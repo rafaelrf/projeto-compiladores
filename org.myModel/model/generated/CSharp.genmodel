@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.myModel/src-gen" editDirectory="/org.myModel.edit/src"
+    editorDirectory="/org.myModel.editor/src" modelPluginID="org.myModel" forceOverwrite="true"
+    modelName="CSharp" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="org.myModel.edit"
+    editorPluginID="org.myModel.editor" runtimeVersion="2.9">
+  <genPackages prefix="CSharp" basePackage="org.myModel" disposableProviderFactory="true"
+      fileExtensions="cs" ecorePackage="CSharp.ecore#/">
+    <genClasses ecoreClass="CSharp.ecore#//Model">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Model/typies"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//Type">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//Type/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//Type/value"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//charDefinitions"/>
+    <genClasses ecoreClass="CSharp.ecore#//intDefinition"/>
+  </genPackages>
+</genmodel:GenModel>
