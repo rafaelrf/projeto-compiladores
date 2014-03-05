@@ -65,6 +65,8 @@ public class CSharpFactoryImpl extends EFactoryImpl implements CSharpFactory
     switch (eClass.getClassifierID())
     {
       case CSharpPackage.MODEL: return createModel();
+      case CSharpPackage.QUALIFIED_IDENTIFIER: return createQualifiedIdentifier();
+      case CSharpPackage.ID: return createID();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -79,6 +81,28 @@ public class CSharpFactoryImpl extends EFactoryImpl implements CSharpFactory
   {
     ModelImpl model = new ModelImpl();
     return model;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public QualifiedIdentifier createQualifiedIdentifier()
+  {
+    QualifiedIdentifierImpl qualifiedIdentifier = new QualifiedIdentifierImpl();
+    return qualifiedIdentifier;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ID createID()
+  {
+    IDImpl id = new IDImpl();
+    return id;
   }
 
   /**

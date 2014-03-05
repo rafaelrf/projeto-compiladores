@@ -15,7 +15,7 @@ public class CSharpParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrPa
 	
 	@Override
 	protected void setInitialHiddenTokens(XtextTokenStream tokenStream) {
-		tokenStream.setInitialHiddenTokens();
+		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
 	
 	@Override
