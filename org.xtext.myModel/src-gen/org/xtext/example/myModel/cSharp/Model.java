@@ -2,8 +2,6 @@
  */
 package org.xtext.example.myModel.cSharp;
 
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -14,7 +12,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.xtext.example.myModel.cSharp.Model#getInput <em>Input</em>}</li>
+ *   <li>{@link org.xtext.example.myModel.cSharp.Model#isInputs <em>Inputs</em>}</li>
  * </ul>
  * </p>
  *
@@ -25,19 +23,29 @@ import org.eclipse.emf.ecore.EObject;
 public interface Model extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Input</b></em>' attribute list.
-   * The list contents are of type {@link java.lang.String}.
+   * Returns the value of the '<em><b>Inputs</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Input</em>' attribute list isn't clear,
+   * If the meaning of the '<em>Inputs</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Input</em>' attribute list.
-   * @see org.xtext.example.myModel.cSharp.CSharpPackage#getModel_Input()
-   * @model unique="false"
+   * @return the value of the '<em>Inputs</em>' attribute.
+   * @see #setInputs(boolean)
+   * @see org.xtext.example.myModel.cSharp.CSharpPackage#getModel_Inputs()
+   * @model
    * @generated
    */
-  EList<String> getInput();
+  boolean isInputs();
+
+  /**
+   * Sets the value of the '{@link org.xtext.example.myModel.cSharp.Model#isInputs <em>Inputs</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Inputs</em>' attribute.
+   * @see #isInputs()
+   * @generated
+   */
+  void setInputs(boolean value);
 
 } // Model

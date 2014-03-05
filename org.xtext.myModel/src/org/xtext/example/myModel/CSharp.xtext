@@ -1,56 +1,145 @@
-grammar org.xtext.example.myModel.CSharp
+grammar org.xtext.example.myModel.CSharp  hidden(WS, ML_COMMENT, SL_COMMENT)
 
 generate cSharp 'http://www.xtext.org/example/myModel/CSharp'
 import 'http://www.eclipse.org/emf/2002/Ecore' as ecore
 
 Model:
-	input+=Input*;
-
-terminal NEW_LINE:
-	('\n' | '\r');
-
-terminal WHITE_SPACE:
-	(' ' | '\t' |NEW_LINE)+;
-
-terminal SINGLE_LINE_COMMENT:
-	'//' ('/S')*;
-
-terminal DELIMITED_COMMENT:
-	'/*'->'*/';
-
-terminal DECIMAL_DIGIT:
-	('0'..'9');
-
-terminal INTEGER_TYPE_SUFFIX:
-	'U' | 'u' | 'L' | 'l' | 'UL' | 'Ul' | 'uL' | 'ul' | 'LU' | 'Lu' | 'lU' | 'lu';
-
-terminal HEX_DIGIT:
-	DECIMAL_DIGIT | LETTER;
-terminal LETTER: ('A'..'F') | ('a'..'f');	
-	
+  	inputs?=Input
+;
 
 Input:
-	InputSectionPart*;
-
+	InputSectionPart	
+;
+//LEXICA
 InputSectionPart:
-	InputElement* NEW_LINE
-	| SINGLE_LINE_COMMENT;
+	(InputElement)* NEW_LINE
+	| PPDirective
+;
+PPDirective:
+ PPDeclaration
+ |PPConditional/*
+ |PPLine
+ |PPDiagnostic
+ |PPRegion */	
+;
+
+PPConditional:
+	PPIfSection  PPElifSections? PPElseSection? PPEndif
+;
+
+PPEndif:
+	WS? '#' WS? 'endif' PPNewLine
+;
+
+PPElseSection:
+	WS? '#' WS? 'else' PPNewLine //ConditionalSection?
+	
+;
+
+PPElifSections:
+	PPElifSection PPElifSections2*
+;
+
+PPElifSections2:
+	PPElifSection PPElifSections2
+;
+
+PPElifSection:
+	WS? '#' WS? 'elif' WS PPExpression PPNewLine //ConditionalSection?
+;
+PPIfSection:
+	  WS? '#' WS? 'if' WS PPExpression PPNewLine //ConditionalSection?
+;
+PPExpression:
+	  WS? PPOrExpression WS?
+;
+/*
+PPOrExpression:
+	PPAndExpression PPOrExpression2*
+;
+PPOrExpression2:
+	WS? '||' WS? PPAndExpression PPOrExpression2 
+;
+
+PPAndExpression:
+	PPEqualityExpression PPAndExpression2*
+;
+PPAndExpression2:
+	WS? '&&' WS? PPEqualityExpression PPAndExpression2
+;
+
+PPEqualityExpression:
+	PPUnaryExpression PPEqualityExpression2*
+;
+
+PPEqualityExpression2:
+	(WS? '==' WS? PPUnaryExpression PPEqualityExpression2)
+    |(WS? '!=' WS? PPUnaryExpression PPEqualityExpression2)
+;
+
+PPUnaryExpression:
+	PPPrimaryExpression
+    |'!' WS? PPUnaryExpression
+;
+
+PPPrimaryExpression:
+	 'true'
+    |'false'
+    |ConditionalSymbol
+    |'(' WS? PPExpression WS? ')'
+;
+ 
+*/
+
+/*
+ConditionalSection:
+	InputSectionPart+
+    |SkippedSectionPart+
+;
+
+/*
+SkippedSectionPart:
+	SkippedCharacters? NEW_LINE
+    |PPDirective
+;
+
+SkippedCharacters:
+	 WS? NotNumberSign InputCharacter*
+;
+
+InputCharacter:
+	('\n'|'\r')* ('\r'? '\n')?// ERRADO??
+;
+
+NotNumberSign:
+	STRING // ERRADO?
+;
+*/
+PPDeclaration:
+	WS? '#' WS? ('define'|'undef') WS ConditionalSymbol PPNewLine
+;
+PPNewLine:
+	 WS? SL_COMMENT? NEW_LINE
+;
+ConditionalSymbol:
+	IdentifierOrKeyword
+;
+
+
 
 InputElement:
-	WHITE_SPACE
+	WS
 	| Comment
 	| Token;
-
 Token:
-	identifier
+	ID
 	| Keywords
 	| IntegerLiteral
-	/*   |RealLiteral
-    |CharacterLiteral
+	|RealLiteral
+    |CharacterLiteral 
     |StringLiteral
-    |OperatorOrPunctuator
-    */;
-
+    |OPERATOR_OR_PUNCTUATOR
+    ;
 Keywords:
 	'abstract'
 	| 'as'
@@ -129,35 +218,78 @@ Keywords:
 	| 'void'
 	| 'volatile'
 	| 'while';
-
 IntegerLiteral:
-	DECIMAL_DIGIT+ INTEGER_TYPE_SUFFIX?
-	| '0x' HEX_DIGIT+ INTEGER_TYPE_SUFFIX
-	| '0X' HEX_DIGIT+ INTEGER_TYPE_SUFFIX?;
-	/*
+	('0x'|'0X') HEX_DIGIT+ INTEGER_TYPE_SUFFIX
+	|INT (INTEGER_TYPE_SUFFIX)?
+	;	
 RealLiteral:
-	
+	INT '.' INT ExponentPart? REAL_TYPE_SUFFIX?
+    | INT ExponentPart REAL_TYPE_SUFFIX?
+    | INT REAL_TYPE_SUFFIX
 ;
-
+ExponentPart:
+  'e' SIGN? INT
+  |'E' SIGN? INT
+;
 CharacterLiteral:
+	  "'" Character "'"
+;
+Character:
+	SINGLE_CHARACTER
+    |'\\' EscapeSequence
+;
+EscapeSequence:
+	ESCAPE_SEQUENCE
+    | HexadecimalEscapeSequence
+    | UnicodeCharacterEscapeSequence
 	
 ;
-
+UnicodeCharacterEscapeSequence:
+	 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT 
+	 |'U' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT 
+;
+HexadecimalEscapeSequence:
+	'x' HEX_DIGIT (HEX_DIGIT(HEX_DIGIT HEX_DIGIT?)?)?
+;
 StringLiteral:
-	
+	 '"' RegularStringCharacter* '"'
+    |'@' VerbatimStringCharacter* '"'	
 ;
-
-OperatorOrPunctuator:
-	
+VerbatimStringCharacter:
+	  SINGLE_CHARACTER //Any character except "
+	  |QUOTE_ESCAPE_SEQUENCE
 ;
-* 
-*/
+RegularStringCharacter:
+	 SINGLE_CHARACTER //Any character except " (U+0022), \ (U+005C), and new-line-character
+    |'\\' ESCAPE_SEQUENCE
+;
 Comment:
-	SINGLE_LINE_COMMENT
-	| DELIMITED_COMMENT;
+	SL_COMMENT
+	| ML_COMMENT;
+Identifier:
+	AvailableIdentifier
+    |'@' IDENTIFIER_START_CHARACTER
+;
+AvailableIdentifier:
+	IdentifierOrKeyword
+;
+IdentifierOrKeyword:
+ IDENTIFIER_START_CHARACTER IdentifierPartCharacter*	
+;
+IdentifierPartCharacter:
+	LETTER
+    |INT/*
+    |connecting-character
+    |combining-character
+    |formatting-character */
+;
+//FIM LEXICA 
 
+
+//SINTAXE
 Type:
 	NonArrayType RANK_SPECIFIER*;
+
 
 IntegralType:
 	'sbyte'
@@ -174,21 +306,18 @@ ArrayType:
 	NonArrayType RANK_SPECIFIER+;
 
 EnumType:
-	Attributes EnumModifier* 'enum' identifier (':' IntegralType)? EnumBody
+	Attributes EnumModifier* 'enum' ID (':' IntegralType)? EnumBody
 	';'?;
-
-RANK_SPECIFIER:
-	'[' ','* ']';
 
 NonArrayType:
 //QualifiedIdentifier|
-	builtInType;
-	/*
+	BuiltInType;
+	
 QualifiedIdentifier:
-   {identifier}+ 
+   {ID} 
 ;
- */
-builtInType:
+ 
+BuiltInType:
 	IntegralType | BuiltInClassType | 'bool' | 'decimal' | 'float' | 'double';
 
 BuiltInClassType:
@@ -199,8 +328,6 @@ EnumBody:
 	//|'{' {EnumMemberDeclaration ','}+ ','? '}'
 ;
 
-identifier:
-	'null';
 
 EnumModifier:
 	'new' | 'public' | 'protected' | 'internal' | 'private';
@@ -208,7 +335,74 @@ EnumModifier:
 Attributes:
 	'null';
 
+terminal REAL_TYPE_SUFFIX:	"F"|"f"|"D"|"d"|"M"|"m";
+terminal LETTER:('A'..'Z') | ('a'..'z');
+terminal IDENTIFIER_START_CHARACTER:LETTER|"_";
+terminal QUOTE_ESCAPE_SEQUENCE:	'""';
+terminal ESCAPE_SEQUENCE:("'"|'"'|"\\"|'0'|'a'|'b'|'f'|'n'|'r'|'t'|'v');
+terminal NEW_LINE:	('\r'|'\n')*EOF;
+terminal RANK_SPECIFIER: '[' ','* ']';
+terminal INTEGER_TYPE_SUFFIX:'U' | 'u' | 'L' | 'l' | 'UL' | 'Ul' | 'uL' | 'ul' | 'LU' | 'Lu' | 'lU' | 'lu';
+terminal HEX_DIGIT:	('0'..'9')|(('A'..'F') | ('a'..'f'));
+terminal SIGN: '+'|'-';
+terminal OPERATOR_OR_PUNCTUATOR:
+	'{'
+    |'}'
+    |'['
+    |']'
+    |'('
+    |')'
+    |'.'
+    |','
+    |':'
+    |';'
+    |'+'
+    |'-'
+    |'*'
+    |'/'
+    |'%'
+    |'&'
+    |'|'
+    |'^'
+    |'!'
+    |'~'
+    |'='
+    |'<'
+    |'>'
+    |'?'
+    |'++'
+    |'--'
+    |'&&'
+    |'||'
+    |'<<'
+    |'>>'
+    |'=='
+    |'!='
+    |'<='
+    |'>='
+    |'+='
+    |'-='
+    |'*='
+    |'/='
+    |'%='
+    |'&='
+    |'|='
+    |'^='
+    |'<<='
+    |'>>='
+    |'->'	
+;
+terminal SINGLE_CHARACTER: .?;
+terminal ID: '^'?('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
+terminal INT returns ecore::EInt: ('0'..'9')+;
+terminal STRING	: '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' 
+			|"'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* "'"; 
+terminal ML_COMMENT: '/*' -> '*/';
+terminal SL_COMMENT:'//' !('\n'|'\r')* ('\r'? '\n')?;
+terminal WS: (' '|'\t'|'\r'|'\n')+;
 
 
+
+ 
 
 	

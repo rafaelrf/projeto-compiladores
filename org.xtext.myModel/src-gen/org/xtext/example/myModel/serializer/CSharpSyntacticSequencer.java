@@ -23,9 +23,21 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if(ruleCall.getRule() == grammarAccess.getInputRule())
+			return getInputToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
+	/**
+	 * Input:
+	 * 	InputSectionPart	
+	 * ;
+	 */
+	protected String getInputToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "";
+	}
 	
 	@Override
 	protected void emitUnassignedTokens(EObject semanticObject, ISynTransition transition, INode fromNode, INode toNode) {

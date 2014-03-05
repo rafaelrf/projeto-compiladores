@@ -38,26 +38,63 @@ public class CSharpParser extends AbstractContentAssistParser {
 				private static final long serialVersionUID = 1L;
 				{
 					put(grammarAccess.getInputSectionPartAccess().getAlternatives(), "rule__InputSectionPart__Alternatives");
+					put(grammarAccess.getPPDirectiveAccess().getAlternatives(), "rule__PPDirective__Alternatives");
+					put(grammarAccess.getPPDeclarationAccess().getAlternatives_3(), "rule__PPDeclaration__Alternatives_3");
 					put(grammarAccess.getInputElementAccess().getAlternatives(), "rule__InputElement__Alternatives");
 					put(grammarAccess.getTokenAccess().getAlternatives(), "rule__Token__Alternatives");
 					put(grammarAccess.getKeywordsAccess().getAlternatives(), "rule__Keywords__Alternatives");
 					put(grammarAccess.getIntegerLiteralAccess().getAlternatives(), "rule__IntegerLiteral__Alternatives");
+					put(grammarAccess.getIntegerLiteralAccess().getAlternatives_0_0(), "rule__IntegerLiteral__Alternatives_0_0");
+					put(grammarAccess.getRealLiteralAccess().getAlternatives(), "rule__RealLiteral__Alternatives");
+					put(grammarAccess.getExponentPartAccess().getAlternatives(), "rule__ExponentPart__Alternatives");
+					put(grammarAccess.getCharacterAccess().getAlternatives(), "rule__Character__Alternatives");
+					put(grammarAccess.getEscapeSequenceAccess().getAlternatives(), "rule__EscapeSequence__Alternatives");
+					put(grammarAccess.getUnicodeCharacterEscapeSequenceAccess().getAlternatives(), "rule__UnicodeCharacterEscapeSequence__Alternatives");
+					put(grammarAccess.getStringLiteralAccess().getAlternatives(), "rule__StringLiteral__Alternatives");
+					put(grammarAccess.getVerbatimStringCharacterAccess().getAlternatives(), "rule__VerbatimStringCharacter__Alternatives");
+					put(grammarAccess.getRegularStringCharacterAccess().getAlternatives(), "rule__RegularStringCharacter__Alternatives");
 					put(grammarAccess.getCommentAccess().getAlternatives(), "rule__Comment__Alternatives");
+					put(grammarAccess.getIdentifierAccess().getAlternatives(), "rule__Identifier__Alternatives");
+					put(grammarAccess.getIdentifierPartCharacterAccess().getAlternatives(), "rule__IdentifierPartCharacter__Alternatives");
 					put(grammarAccess.getIntegralTypeAccess().getAlternatives(), "rule__IntegralType__Alternatives");
 					put(grammarAccess.getBuiltInTypeAccess().getAlternatives(), "rule__BuiltInType__Alternatives");
 					put(grammarAccess.getBuiltInClassTypeAccess().getAlternatives(), "rule__BuiltInClassType__Alternatives");
 					put(grammarAccess.getEnumModifierAccess().getAlternatives(), "rule__EnumModifier__Alternatives");
 					put(grammarAccess.getInputSectionPartAccess().getGroup_0(), "rule__InputSectionPart__Group_0__0");
+					put(grammarAccess.getPPConditionalAccess().getGroup(), "rule__PPConditional__Group__0");
+					put(grammarAccess.getPPEndifAccess().getGroup(), "rule__PPEndif__Group__0");
+					put(grammarAccess.getPPElseSectionAccess().getGroup(), "rule__PPElseSection__Group__0");
+					put(grammarAccess.getPPElifSectionsAccess().getGroup(), "rule__PPElifSections__Group__0");
+					put(grammarAccess.getPPElifSections2Access().getGroup(), "rule__PPElifSections2__Group__0");
+					put(grammarAccess.getPPElifSectionAccess().getGroup(), "rule__PPElifSection__Group__0");
+					put(grammarAccess.getPPIfSectionAccess().getGroup(), "rule__PPIfSection__Group__0");
+					put(grammarAccess.getPPDeclarationAccess().getGroup(), "rule__PPDeclaration__Group__0");
+					put(grammarAccess.getPPNewLineAccess().getGroup(), "rule__PPNewLine__Group__0");
 					put(grammarAccess.getIntegerLiteralAccess().getGroup_0(), "rule__IntegerLiteral__Group_0__0");
 					put(grammarAccess.getIntegerLiteralAccess().getGroup_1(), "rule__IntegerLiteral__Group_1__0");
-					put(grammarAccess.getIntegerLiteralAccess().getGroup_2(), "rule__IntegerLiteral__Group_2__0");
+					put(grammarAccess.getRealLiteralAccess().getGroup_0(), "rule__RealLiteral__Group_0__0");
+					put(grammarAccess.getRealLiteralAccess().getGroup_1(), "rule__RealLiteral__Group_1__0");
+					put(grammarAccess.getRealLiteralAccess().getGroup_2(), "rule__RealLiteral__Group_2__0");
+					put(grammarAccess.getExponentPartAccess().getGroup_0(), "rule__ExponentPart__Group_0__0");
+					put(grammarAccess.getExponentPartAccess().getGroup_1(), "rule__ExponentPart__Group_1__0");
+					put(grammarAccess.getCharacterLiteralAccess().getGroup(), "rule__CharacterLiteral__Group__0");
+					put(grammarAccess.getCharacterAccess().getGroup_1(), "rule__Character__Group_1__0");
+					put(grammarAccess.getUnicodeCharacterEscapeSequenceAccess().getGroup_0(), "rule__UnicodeCharacterEscapeSequence__Group_0__0");
+					put(grammarAccess.getUnicodeCharacterEscapeSequenceAccess().getGroup_1(), "rule__UnicodeCharacterEscapeSequence__Group_1__0");
+					put(grammarAccess.getHexadecimalEscapeSequenceAccess().getGroup(), "rule__HexadecimalEscapeSequence__Group__0");
+					put(grammarAccess.getHexadecimalEscapeSequenceAccess().getGroup_2(), "rule__HexadecimalEscapeSequence__Group_2__0");
+					put(grammarAccess.getHexadecimalEscapeSequenceAccess().getGroup_2_1(), "rule__HexadecimalEscapeSequence__Group_2_1__0");
+					put(grammarAccess.getStringLiteralAccess().getGroup_0(), "rule__StringLiteral__Group_0__0");
+					put(grammarAccess.getStringLiteralAccess().getGroup_1(), "rule__StringLiteral__Group_1__0");
+					put(grammarAccess.getRegularStringCharacterAccess().getGroup_1(), "rule__RegularStringCharacter__Group_1__0");
+					put(grammarAccess.getIdentifierAccess().getGroup_1(), "rule__Identifier__Group_1__0");
+					put(grammarAccess.getIdentifierOrKeywordAccess().getGroup(), "rule__IdentifierOrKeyword__Group__0");
 					put(grammarAccess.getTypeAccess().getGroup(), "rule__Type__Group__0");
 					put(grammarAccess.getArrayTypeAccess().getGroup(), "rule__ArrayType__Group__0");
 					put(grammarAccess.getEnumTypeAccess().getGroup(), "rule__EnumType__Group__0");
 					put(grammarAccess.getEnumTypeAccess().getGroup_4(), "rule__EnumType__Group_4__0");
-					put(grammarAccess.getRANK_SPECIFIERAccess().getGroup(), "rule__RANK_SPECIFIER__Group__0");
 					put(grammarAccess.getEnumBodyAccess().getGroup(), "rule__EnumBody__Group__0");
-					put(grammarAccess.getModelAccess().getInputAssignment(), "rule__Model__InputAssignment");
+					put(grammarAccess.getModelAccess().getInputsAssignment(), "rule__Model__InputsAssignment");
 				}
 			};
 		}
@@ -77,7 +114,7 @@ public class CSharpParser extends AbstractContentAssistParser {
 	
 	@Override
 	protected String[] getInitialHiddenTokens() {
-		return new String[] {  };
+		return new String[] { "RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT" };
 	}
 	
 	public CSharpGrammarAccess getGrammarAccess() {
