@@ -108,16 +108,15 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final RuleCall cWSTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final RuleCall cPPIfSectionParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
-		private final RuleCall cWSTerminalRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
-		private final RuleCall cPPElifSectionsParserRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
-		private final RuleCall cPPElseSectionParserRuleCall_4 = (RuleCall)cGroup.eContents().get(4);
-		private final RuleCall cPPEndifParserRuleCall_5 = (RuleCall)cGroup.eContents().get(5);
+		private final RuleCall cPPElifSectionsParserRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		private final RuleCall cPPElseSectionParserRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
+		private final RuleCall cPPEndifParserRuleCall_4 = (RuleCall)cGroup.eContents().get(4);
 		
 		//PPConditional:
-		//	WS* PPIfSection WS* PPElifSections? => PPElseSection? PPEndif;
+		//	WS* PPIfSection PPElifSections? => PPElseSection? PPEndif;
 		public ParserRule getRule() { return rule; }
 
-		//WS* PPIfSection WS* PPElifSections? => PPElseSection? PPEndif
+		//WS* PPIfSection PPElifSections? => PPElseSection? PPEndif
 		public Group getGroup() { return cGroup; }
 
 		//WS*
@@ -126,17 +125,14 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 		//PPIfSection
 		public RuleCall getPPIfSectionParserRuleCall_1() { return cPPIfSectionParserRuleCall_1; }
 
-		//WS*
-		public RuleCall getWSTerminalRuleCall_2() { return cWSTerminalRuleCall_2; }
-
 		//PPElifSections?
-		public RuleCall getPPElifSectionsParserRuleCall_3() { return cPPElifSectionsParserRuleCall_3; }
+		public RuleCall getPPElifSectionsParserRuleCall_2() { return cPPElifSectionsParserRuleCall_2; }
 
 		//=> PPElseSection?
-		public RuleCall getPPElseSectionParserRuleCall_4() { return cPPElseSectionParserRuleCall_4; }
+		public RuleCall getPPElseSectionParserRuleCall_3() { return cPPElseSectionParserRuleCall_3; }
 
 		//PPEndif
-		public RuleCall getPPEndifParserRuleCall_5() { return cPPEndifParserRuleCall_5; }
+		public RuleCall getPPEndifParserRuleCall_4() { return cPPEndifParserRuleCall_4; }
 	}
 
 	public class PPEndifElements extends AbstractParserRuleElementFinder {
@@ -164,22 +160,24 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cElseKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final RuleCall cPPNewLineParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final RuleCall cWSTerminalRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
 		
 		//PPElseSection:
-		//	"else" //ConditionalSection?
-		// PPNewLine;
+		//	"else" PPNewLine WS* //ConditionalSection? 
+		//;
 		public ParserRule getRule() { return rule; }
 
-		//"else" //ConditionalSection?
-		// PPNewLine
+		//"else" PPNewLine WS* //ConditionalSection?
 		public Group getGroup() { return cGroup; }
 
 		//"else"
 		public Keyword getElseKeyword_0() { return cElseKeyword_0; }
 
-		////ConditionalSection?
-		// PPNewLine
+		//PPNewLine
 		public RuleCall getPPNewLineParserRuleCall_1() { return cPPNewLineParserRuleCall_1; }
+
+		//WS*
+		public RuleCall getWSTerminalRuleCall_2() { return cWSTerminalRuleCall_2; }
 	}
 
 	public class PPElifSectionsElements extends AbstractParserRuleElementFinder {
@@ -229,163 +227,179 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cWSTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
 		private final RuleCall cPPExpressionParserRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
 		private final RuleCall cPPNewLineParserRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
+		private final RuleCall cWSTerminalRuleCall_4 = (RuleCall)cGroup.eContents().get(4);
 		
 		//PPElifSection:
-		//	"elif" WS PPExpression //ConditionalSection?
-		// PPNewLine;
+		//	"elif" WS* PPExpression PPNewLine WS* //ConditionalSection?
+		//;
 		public ParserRule getRule() { return rule; }
 
-		//=> "elif" WS PPExpression //ConditionalSection?
-		// PPNewLine
+		//=> "elif" WS* PPExpression PPNewLine WS* //ConditionalSection?
 		public Group getGroup() { return cGroup; }
 
 		//=> "elif"
 		public Keyword getElifKeyword_0() { return cElifKeyword_0; }
 
-		//WS
+		//WS*
 		public RuleCall getWSTerminalRuleCall_1() { return cWSTerminalRuleCall_1; }
 
 		//PPExpression
 		public RuleCall getPPExpressionParserRuleCall_2() { return cPPExpressionParserRuleCall_2; }
 
-		////ConditionalSection?
-		// PPNewLine
+		//PPNewLine
 		public RuleCall getPPNewLineParserRuleCall_3() { return cPPNewLineParserRuleCall_3; }
+
+		//WS*
+		public RuleCall getWSTerminalRuleCall_4() { return cWSTerminalRuleCall_4; }
 	}
 
 	public class PPIfSectionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PPIfSection");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cIfKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final RuleCall cPPExpressionParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
-		private final RuleCall cPPNewLineParserRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		private final RuleCall cWSTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final RuleCall cPPExpressionParserRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		private final RuleCall cPPNewLineParserRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
+		private final RuleCall cWSTerminalRuleCall_4 = (RuleCall)cGroup.eContents().get(4);
 		
 		//PPIfSection:
-		//	"if" PPExpression //ConditionalSection?
-		// PPNewLine;
+		//	"if" WS* PPExpression PPNewLine WS* //ConditionalSection?
+		//;
 		public ParserRule getRule() { return rule; }
 
-		//"if" PPExpression //ConditionalSection?
-		// PPNewLine
+		//"if" WS* PPExpression PPNewLine WS* //ConditionalSection?
 		public Group getGroup() { return cGroup; }
 
 		//"if"
 		public Keyword getIfKeyword_0() { return cIfKeyword_0; }
 
-		//PPExpression
-		public RuleCall getPPExpressionParserRuleCall_1() { return cPPExpressionParserRuleCall_1; }
+		//WS*
+		public RuleCall getWSTerminalRuleCall_1() { return cWSTerminalRuleCall_1; }
 
-		////ConditionalSection?
-		// PPNewLine
-		public RuleCall getPPNewLineParserRuleCall_2() { return cPPNewLineParserRuleCall_2; }
+		//PPExpression
+		public RuleCall getPPExpressionParserRuleCall_2() { return cPPExpressionParserRuleCall_2; }
+
+		//PPNewLine
+		public RuleCall getPPNewLineParserRuleCall_3() { return cPPNewLineParserRuleCall_3; }
+
+		//WS*
+		public RuleCall getWSTerminalRuleCall_4() { return cWSTerminalRuleCall_4; }
 	}
 
 	public class PPExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PPExpression");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cWSTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
-		private final RuleCall cPPOrExpressionParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final RuleCall cPPOrExpressionParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		//PPExpression:
-		//	WS PPOrExpression;
+		//	PPOrExpression;
 		public ParserRule getRule() { return rule; }
 
-		//WS PPOrExpression
-		public Group getGroup() { return cGroup; }
-
-		//WS
-		public RuleCall getWSTerminalRuleCall_0() { return cWSTerminalRuleCall_0; }
-
 		//PPOrExpression
-		public RuleCall getPPOrExpressionParserRuleCall_1() { return cPPOrExpressionParserRuleCall_1; }
+		public RuleCall getPPOrExpressionParserRuleCall() { return cPPOrExpressionParserRuleCall; }
 	}
 
 	public class PPOrExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PPOrExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final RuleCall cPPAndExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
-		private final RuleCall cPPOrExpression2ParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final RuleCall cWSTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final RuleCall cPPOrExpression2ParserRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
 		
 		//PPOrExpression:
-		//	PPAndExpression PPOrExpression2;
+		//	PPAndExpression WS* PPOrExpression2;
 		public ParserRule getRule() { return rule; }
 
-		//PPAndExpression PPOrExpression2
+		//PPAndExpression WS* PPOrExpression2
 		public Group getGroup() { return cGroup; }
 
 		//PPAndExpression
 		public RuleCall getPPAndExpressionParserRuleCall_0() { return cPPAndExpressionParserRuleCall_0; }
 
+		//WS*
+		public RuleCall getWSTerminalRuleCall_1() { return cWSTerminalRuleCall_1; }
+
 		//PPOrExpression2
-		public RuleCall getPPOrExpression2ParserRuleCall_1() { return cPPOrExpression2ParserRuleCall_1; }
+		public RuleCall getPPOrExpression2ParserRuleCall_2() { return cPPOrExpression2ParserRuleCall_2; }
 	}
 
 	public class PPOrExpression2Elements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PPOrExpression2");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cVerticalLineVerticalLineKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final RuleCall cPPAndExpressionParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
-		private final RuleCall cPPOrExpression2ParserRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		private final RuleCall cWSTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final RuleCall cPPAndExpressionParserRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		private final RuleCall cPPOrExpression2ParserRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
 		
 		//PPOrExpression2:
-		//	("||" PPAndExpression PPOrExpression2)*;
+		//	("||" WS* PPAndExpression PPOrExpression2)*;
 		public ParserRule getRule() { return rule; }
 
-		//(=> "||" PPAndExpression PPOrExpression2)*
+		//(=> "||" WS* PPAndExpression PPOrExpression2)*
 		public Group getGroup() { return cGroup; }
 
 		//=> "||"
 		public Keyword getVerticalLineVerticalLineKeyword_0() { return cVerticalLineVerticalLineKeyword_0; }
 
+		//WS*
+		public RuleCall getWSTerminalRuleCall_1() { return cWSTerminalRuleCall_1; }
+
 		//PPAndExpression
-		public RuleCall getPPAndExpressionParserRuleCall_1() { return cPPAndExpressionParserRuleCall_1; }
+		public RuleCall getPPAndExpressionParserRuleCall_2() { return cPPAndExpressionParserRuleCall_2; }
 
 		//PPOrExpression2
-		public RuleCall getPPOrExpression2ParserRuleCall_2() { return cPPOrExpression2ParserRuleCall_2; }
+		public RuleCall getPPOrExpression2ParserRuleCall_3() { return cPPOrExpression2ParserRuleCall_3; }
 	}
 
 	public class PPAndExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PPAndExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final RuleCall cPPEqualityExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
-		private final RuleCall cPPAndExpression2ParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final RuleCall cWSTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final RuleCall cPPAndExpression2ParserRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
 		
 		//PPAndExpression:
-		//	PPEqualityExpression PPAndExpression2;
+		//	PPEqualityExpression WS* PPAndExpression2;
 		public ParserRule getRule() { return rule; }
 
-		//PPEqualityExpression PPAndExpression2
+		//PPEqualityExpression WS* PPAndExpression2
 		public Group getGroup() { return cGroup; }
 
 		//PPEqualityExpression
 		public RuleCall getPPEqualityExpressionParserRuleCall_0() { return cPPEqualityExpressionParserRuleCall_0; }
 
+		//WS*
+		public RuleCall getWSTerminalRuleCall_1() { return cWSTerminalRuleCall_1; }
+
 		//PPAndExpression2
-		public RuleCall getPPAndExpression2ParserRuleCall_1() { return cPPAndExpression2ParserRuleCall_1; }
+		public RuleCall getPPAndExpression2ParserRuleCall_2() { return cPPAndExpression2ParserRuleCall_2; }
 	}
 
 	public class PPAndExpression2Elements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PPAndExpression2");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cAmpersandAmpersandKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final RuleCall cPPEqualityExpressionParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
-		private final RuleCall cPPAndExpression2ParserRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		private final RuleCall cWSTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final RuleCall cPPEqualityExpressionParserRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		private final RuleCall cPPAndExpression2ParserRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
 		
 		//PPAndExpression2:
-		//	("&&" PPEqualityExpression PPAndExpression2)*;
+		//	("&&" WS* PPEqualityExpression PPAndExpression2)*;
 		public ParserRule getRule() { return rule; }
 
-		//(=> "&&" PPEqualityExpression PPAndExpression2)*
+		//(=> "&&" WS* PPEqualityExpression PPAndExpression2)*
 		public Group getGroup() { return cGroup; }
 
 		//=> "&&"
 		public Keyword getAmpersandAmpersandKeyword_0() { return cAmpersandAmpersandKeyword_0; }
 
+		//WS*
+		public RuleCall getWSTerminalRuleCall_1() { return cWSTerminalRuleCall_1; }
+
 		//PPEqualityExpression
-		public RuleCall getPPEqualityExpressionParserRuleCall_1() { return cPPEqualityExpressionParserRuleCall_1; }
+		public RuleCall getPPEqualityExpressionParserRuleCall_2() { return cPPEqualityExpressionParserRuleCall_2; }
 
 		//PPAndExpression2
-		public RuleCall getPPAndExpression2ParserRuleCall_2() { return cPPAndExpression2ParserRuleCall_2; }
+		public RuleCall getPPAndExpression2ParserRuleCall_3() { return cPPAndExpression2ParserRuleCall_3; }
 	}
 
 	public class PPEqualityExpressionElements extends AbstractParserRuleElementFinder {
@@ -414,14 +428,15 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
 		private final Keyword cEqualsSignEqualsSignKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
 		private final Keyword cExclamationMarkEqualsSignKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
-		private final RuleCall cPPUnaryExpressionParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
-		private final RuleCall cPPEqualityExpression2ParserRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		private final RuleCall cWSTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final RuleCall cPPUnaryExpressionParserRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		private final RuleCall cPPEqualityExpression2ParserRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
 		
 		//PPEqualityExpression2:
-		//	("==" | "!=") PPUnaryExpression PPEqualityExpression2;
+		//	("==" | "!=") WS* PPUnaryExpression PPEqualityExpression2;
 		public ParserRule getRule() { return rule; }
 
-		//("==" | "!=") PPUnaryExpression PPEqualityExpression2
+		//("==" | "!=") WS* PPUnaryExpression PPEqualityExpression2
 		public Group getGroup() { return cGroup; }
 
 		//"==" | "!="
@@ -433,11 +448,14 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 		//"!="
 		public Keyword getExclamationMarkEqualsSignKeyword_0_1() { return cExclamationMarkEqualsSignKeyword_0_1; }
 
+		//WS*
+		public RuleCall getWSTerminalRuleCall_1() { return cWSTerminalRuleCall_1; }
+
 		//PPUnaryExpression
-		public RuleCall getPPUnaryExpressionParserRuleCall_1() { return cPPUnaryExpressionParserRuleCall_1; }
+		public RuleCall getPPUnaryExpressionParserRuleCall_2() { return cPPUnaryExpressionParserRuleCall_2; }
 
 		//PPEqualityExpression2
-		public RuleCall getPPEqualityExpression2ParserRuleCall_2() { return cPPEqualityExpression2ParserRuleCall_2; }
+		public RuleCall getPPEqualityExpression2ParserRuleCall_3() { return cPPEqualityExpression2ParserRuleCall_3; }
 	}
 
 	public class PPUnaryExpressionElements extends AbstractParserRuleElementFinder {
@@ -476,14 +494,16 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cConditionalSymbolParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
 		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final RuleCall cPPExpressionParserRuleCall_3_1 = (RuleCall)cGroup_3.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
+		private final RuleCall cWSTerminalRuleCall_3_1 = (RuleCall)cGroup_3.eContents().get(1);
+		private final RuleCall cPPExpressionParserRuleCall_3_2 = (RuleCall)cGroup_3.eContents().get(2);
+		private final RuleCall cWSTerminalRuleCall_3_3 = (RuleCall)cGroup_3.eContents().get(3);
+		private final Keyword cRightParenthesisKeyword_3_4 = (Keyword)cGroup_3.eContents().get(4);
 		
 		//PPPrimaryExpression:
-		//	"true" | "false" | ConditionalSymbol | "(" PPExpression ")";
+		//	"true" | "false" | ConditionalSymbol | "(" WS* PPExpression WS* ")";
 		public ParserRule getRule() { return rule; }
 
-		//"true" | "false" | ConditionalSymbol | "(" PPExpression ")"
+		//"true" | "false" | ConditionalSymbol | "(" WS* PPExpression WS* ")"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//"true"
@@ -495,17 +515,23 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 		//ConditionalSymbol
 		public RuleCall getConditionalSymbolParserRuleCall_2() { return cConditionalSymbolParserRuleCall_2; }
 
-		//"(" PPExpression ")"
+		//"(" WS* PPExpression WS* ")"
 		public Group getGroup_3() { return cGroup_3; }
 
 		//"("
 		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
 
+		//WS*
+		public RuleCall getWSTerminalRuleCall_3_1() { return cWSTerminalRuleCall_3_1; }
+
 		//PPExpression
-		public RuleCall getPPExpressionParserRuleCall_3_1() { return cPPExpressionParserRuleCall_3_1; }
+		public RuleCall getPPExpressionParserRuleCall_3_2() { return cPPExpressionParserRuleCall_3_2; }
+
+		//WS*
+		public RuleCall getWSTerminalRuleCall_3_3() { return cWSTerminalRuleCall_3_3; }
 
 		//")"
-		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
+		public Keyword getRightParenthesisKeyword_3_4() { return cRightParenthesisKeyword_3_4; }
 	}
 
 	public class PPDeclarationElements extends AbstractParserRuleElementFinder {
@@ -587,13 +613,13 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNEW_LINETerminalRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
 		
 		//PPNewLine:
-		//	WS? SL_COMMENT? NEW_LINE;
+		//	WS* SL_COMMENT? NEW_LINE;
 		public ParserRule getRule() { return rule; }
 
-		//WS? SL_COMMENT? NEW_LINE
+		//WS* SL_COMMENT? NEW_LINE
 		public Group getGroup() { return cGroup; }
 
-		//WS?
+		//WS*
 		public RuleCall getWSTerminalRuleCall_0() { return cWSTerminalRuleCall_0; }
 
 		//SL_COMMENT?
@@ -1999,7 +2025,7 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PPConditional:
-	//	WS* PPIfSection WS* PPElifSections? => PPElseSection? PPEndif;
+	//	WS* PPIfSection PPElifSections? => PPElseSection? PPEndif;
 	public PPConditionalElements getPPConditionalAccess() {
 		return (pPPConditional != null) ? pPPConditional : (pPPConditional = new PPConditionalElements());
 	}
@@ -2019,8 +2045,8 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PPElseSection:
-	//	"else" //ConditionalSection?
-	// PPNewLine;
+	//	"else" PPNewLine WS* //ConditionalSection? 
+	//;
 	public PPElseSectionElements getPPElseSectionAccess() {
 		return (pPPElseSection != null) ? pPPElseSection : (pPPElseSection = new PPElseSectionElements());
 	}
@@ -2050,8 +2076,8 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PPElifSection:
-	//	"elif" WS PPExpression //ConditionalSection?
-	// PPNewLine;
+	//	"elif" WS* PPExpression PPNewLine WS* //ConditionalSection?
+	//;
 	public PPElifSectionElements getPPElifSectionAccess() {
 		return (pPPElifSection != null) ? pPPElifSection : (pPPElifSection = new PPElifSectionElements());
 	}
@@ -2061,8 +2087,8 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PPIfSection:
-	//	"if" PPExpression //ConditionalSection?
-	// PPNewLine;
+	//	"if" WS* PPExpression PPNewLine WS* //ConditionalSection?
+	//;
 	public PPIfSectionElements getPPIfSectionAccess() {
 		return (pPPIfSection != null) ? pPPIfSection : (pPPIfSection = new PPIfSectionElements());
 	}
@@ -2072,7 +2098,7 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PPExpression:
-	//	WS PPOrExpression;
+	//	PPOrExpression;
 	public PPExpressionElements getPPExpressionAccess() {
 		return (pPPExpression != null) ? pPPExpression : (pPPExpression = new PPExpressionElements());
 	}
@@ -2082,7 +2108,7 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PPOrExpression:
-	//	PPAndExpression PPOrExpression2;
+	//	PPAndExpression WS* PPOrExpression2;
 	public PPOrExpressionElements getPPOrExpressionAccess() {
 		return (pPPOrExpression != null) ? pPPOrExpression : (pPPOrExpression = new PPOrExpressionElements());
 	}
@@ -2092,7 +2118,7 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PPOrExpression2:
-	//	("||" PPAndExpression PPOrExpression2)*;
+	//	("||" WS* PPAndExpression PPOrExpression2)*;
 	public PPOrExpression2Elements getPPOrExpression2Access() {
 		return (pPPOrExpression2 != null) ? pPPOrExpression2 : (pPPOrExpression2 = new PPOrExpression2Elements());
 	}
@@ -2102,7 +2128,7 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PPAndExpression:
-	//	PPEqualityExpression PPAndExpression2;
+	//	PPEqualityExpression WS* PPAndExpression2;
 	public PPAndExpressionElements getPPAndExpressionAccess() {
 		return (pPPAndExpression != null) ? pPPAndExpression : (pPPAndExpression = new PPAndExpressionElements());
 	}
@@ -2112,7 +2138,7 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PPAndExpression2:
-	//	("&&" PPEqualityExpression PPAndExpression2)*;
+	//	("&&" WS* PPEqualityExpression PPAndExpression2)*;
 	public PPAndExpression2Elements getPPAndExpression2Access() {
 		return (pPPAndExpression2 != null) ? pPPAndExpression2 : (pPPAndExpression2 = new PPAndExpression2Elements());
 	}
@@ -2132,7 +2158,7 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PPEqualityExpression2:
-	//	("==" | "!=") PPUnaryExpression PPEqualityExpression2;
+	//	("==" | "!=") WS* PPUnaryExpression PPEqualityExpression2;
 	public PPEqualityExpression2Elements getPPEqualityExpression2Access() {
 		return (pPPEqualityExpression2 != null) ? pPPEqualityExpression2 : (pPPEqualityExpression2 = new PPEqualityExpression2Elements());
 	}
@@ -2152,7 +2178,7 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PPPrimaryExpression:
-	//	"true" | "false" | ConditionalSymbol | "(" PPExpression ")";
+	//	"true" | "false" | ConditionalSymbol | "(" WS* PPExpression WS* ")";
 	public PPPrimaryExpressionElements getPPPrimaryExpressionAccess() {
 		return (pPPPrimaryExpression != null) ? pPPPrimaryExpression : (pPPPrimaryExpression = new PPPrimaryExpressionElements());
 	}
@@ -2195,7 +2221,7 @@ public class CSharpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PPNewLine:
-	//	WS? SL_COMMENT? NEW_LINE;
+	//	WS* SL_COMMENT? NEW_LINE;
 	public PPNewLineElements getPPNewLineAccess() {
 		return (pPPNewLine != null) ? pPPNewLine : (pPPNewLine = new PPNewLineElements());
 	}
