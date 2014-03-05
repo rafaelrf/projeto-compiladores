@@ -22,16 +22,14 @@ PPDirective:
  |PPDiagnostic
  |PPRegion */	
 ;
-
-
 PPConditional:
-	(WS)* PPIfSection (WS)* PPElifSections? =>PPElseSection? PPEndif
+	(WS)* PPIfSection PPElifSections? =>PPElseSection? PPEndif
 ;
 PPEndif:
 	'endif' PPNewLine
 ;
 PPElseSection:
-	'else' PPNewLine //ConditionalSection?
+	'else' PPNewLine  (WS)* //ConditionalSection? 
 ;
 PPElifSections:
 	PPElifSection PPElifSections2
@@ -40,31 +38,31 @@ PPElifSections2:
 	(PPElifSection PPElifSections2)*
 ;
 PPElifSection:
-	 =>'elif' WS PPExpression PPNewLine //ConditionalSection?
+	 =>'elif' (WS)* PPExpression PPNewLine (WS)* //ConditionalSection?
 ;
 PPIfSection:
-	  'if' PPExpression PPNewLine //ConditionalSection?
+	 'if' (WS)* PPExpression PPNewLine  (WS)*//ConditionalSection?
 ;
 PPExpression:
-	WS PPOrExpression
+	PPOrExpression
 ;
-PPOrExpression:
-	PPAndExpression PPOrExpression2
+PPOrExpression:	
+	PPAndExpression (WS)* PPOrExpression2  
 ;
 PPOrExpression2:
-	(=>'||'  PPAndExpression PPOrExpression2)* 
+	(=>'||' (WS)*  PPAndExpression PPOrExpression2)*  
 ;
 PPAndExpression:
-	PPEqualityExpression PPAndExpression2
+	PPEqualityExpression (WS)* PPAndExpression2 
 ;
 PPAndExpression2:
-	(=>'&&' PPEqualityExpression PPAndExpression2)*
+	(=>'&&' (WS)* PPEqualityExpression PPAndExpression2)*
 ;
 PPEqualityExpression:
 	PPUnaryExpression PPEqualityExpression2*
 ;
 PPEqualityExpression2:
-	('=='|'!=') PPUnaryExpression PPEqualityExpression2
+	('=='|'!=') (WS)* PPUnaryExpression PPEqualityExpression2
 ;
 PPUnaryExpression:
 	PPPrimaryExpression
@@ -74,7 +72,7 @@ PPPrimaryExpression:
 	 'true'
     |'false'
     |ConditionalSymbol
-    |'(' PPExpression ')'
+    |'(' (WS)* PPExpression (WS)*')'
 ;
 /*
 ConditionalSection:
@@ -104,7 +102,7 @@ PPDeclaration:
 	WS? '#' WS? ('define'|'undef') WS ConditionalSymbol PPNewLine
 ;
 PPNewLine:
-	 WS? SL_COMMENT? NEW_LINE
+	 (WS)* SL_COMMENT? NEW_LINE 
 ;
 ConditionalSymbol:
 	IdentifierOrKeyword

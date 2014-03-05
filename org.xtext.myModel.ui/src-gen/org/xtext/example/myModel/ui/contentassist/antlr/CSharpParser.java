@@ -71,7 +71,6 @@ public class CSharpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPPElifSections2Access().getGroup(), "rule__PPElifSections2__Group__0");
 					put(grammarAccess.getPPElifSectionAccess().getGroup(), "rule__PPElifSection__Group__0");
 					put(grammarAccess.getPPIfSectionAccess().getGroup(), "rule__PPIfSection__Group__0");
-					put(grammarAccess.getPPExpressionAccess().getGroup(), "rule__PPExpression__Group__0");
 					put(grammarAccess.getPPOrExpressionAccess().getGroup(), "rule__PPOrExpression__Group__0");
 					put(grammarAccess.getPPOrExpression2Access().getGroup(), "rule__PPOrExpression2__Group__0");
 					put(grammarAccess.getPPAndExpressionAccess().getGroup(), "rule__PPAndExpression__Group__0");
