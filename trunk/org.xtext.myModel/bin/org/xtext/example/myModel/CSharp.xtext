@@ -23,74 +23,59 @@ PPDirective:
  |PPRegion */	
 ;
 
+
 PPConditional:
-	PPIfSection  PPElifSections? PPElseSection? PPEndif
+	(WS)* PPIfSection (WS)* PPElifSections? =>PPElseSection? PPEndif
 ;
-
 PPEndif:
-	WS? '#' WS? 'endif' PPNewLine
+	'endif' PPNewLine
 ;
-
 PPElseSection:
-	WS? '#' WS? 'else' PPNewLine //ConditionalSection?
-	
+	'else' PPNewLine //ConditionalSection?
 ;
-
 PPElifSections:
-	PPElifSection PPElifSections2*
-;
-
-PPElifSections2:
 	PPElifSection PPElifSections2
 ;
-
+PPElifSections2:
+	(PPElifSection PPElifSections2)*
+;
 PPElifSection:
-	WS? '#' WS? 'elif' WS PPExpression PPNewLine //ConditionalSection?
+	 =>'elif' WS PPExpression PPNewLine //ConditionalSection?
 ;
 PPIfSection:
-	  WS? '#' WS? 'if' WS PPExpression PPNewLine //ConditionalSection?
+	  'if' PPExpression PPNewLine //ConditionalSection?
 ;
 PPExpression:
-	  WS? PPOrExpression WS?
+	WS PPOrExpression
 ;
-/*
 PPOrExpression:
-	PPAndExpression PPOrExpression2*
+	PPAndExpression PPOrExpression2
 ;
 PPOrExpression2:
-	WS? '||' WS? PPAndExpression PPOrExpression2 
+	(=>'||'  PPAndExpression PPOrExpression2)* 
 ;
-
 PPAndExpression:
-	PPEqualityExpression PPAndExpression2*
+	PPEqualityExpression PPAndExpression2
 ;
 PPAndExpression2:
-	WS? '&&' WS? PPEqualityExpression PPAndExpression2
+	(=>'&&' PPEqualityExpression PPAndExpression2)*
 ;
-
 PPEqualityExpression:
 	PPUnaryExpression PPEqualityExpression2*
 ;
-
 PPEqualityExpression2:
-	(WS? '==' WS? PPUnaryExpression PPEqualityExpression2)
-    |(WS? '!=' WS? PPUnaryExpression PPEqualityExpression2)
+	('=='|'!=') PPUnaryExpression PPEqualityExpression2
 ;
-
 PPUnaryExpression:
 	PPPrimaryExpression
-    |'!' WS? PPUnaryExpression
+    |'!' PPUnaryExpression
 ;
-
 PPPrimaryExpression:
 	 'true'
     |'false'
     |ConditionalSymbol
-    |'(' WS? PPExpression WS? ')'
+    |'(' PPExpression ')'
 ;
- 
-*/
-
 /*
 ConditionalSection:
 	InputSectionPart+
@@ -340,7 +325,7 @@ terminal LETTER:('A'..'Z') | ('a'..'z');
 terminal IDENTIFIER_START_CHARACTER:LETTER|"_";
 terminal QUOTE_ESCAPE_SEQUENCE:	'""';
 terminal ESCAPE_SEQUENCE:("'"|'"'|"\\"|'0'|'a'|'b'|'f'|'n'|'r'|'t'|'v');
-terminal NEW_LINE:	('\r'|'\n')*EOF;
+terminal NEW_LINE:	 ('\r'|'\n')*EOF;
 terminal RANK_SPECIFIER: '[' ','* ']';
 terminal INTEGER_TYPE_SUFFIX:'U' | 'u' | 'L' | 'l' | 'UL' | 'Ul' | 'uL' | 'ul' | 'LU' | 'Lu' | 'lU' | 'lu';
 terminal HEX_DIGIT:	('0'..'9')|(('A'..'F') | ('a'..'f'));

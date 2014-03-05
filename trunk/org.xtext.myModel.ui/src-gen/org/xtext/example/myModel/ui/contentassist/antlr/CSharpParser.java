@@ -39,6 +39,9 @@ public class CSharpParser extends AbstractContentAssistParser {
 				{
 					put(grammarAccess.getInputSectionPartAccess().getAlternatives(), "rule__InputSectionPart__Alternatives");
 					put(grammarAccess.getPPDirectiveAccess().getAlternatives(), "rule__PPDirective__Alternatives");
+					put(grammarAccess.getPPEqualityExpression2Access().getAlternatives_0(), "rule__PPEqualityExpression2__Alternatives_0");
+					put(grammarAccess.getPPUnaryExpressionAccess().getAlternatives(), "rule__PPUnaryExpression__Alternatives");
+					put(grammarAccess.getPPPrimaryExpressionAccess().getAlternatives(), "rule__PPPrimaryExpression__Alternatives");
 					put(grammarAccess.getPPDeclarationAccess().getAlternatives_3(), "rule__PPDeclaration__Alternatives_3");
 					put(grammarAccess.getInputElementAccess().getAlternatives(), "rule__InputElement__Alternatives");
 					put(grammarAccess.getTokenAccess().getAlternatives(), "rule__Token__Alternatives");
@@ -68,6 +71,15 @@ public class CSharpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPPElifSections2Access().getGroup(), "rule__PPElifSections2__Group__0");
 					put(grammarAccess.getPPElifSectionAccess().getGroup(), "rule__PPElifSection__Group__0");
 					put(grammarAccess.getPPIfSectionAccess().getGroup(), "rule__PPIfSection__Group__0");
+					put(grammarAccess.getPPExpressionAccess().getGroup(), "rule__PPExpression__Group__0");
+					put(grammarAccess.getPPOrExpressionAccess().getGroup(), "rule__PPOrExpression__Group__0");
+					put(grammarAccess.getPPOrExpression2Access().getGroup(), "rule__PPOrExpression2__Group__0");
+					put(grammarAccess.getPPAndExpressionAccess().getGroup(), "rule__PPAndExpression__Group__0");
+					put(grammarAccess.getPPAndExpression2Access().getGroup(), "rule__PPAndExpression2__Group__0");
+					put(grammarAccess.getPPEqualityExpressionAccess().getGroup(), "rule__PPEqualityExpression__Group__0");
+					put(grammarAccess.getPPEqualityExpression2Access().getGroup(), "rule__PPEqualityExpression2__Group__0");
+					put(grammarAccess.getPPUnaryExpressionAccess().getGroup_1(), "rule__PPUnaryExpression__Group_1__0");
+					put(grammarAccess.getPPPrimaryExpressionAccess().getGroup_3(), "rule__PPPrimaryExpression__Group_3__0");
 					put(grammarAccess.getPPDeclarationAccess().getGroup(), "rule__PPDeclaration__Group__0");
 					put(grammarAccess.getPPNewLineAccess().getGroup(), "rule__PPNewLine__Group__0");
 					put(grammarAccess.getIntegerLiteralAccess().getGroup_0(), "rule__IntegerLiteral__Group_0__0");
