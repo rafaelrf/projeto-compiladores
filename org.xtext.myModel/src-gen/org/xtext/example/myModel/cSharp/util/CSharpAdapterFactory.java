@@ -80,16 +80,6 @@ public class CSharpAdapterFactory extends AdapterFactoryImpl
         return createModelAdapter();
       }
       @Override
-      public Adapter caseQualifiedIdentifier(QualifiedIdentifier object)
-      {
-        return createQualifiedIdentifierAdapter();
-      }
-      @Override
-      public Adapter caseID(ID object)
-      {
-        return createIDAdapter();
-      }
-      @Override
       public Adapter defaultCase(EObject object)
       {
         return createEObjectAdapter();
@@ -122,36 +112,6 @@ public class CSharpAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createModelAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.QualifiedIdentifier <em>Qualified Identifier</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.QualifiedIdentifier
-   * @generated
-   */
-  public Adapter createQualifiedIdentifierAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.ID <em>ID</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.ID
-   * @generated
-   */
-  public Adapter createIDAdapter()
   {
     return null;
   }

@@ -14,7 +14,6 @@ import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 import org.xtext.example.myModel.cSharp.CSharpPackage;
-import org.xtext.example.myModel.cSharp.ID;
 import org.xtext.example.myModel.cSharp.Model;
 import org.xtext.example.myModel.services.CSharpGrammarAccess;
 
@@ -26,12 +25,6 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	public void createSequence(EObject context, EObject semanticObject) {
 		if(semanticObject.eClass().getEPackage() == CSharpPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case CSharpPackage.ID:
-				if(context == grammarAccess.getQualifiedIdentifierRule()) {
-					sequence_QualifiedIdentifier(context, (ID) semanticObject); 
-					return; 
-				}
-				else break;
 			case CSharpPackage.MODEL:
 				if(context == grammarAccess.getModelRule()) {
 					sequence_Model(context, (Model) semanticObject); 
@@ -55,14 +48,5 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
 		feeder.accept(grammarAccess.getModelAccess().getInputsInputParserRuleCall_0(), semanticObject.isInputs());
 		feeder.finish();
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     {ID}
-	 */
-	protected void sequence_QualifiedIdentifier(EObject context, ID semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
 	}
 }

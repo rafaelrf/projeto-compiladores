@@ -32,24 +32,6 @@ public interface CSharpFactory extends EFactory
   Model createModel();
 
   /**
-   * Returns a new object of class '<em>Qualified Identifier</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Qualified Identifier</em>'.
-   * @generated
-   */
-  QualifiedIdentifier createQualifiedIdentifier();
-
-  /**
-   * Returns a new object of class '<em>ID</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>ID</em>'.
-   * @generated
-   */
-  ID createID();
-
-  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

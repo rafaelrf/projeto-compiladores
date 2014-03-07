@@ -11,7 +11,6 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.xtext.example.myModel.cSharp.CSharpFactory;
 import org.xtext.example.myModel.cSharp.CSharpPackage;
 import org.xtext.example.myModel.cSharp.Model;
-import org.xtext.example.myModel.cSharp.QualifiedIdentifier;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,20 +26,6 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * @generated
    */
   private EClass modelEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass qualifiedIdentifierEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass idEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -130,26 +115,6 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getQualifiedIdentifier()
-  {
-    return qualifiedIdentifierEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getID()
-  {
-    return idEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public CSharpFactory getCSharpFactory()
   {
     return (CSharpFactory)getEFactoryInstance();
@@ -177,10 +142,6 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     // Create classes and their features
     modelEClass = createEClass(MODEL);
     createEAttribute(modelEClass, MODEL__INPUTS);
-
-    qualifiedIdentifierEClass = createEClass(QUALIFIED_IDENTIFIER);
-
-    idEClass = createEClass(ID);
   }
 
   /**
@@ -212,15 +173,10 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    idEClass.getESuperTypes().add(this.getQualifiedIdentifier());
 
     // Initialize classes and features; add operations and parameters
     initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getModel_Inputs(), ecorePackage.getEBoolean(), "inputs", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(qualifiedIdentifierEClass, QualifiedIdentifier.class, "QualifiedIdentifier", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(idEClass, org.xtext.example.myModel.cSharp.ID.class, "ID", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);
