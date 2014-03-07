@@ -22,16 +22,15 @@ Import-Package: org.apache.log4j,
  org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.xtext.example.myModel,
- org.xtext.example.myModel.services,
  org.xtext.example.myModel.cSharp,
  org.xtext.example.myModel.cSharp.impl,
  org.xtext.example.myModel.cSharp.util,
- org.xtext.example.myModel.serializer,
+ org.xtext.example.myModel.formatting,
+ org.xtext.example.myModel.generator,
  org.xtext.example.myModel.parser.antlr,
  org.xtext.example.myModel.parser.antlr.internal,
- org.xtext.example.myModel.validation,
  org.xtext.example.myModel.scoping,
- org.xtext.example.myModel.generator,
- org.xtext.example.myModel.formatting,
- org.xtext.example.myModel.jvmmodel
+ org.xtext.example.myModel.serializer,
+ org.xtext.example.myModel.services,
+ org.xtext.example.myModel.validation
 

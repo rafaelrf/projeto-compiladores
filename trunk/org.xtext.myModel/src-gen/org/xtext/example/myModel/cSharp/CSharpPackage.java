@@ -83,44 +83,6 @@ public interface CSharpPackage extends EPackage
    */
   int MODEL_FEATURE_COUNT = 1;
 
-  /**
-   * The meta object id for the '{@link org.xtext.example.myModel.cSharp.impl.QualifiedIdentifierImpl <em>Qualified Identifier</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.xtext.example.myModel.cSharp.impl.QualifiedIdentifierImpl
-   * @see org.xtext.example.myModel.cSharp.impl.CSharpPackageImpl#getQualifiedIdentifier()
-   * @generated
-   */
-  int QUALIFIED_IDENTIFIER = 1;
-
-  /**
-   * The number of structural features of the '<em>Qualified Identifier</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int QUALIFIED_IDENTIFIER_FEATURE_COUNT = 0;
-
-  /**
-   * The meta object id for the '{@link org.xtext.example.myModel.cSharp.impl.IDImpl <em>ID</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.xtext.example.myModel.cSharp.impl.IDImpl
-   * @see org.xtext.example.myModel.cSharp.impl.CSharpPackageImpl#getID()
-   * @generated
-   */
-  int ID = 2;
-
-  /**
-   * The number of structural features of the '<em>ID</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ID_FEATURE_COUNT = QUALIFIED_IDENTIFIER_FEATURE_COUNT + 0;
-
 
   /**
    * Returns the meta object for class '{@link org.xtext.example.myModel.cSharp.Model <em>Model</em>}'.
@@ -142,26 +104,6 @@ public interface CSharpPackage extends EPackage
    * @generated
    */
   EAttribute getModel_Inputs();
-
-  /**
-   * Returns the meta object for class '{@link org.xtext.example.myModel.cSharp.QualifiedIdentifier <em>Qualified Identifier</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Qualified Identifier</em>'.
-   * @see org.xtext.example.myModel.cSharp.QualifiedIdentifier
-   * @generated
-   */
-  EClass getQualifiedIdentifier();
-
-  /**
-   * Returns the meta object for class '{@link org.xtext.example.myModel.cSharp.ID <em>ID</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>ID</em>'.
-   * @see org.xtext.example.myModel.cSharp.ID
-   * @generated
-   */
-  EClass getID();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -203,26 +145,6 @@ public interface CSharpPackage extends EPackage
      * @generated
      */
     EAttribute MODEL__INPUTS = eINSTANCE.getModel_Inputs();
-
-    /**
-     * The meta object literal for the '{@link org.xtext.example.myModel.cSharp.impl.QualifiedIdentifierImpl <em>Qualified Identifier</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.xtext.example.myModel.cSharp.impl.QualifiedIdentifierImpl
-     * @see org.xtext.example.myModel.cSharp.impl.CSharpPackageImpl#getQualifiedIdentifier()
-     * @generated
-     */
-    EClass QUALIFIED_IDENTIFIER = eINSTANCE.getQualifiedIdentifier();
-
-    /**
-     * The meta object literal for the '{@link org.xtext.example.myModel.cSharp.impl.IDImpl <em>ID</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.xtext.example.myModel.cSharp.impl.IDImpl
-     * @see org.xtext.example.myModel.cSharp.impl.CSharpPackageImpl#getID()
-     * @generated
-     */
-    EClass ID = eINSTANCE.getID();
 
   }
 

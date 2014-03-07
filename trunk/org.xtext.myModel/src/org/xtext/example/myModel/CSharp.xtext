@@ -107,9 +107,6 @@ PPNewLine:
 ConditionalSymbol:
 	IdentifierOrKeyword
 ;
-
-
-
 InputElement:
 	WS
 	| Comment
@@ -211,8 +208,8 @@ RealLiteral:
     | INT REAL_TYPE_SUFFIX
 ;
 ExponentPart:
-  'e' SIGN? INT
-  |'E' SIGN? INT
+  'e' OPERATOR_OR_SIGN? INT
+  |'E' OPERATOR_OR_SIGN? INT
 ;
 CharacterLiteral:
 	  "'" Character "'"
@@ -270,8 +267,574 @@ IdentifierPartCharacter:
 
 
 //SINTAXE
+CompilationUnit:
+    UsingDirective* GlobalAttributes NamespaceMemberDeclaration*    
+;
+
+NamespaceMemberDeclaration:
+	 NamespaceDeclaration
+    |TypeDeclaration
+;
+
+
+NamespaceDeclaration:
+	    "namespace" QualifiedIdentifier NamespaceBody ";"?
+;
+
+NamespaceBody:
+	 "{" UsingDirective* NamespaceMemberDeclaration* "}"
+;
+
+TypeDeclaration:
+	Attributes
+   (ClassDeclaration
+    |StructDeclaration
+    |InterfaceDeclaration
+    |EnumDeclaration
+    |DelegateDeclaration)
+;
+
+DelegateDeclaration:
+	DelegateModifier* "delegate" TypeOrVoid Identifier "(" FormalParameterList? ")" ";"
+;
+
+DelegateModifier:
+	"new"
+    |"public"
+    |"protected"
+    |"internal"
+    |"private"
+;
+
+EnumDeclaration:
+	 Attributes EnumModifier* "enum" Identifier ( ":" IntegralType )? EnumBody ";"?
+;
+
+InterfaceDeclaration:
+  Attributes InterfaceModifier* "struct" Identifier ( ":" QualifiedIdentifierList )? InterfaceBody ";"?
+;
+
+InterfaceModifier:
+	"new"
+    |"public"
+    |"protected"
+    |"internal"
+    |"private"
+;
+
+InterfaceBody:
+ "{"InterfaceMemberDeclaration* "}"
+;
+
+InterfaceMemberDeclaration:
+   Attributes 'new'? 
+  (InterfaceMethodDeclaration
+  |InterfaceEventDeclaration
+  |Type (InterfaceIndexerDeclaration|InterfacePropertyDeclaration))
+;
+
+InterfaceIndexerDeclaration:
+	"this" "[" FormalParameterList "]" "{" InterfaceAccessors "}"
+;
+
+InterfaceEventDeclaration:
+	"event" Type Identifier ";"
+;
+
+InterfacePropertyDeclaration:
+	Identifier "{" InterfaceAccessors "}"
+;
+
+InterfaceAccessors:
+	 Attributes ("get" ";" ( Attributes "set" ";" )? | "set" ";" ( Attributes "get" ";" )?)
+;
+
+InterfaceMethodDeclaration:
+	TypeOrVoid Identifier "(" FormalParameterList? ")" ";"
+;
+
+StructDeclaration:
+Attributes StructModifier* "struct" Identifier ( ":" QualifiedIdentifierList )? StructBody ";"?
+;
+
+StructBody:
+  "{" StructMemberDeclaration* "}"
+;
+
+StructMemberDeclarations:
+  StructMemberDeclaration (StructMemberDeclarations2)*
+;
+
+StructMemberDeclarations2:
+	StructMemberDeclaration StructMemberDeclarations2
+;
+
+StructMemberDeclaration:
+	ConstantDeclaration
+    |FieldDeclaration
+    |MethodDeclaration
+    |PropertyDeclaration
+    |EventDeclaration
+    |IndexerDeclaration
+    |OperatorDeclaration
+    |ConstructorDeclaration
+    |StaticConstructorDeclaration
+    |TypeDeclaration
+;
+
+StructModifier:
+	"new"
+    |"public"
+    |"protected"
+    |"internal"
+    |"private"
+;
+
+ClassDeclaration:
+	  Attributes ClassModifier* "class" Identifier ClassBase? ClassBody ";"?
+;
+
+ClassBody:
+	"{" ClassMemberDeclaration* "}"
+;
+
+ClassMemberDeclaration:
+	ConstantDeclaration
+    |FieldDeclaration
+    |MethodDeclaration
+    |PropertyDeclaration
+    |EventDeclaration
+    |IndexerDeclaration
+    |OperatorDeclaration
+    |ConstructorDeclaration
+    |DestructorDeclaration
+    |StaticConstructorDeclaration
+    |TypeDeclaration 
+;
+
+StaticConstructorDeclaration:
+  Attributes StaticConstructorModifiers Identifier "(" ")" //maybe-empty-block
+;
+
+StaticConstructorModifiers:
+	"extern"? "static"
+    |"static" "extern"
+;
+
+DestructorDeclaration:
+	 Attributes "extern"? "~" Identifier "(" ")" //maybe-empty-block
+;
+
+ConstructorDeclaration:
+   Attributes ConstructorModifier* ConstructorDeclarator //MaybeEmptyBlock
+;
+
+ConstructorDeclarator:
+   Identifier "(" FormalParameterList? ")" ConstructorInitializer?
+;
+
+ConstructorInitializer:
+   ":" "base" "(" ArgumentList ")"
+   |":" "this" "(" ArgumentList ")"
+;
+
+ArgumentList:
+	(Argument",")*
+;
+
+Argument:
+  RefOrOut? //Expression	
+;
+
+RefOrOut:
+  "ref"
+  |"out"
+;
+
+ConstructorModifier:
+	"public"
+    |"protected"
+    |"internal"
+    |"private"
+    |"extern"
+;
+
+OperatorDeclaration:
+	Attributes OperatorModifier+ OperatorDeclarator //MaybeEmptyBlock
+;
+
+OperatorDeclarator:
+	 UnaryOperatorDeclarator
+    |BinaryOperatorDeclarator
+    |ConversionOperatorDeclarator
+;
+
+ConversionOperatorDeclarator:
+	    ConversionKind "operator" Type "(" Type Identifier ")"
+	
+;
+
+ConversionKind:
+	"implicit"
+    |"explicit"
+	
+;
+
+BinaryOperatorDeclarator:
+	Type "operator" OverloadableBinaryOperator "(" Type Identifier "," Type Identifier ")"
+;
+
+OverloadableBinaryOperator:
+	 OPERATOR_OR_SIGN
+    |"*"
+    |"/"
+    |"%"
+    |AMPERSAND
+    |BAR
+    |"^"
+    |"<<"
+    |">>"
+    |"=="
+    |"!="
+    |GREATER_THAN
+    |LESS_THAN
+    |">="
+    |"<="
+	
+;
+
+UnaryOperatorDeclarator:
+	Type "operator" OverloadableUnaryOperator "(" Type Identifier ")"
+;
+
+OverloadableUnaryOperator:
+	 OPERATOR_OR_SIGN
+    |INCREMENT_DECREMENT
+    |"!"
+    |"~"
+    |"true"
+    |"false"
+;
+
+OperatorModifier:
+	"public"
+    |"static"
+    |"extern"
+;
+
+IndexerDeclaration:
+	    Attributes IndexerModifier* IndexerDeclarator "{" AccessorDeclarations "}"
+;
+
+IndexerDeclarator:
+	Type "this" "[" FormalParameterList "]"
+    |Type QualifiedIdentifier "." "this" "[" FormalParameterList "]"
+	
+;
+
+IndexerModifier:
+	 "new"
+    |"public"
+    |"protected"
+    |"internal"
+    |"private"
+    |"virtual"
+    |"sealed"
+    |"override"
+    |"abstract"
+    |"extern"
+;
+
+EventDeclaration:
+	Attributes EventModifier* "event" Type ((VariableDeclarator ",")+ ";"|QualifiedIdentifier "{" EventAccessorDeclarations "}")
+;
+
+EventAccessorDeclarations:
+	AddAccessorDeclaration RemoveAccessorDeclaration
+    |RemoveAccessorDeclaration AddAccessorDeclaration
+;
+
+RemoveAccessorDeclaration:
+	    Attributes "remove" //Block	
+;
+/*
+Block:
+	 "{" Statement* "}"
+;
+ */
+AddAccessorDeclaration:
+	    Attributes "add" //Block
+;
+
+EventModifier:
+	"new"
+    |"public"
+    |"protected"
+    |"internal"
+    |"private"
+    |"static"
+    |"virtual"
+    |"sealed"
+    |"override"
+    |"abstract"
+    |"extern"
+;
+
+PropertyDeclaration:
+   Attributes PropertyModifier* Type QualifiedIdentifier "{" AccessorDeclarations "}"
+;
+
+AccessorDeclarations:
+	 GetAccessorDeclaration (SetAccessorDeclaration)?
+    |SetAccessorDeclaration (GetAccessorDeclaration)?
+;
+
+SetAccessorDeclaration:
+	 Attributes "set" //MaybeEmptyBlock	
+;
+GetAccessorDeclaration:
+	 Attributes "get" //MaybeEmptyBlock
+;
+
+PropertyModifier:
+	"new"
+    |"public"
+    |"protected"
+    |"internal"
+    |"private"
+    |"static"
+    |"virtual"
+    |"sealed"
+    |"override"
+    |"abstract"
+    |"extern"
+;
+
+MethodDeclaration:
+	MethodHeader //MaybeEmptyBlock
+;
+
+MethodHeader:
+	Attributes MethodModifier* TypeOrVoid QualifiedIdentifier "(" FormalParameterList? ")"
+;
+
+FormalParameterList:
+	FixedParameters
+    |FixedParameters "," ParameterArray
+    |ParameterArray
+	
+;
+
+ParameterArray:
+	    Attributes "params" ArrayType Identifier
+;
+
+FixedParameters:
+	(FixedParameter ",")+
+;
+
+FixedParameter:
+   Attributes ParameterModifier? Type Identifier
+;
+
+ParameterModifier:
+	 "ref"
+    |"out"
+;
+
+TypeOrVoid:
+	 Type
+    |"void"
+;
+
+MethodModifier:
+	 "new"
+    |"public"
+    |"protected"
+    |"internal"
+    |"private"
+    |"static"
+    |"virtual"
+    |"sealed"
+    |"override"
+    |"abstract"
+    |"extern"
+	
+;
+
+FieldDeclaration:
+	    Attributes FieldModifier* Type (VariableDeclarator ",")+ ";"
+;
+
+VariableDeclarator:
+	Identifier
+    Identifier "=" VariableInitializer
+;
+
+VariableInitializer:
+	//Expression|
+	ArrayInitializer
+;
+
+ArrayInitializer:
+	 "{" "}"
+    |"{" (VariableInitializer ",") + ","? "}"
+;
+
+FieldModifier:
+	"new"
+    |"public"
+    |"protected"
+    |"internal"
+    |"private"
+    |"static"
+    |"readonly"
+    |"volatile"
+;
+
+ConstantDeclaration:
+	    Attributes ConstantModifier* "const" Type (ConstantDeclarator ",") + ";"
+;
+
+ConstantModifier:
+	 "new"
+    |"public"
+    |"protected"
+    |"internal"
+    |"private"
+;
+
+ConstantDeclarator: //TODO
+	 Identifier "=" //Expression
+;
+
+
+ClassBase:
+	":" (QualifiedIdentifierList | BuiltInClassType ( "," QualifiedIdentifierList )?)
+;
+
+QualifiedIdentifierList:
+	    (QualifiedIdentifier ",")+
+;
+
+ClassModifier:
+	"new"
+    |"public"
+    |"protected"
+    |"internal"
+    |"private"
+    |"abstract"
+    |"sealed"
+;
+GlobalAttributes:
+	  GlobalAttributeSection*
+;
+
+GlobalAttributeSection:
+	'[' 'assembly' ':' AttributeList ','? ']'
+;
+
+Attributes:
+ AttributeSection*
+;
+
+AttributeSection:
+    '[' ( AttributeTarget ':' )? AttributeList ','? ']'	
+;
+
+AttributeTarget:
+	 'field'
+    |'event'
+    |'method'
+    |'module'
+    |'param'
+    |'property'
+    |'return'
+    |'type'
+;
+
+AttributeList:
+	  (Attribute ',') +
+;
+
+Attribute:// AQUI
+	 AttributeName AttributeArguments?
+;
+
+AttributeArguments:
+	    "(" ExpressionList? ")"
+;
+
+ExpressionList:
+   (Expression ",")+
+;
+
+Expression:
+   	UnaryExpression  (Expression2|BAR Expression Expression2)
+;
+
+Expression2:
+	("?" Expression ":" Expression Expression2 
+	|"||" Expression Expression2
+    | "&&" Expression Expression2
+    |BAR Expression Expression2
+    | "^" Expression Expression2
+    | AMPERSAND Expression Expression2
+    |EXPRESSION_EQUALITY_OPERATOR Expression Expression2
+    |ExpressionRelationalOperator Expression Expression2
+    |"is" BuiltInType Expression2
+    |ExpressionShiftOperator Expression Expression2
+    |OPERATOR_OR_SIGN Expression Expression2
+    |"*" Expression Expression2
+    |"/" Expression Expression2
+    |"%" Expression  Expression2)*
+;
+
+
+
+
+UnaryExpression:
+	 ExpressionUnaryOperator UnaryExpression
+    |"(" Type ")" UnaryExpression
+//    |PrimaryExpression
+;
+
+
+ExpressionUnaryOperator:
+	 OPERATOR_OR_PUNCTUATOR
+    |INCREMENT_DECREMENT
+    |"!"
+    |"~"
+    |"*"
+;
+
+
+ExpressionShiftOperator:
+	"<<"
+    |">>"
+;
+
+ExpressionRelationalOperator:
+	LESS_THAN
+    |GREATER_THAN
+    |"<="
+    |">="
+    |"is"
+    |"as"
+;
+
+
+AttributeName:
+	 QualifiedIdentifier
+;
+
+UsingDirective:
+	 'using' (Identifier '=')? QualifiedIdentifier ';'
+;
+
 Type:
-	NonArrayType RANK_SPECIFIER*;
+	NonArrayType RANK_SPECIFIER*
+;
 
 
 IntegralType:
@@ -297,8 +860,8 @@ NonArrayType:
 	BuiltInType;
 	
 QualifiedIdentifier:
-   {ID} 
-;
+   (Identifier '.')+
+   ;
  
 BuiltInType:
 	IntegralType | BuiltInClassType | 'bool' | 'decimal' | 'float' | 'double';
@@ -308,26 +871,38 @@ BuiltInClassType:
 
 EnumBody:
 	'{' '}'
-	//|'{' {EnumMemberDeclaration ','}+ ','? '}'
+	|'{' (EnumMemberDeclaration ',')+ ','? '}'
+;
+
+EnumMemberDeclaration:
+	  Attributes Identifier ( "=" Expression )?
 ;
 
 
 EnumModifier:
 	'new' | 'public' | 'protected' | 'internal' | 'private';
 
-Attributes:
-	'null';
 
-terminal REAL_TYPE_SUFFIX:	"F"|"f"|"D"|"d"|"M"|"m";
+
+terminal EXPRESSION_EQUALITY_OPERATOR:
+	"=="
+    |"!="
+;
+terminal LESS_THAN:	'<';
+terminal GREATER_THAN: '>';
+terminal BAR: '|';
+terminal AMPERSAND: '&';
+terminal INCREMENT_DECREMENT: "++"|"--";
+terminal OPERATOR_OR_SIGN: '+'|'-';
+terminal REAL_TYPE_SUFFIX:	'F'|'f'|'D'|'d'|'M'|'m';
 terminal LETTER:('A'..'Z') | ('a'..'z');
-terminal IDENTIFIER_START_CHARACTER:LETTER|"_";
+terminal IDENTIFIER_START_CHARACTER: LETTER|'_';
 terminal QUOTE_ESCAPE_SEQUENCE:	'""';
 terminal ESCAPE_SEQUENCE:("'"|'"'|"\\"|'0'|'a'|'b'|'f'|'n'|'r'|'t'|'v');
 terminal NEW_LINE:	 ('\r'|'\n')*EOF;
 terminal RANK_SPECIFIER: '[' ','* ']';
 terminal INTEGER_TYPE_SUFFIX:'U' | 'u' | 'L' | 'l' | 'UL' | 'Ul' | 'uL' | 'ul' | 'LU' | 'Lu' | 'lU' | 'lu';
 terminal HEX_DIGIT:	('0'..'9')|(('A'..'F') | ('a'..'f'));
-terminal SIGN: '+'|'-';
 terminal OPERATOR_OR_PUNCTUATOR:
 	'{'
     |'}'

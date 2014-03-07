@@ -5,6 +5,4 @@
   <eClassifiers xsi:type="ecore:EClass" name="Model">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="inputs" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="QualifiedIdentifier"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ID" eSuperTypes="#//QualifiedIdentifier"/>
 </ecore:EPackage>

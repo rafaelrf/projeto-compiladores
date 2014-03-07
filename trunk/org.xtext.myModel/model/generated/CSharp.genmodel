@@ -10,7 +10,5 @@
     <genClasses ecoreClass="CSharp.ecore#//Model">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//Model/inputs"/>
     </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//QualifiedIdentifier"/>
-    <genClasses ecoreClass="CSharp.ecore#//ID"/>
   </genPackages>
 </genmodel:GenModel>
