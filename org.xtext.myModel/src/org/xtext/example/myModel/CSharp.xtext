@@ -286,35 +286,28 @@ NamespaceBody:
 ;
 
 TypeDeclaration:
-	Attributes
    (ClassDeclaration
-    |StructDeclaration
-    |InterfaceDeclaration
-    |EnumDeclaration
-    |DelegateDeclaration)
+   	|Modifier*(StructDeclaration
+    	|InterfaceDeclaration
+    	|EnumDeclaration
+    	|DelegateDeclaration
+    	)
+   )
 ;
 
 DelegateDeclaration:
-	DelegateModifier* "delegate" TypeOrVoid Identifier "(" FormalParameterList? ")" ";"
-;
-
-DelegateModifier:
-	"new"
-    |"public"
-    |"protected"
-    |"internal"
-    |"private"
+   "delegate" TypeOrVoid Identifier "(" FormalParameterList? ")" ";"
 ;
 
 EnumDeclaration:
-	 Attributes EnumModifier* "enum" Identifier ( ":" IntegralType )? EnumBody ";"?
+  "enum" Identifier ( ":" IntegralType )? EnumBody ";"?
 ;
 
 InterfaceDeclaration:
-  Attributes InterfaceModifier* "struct" Identifier ( ":" QualifiedIdentifierList )? InterfaceBody ";"?
+ "struct" Identifier ( ":" QualifiedIdentifierList )? InterfaceBody ";"?
 ;
 
-InterfaceModifier:
+Modifier:
 	"new"
     |"public"
     |"protected"
@@ -327,7 +320,7 @@ InterfaceBody:
 ;
 
 InterfaceMemberDeclaration:
-   Attributes 'new'? 
+   'new'? 
   (InterfaceMethodDeclaration
   |InterfaceEventDeclaration
   |Type (InterfaceIndexerDeclaration|InterfacePropertyDeclaration))
@@ -354,7 +347,7 @@ InterfaceMethodDeclaration:
 ;
 
 StructDeclaration:
-Attributes StructModifier* "struct" Identifier ( ":" QualifiedIdentifierList )? StructBody ";"?
+  "struct" Identifier ( ":" QualifiedIdentifierList )? StructBody ";"?
 ;
 
 StructBody:
@@ -382,16 +375,9 @@ StructMemberDeclaration:
     |TypeDeclaration
 ;
 
-StructModifier:
-	"new"
-    |"public"
-    |"protected"
-    |"internal"
-    |"private"
-;
 
 ClassDeclaration:
-	  Attributes ClassModifier* "class" Identifier ClassBase? ClassBody ";"?
+	ClassModifier* "class" Identifier ClassBase? ClassBody ";"?
 ;
 
 ClassBody:
@@ -399,9 +385,10 @@ ClassBody:
 ;
 
 ClassMemberDeclaration:
-	ConstantDeclaration
+	
+	MethodDeclaration| 
+	Attributes (ConstantDeclaration
     |FieldDeclaration
-    |MethodDeclaration
     |PropertyDeclaration
     |EventDeclaration
     |IndexerDeclaration
@@ -409,11 +396,11 @@ ClassMemberDeclaration:
     |ConstructorDeclaration
     |DestructorDeclaration
     |StaticConstructorDeclaration
-    |TypeDeclaration 
+    |TypeDeclaration) 
 ;
 
 StaticConstructorDeclaration:
-  Attributes StaticConstructorModifiers Identifier "(" ")" //maybe-empty-block
+  StaticConstructorModifiers Identifier "(" ")" //maybe-empty-block
 ;
 
 StaticConstructorModifiers:
@@ -422,11 +409,11 @@ StaticConstructorModifiers:
 ;
 
 DestructorDeclaration:
-	 Attributes "extern"? "~" Identifier "(" ")" //maybe-empty-block
+	"extern"? "~" Identifier "(" ")" //maybe-empty-block
 ;
 
 ConstructorDeclaration:
-   Attributes ConstructorModifier* ConstructorDeclarator //MaybeEmptyBlock
+  ConstructorModifier* ConstructorDeclarator //MaybeEmptyBlock
 ;
 
 ConstructorDeclarator:
@@ -460,7 +447,7 @@ ConstructorModifier:
 ;
 
 OperatorDeclaration:
-	Attributes OperatorModifier+ OperatorDeclarator //MaybeEmptyBlock
+	OperatorModifier+ OperatorDeclarator //MaybeEmptyBlock
 ;
 
 OperatorDeclarator:
@@ -523,12 +510,12 @@ OperatorModifier:
 ;
 
 IndexerDeclaration:
-	    Attributes IndexerModifier* IndexerDeclarator "{" AccessorDeclarations "}"
+   IndexerModifier* IndexerDeclarator "{" AccessorDeclarations "}"
 ;
 
 IndexerDeclarator:
-	Type "this" "[" FormalParameterList "]"
-    |Type QualifiedIdentifier "." "this" "[" FormalParameterList "]"
+	Type ("this" "[" FormalParameterList "]"
+    |QualifiedIdentifier "." "this" "[" FormalParameterList "]")
 	
 ;
 
@@ -546,16 +533,16 @@ IndexerModifier:
 ;
 
 EventDeclaration:
-	Attributes EventModifier* "event" Type ((VariableDeclarator ",")+ ";"|QualifiedIdentifier "{" EventAccessorDeclarations "}")
+  EventModifier* "event" Type ((VariableDeclarator ",")+ ";"|QualifiedIdentifier "{" EventAccessorDeclarations "}")
 ;
 
 EventAccessorDeclarations:
-	AddAccessorDeclaration RemoveAccessorDeclaration
-    |RemoveAccessorDeclaration AddAccessorDeclaration
+	Attributes (AddAccessorDeclaration  Attributes RemoveAccessorDeclaration
+                |RemoveAccessorDeclaration  Attributes AddAccessorDeclaration)
 ;
 
 RemoveAccessorDeclaration:
-	    Attributes "remove" //Block	
+	    "remove" //Block	
 ;
 /*
 Block:
@@ -563,7 +550,7 @@ Block:
 ;
  */
 AddAccessorDeclaration:
-	    Attributes "add" //Block
+	     "add" //Block
 ;
 
 EventModifier:
@@ -581,19 +568,19 @@ EventModifier:
 ;
 
 PropertyDeclaration:
-   Attributes PropertyModifier* Type QualifiedIdentifier "{" AccessorDeclarations "}"
+   PropertyModifier* Type QualifiedIdentifier "{" AccessorDeclarations "}"
 ;
 
 AccessorDeclarations:
-	 GetAccessorDeclaration (SetAccessorDeclaration)?
-    |SetAccessorDeclaration (GetAccessorDeclaration)?
+	Attributes  (GetAccessorDeclaration  Attributes (SetAccessorDeclaration)?
+    			|SetAccessorDeclaration  Attributes (GetAccessorDeclaration)?)
 ;
 
 SetAccessorDeclaration:
-	 Attributes "set" //MaybeEmptyBlock	
+	  "set" //MaybeEmptyBlock	
 ;
 GetAccessorDeclaration:
-	 Attributes "get" //MaybeEmptyBlock
+	 "get" //MaybeEmptyBlock
 ;
 
 PropertyModifier:
@@ -619,9 +606,8 @@ MethodHeader:
 ;
 
 FormalParameterList:
-	FixedParameters
-    |FixedParameters "," ParameterArray
-    |ParameterArray
+	FixedParameters ("," ParameterArray
+					 |ParameterArray)
 	
 ;
 
@@ -630,11 +616,11 @@ ParameterArray:
 ;
 
 FixedParameters:
-	(FixedParameter ",")+
+	 (=>FixedParameter ",")+
 ;
 
 FixedParameter:
-   Attributes ParameterModifier? Type Identifier
+    ParameterModifier? Type Identifier
 ;
 
 ParameterModifier:
@@ -663,7 +649,7 @@ MethodModifier:
 ;
 
 FieldDeclaration:
-	    Attributes FieldModifier* Type (VariableDeclarator ",")+ ";"
+  FieldModifier* Type (VariableDeclarator ",")+ ";"
 ;
 
 VariableDeclarator:
@@ -693,7 +679,7 @@ FieldModifier:
 ;
 
 ConstantDeclaration:
-	    Attributes ConstantModifier* "const" Type (ConstantDeclarator ",") + ";"
+	ConstantModifier* "const" Type (ConstantDeclarator ",") + ";"
 ;
 
 ConstantModifier:
@@ -718,11 +704,7 @@ QualifiedIdentifierList:
 ;
 
 ClassModifier:
-	"new"
-    |"public"
-    |"protected"
-    |"internal"
-    |"private"
+	Modifier
     |"abstract"
     |"sealed"
 ;
