@@ -2,12 +2,15 @@
  */
 package org.xtext.example.myModel.cSharp.impl;
 
-import org.eclipse.emf.common.notify.Notification;
+import java.util.Collection;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 import org.xtext.example.myModel.cSharp.CSharpPackage;
 import org.xtext.example.myModel.cSharp.Model;
@@ -19,7 +22,7 @@ import org.xtext.example.myModel.cSharp.Model;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.xtext.example.myModel.cSharp.impl.ModelImpl#isInputs <em>Inputs</em>}</li>
+ *   <li>{@link org.xtext.example.myModel.cSharp.impl.ModelImpl#getInputs <em>Inputs</em>}</li>
  * </ul>
  * </p>
  *
@@ -28,24 +31,14 @@ import org.xtext.example.myModel.cSharp.Model;
 public class ModelImpl extends MinimalEObjectImpl.Container implements Model
 {
   /**
-   * The default value of the '{@link #isInputs() <em>Inputs</em>}' attribute.
+   * The cached value of the '{@link #getInputs() <em>Inputs</em>}' attribute list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isInputs()
+   * @see #getInputs()
    * @generated
    * @ordered
    */
-  protected static final boolean INPUTS_EDEFAULT = false;
-
-  /**
-   * The cached value of the '{@link #isInputs() <em>Inputs</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isInputs()
-   * @generated
-   * @ordered
-   */
-  protected boolean inputs = INPUTS_EDEFAULT;
+  protected EList<String> inputs;
 
   /**
    * <!-- begin-user-doc -->
@@ -73,22 +66,13 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean isInputs()
+  public EList<String> getInputs()
   {
+    if (inputs == null)
+    {
+      inputs = new EDataTypeEList<String>(String.class, this, CSharpPackage.MODEL__INPUTS);
+    }
     return inputs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setInputs(boolean newInputs)
-  {
-    boolean oldInputs = inputs;
-    inputs = newInputs;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CSharpPackage.MODEL__INPUTS, oldInputs, inputs));
   }
 
   /**
@@ -102,7 +86,7 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
     switch (featureID)
     {
       case CSharpPackage.MODEL__INPUTS:
-        return isInputs();
+        return getInputs();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -112,13 +96,15 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
       case CSharpPackage.MODEL__INPUTS:
-        setInputs((Boolean)newValue);
+        getInputs().clear();
+        getInputs().addAll((Collection<? extends String>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -135,7 +121,7 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
     switch (featureID)
     {
       case CSharpPackage.MODEL__INPUTS:
-        setInputs(INPUTS_EDEFAULT);
+        getInputs().clear();
         return;
     }
     super.eUnset(featureID);
@@ -152,7 +138,7 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
     switch (featureID)
     {
       case CSharpPackage.MODEL__INPUTS:
-        return inputs != INPUTS_EDEFAULT;
+        return inputs != null && !inputs.isEmpty();
     }
     return super.eIsSet(featureID);
   }
