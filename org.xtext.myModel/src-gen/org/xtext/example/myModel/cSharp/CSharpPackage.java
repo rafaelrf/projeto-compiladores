@@ -66,7 +66,7 @@ public interface CSharpPackage extends EPackage
   int MODEL = 0;
 
   /**
-   * The feature id for the '<em><b>Inputs</b></em>' attribute.
+   * The feature id for the '<em><b>Inputs</b></em>' attribute list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -95,11 +95,11 @@ public interface CSharpPackage extends EPackage
   EClass getModel();
 
   /**
-   * Returns the meta object for the attribute '{@link org.xtext.example.myModel.cSharp.Model#isInputs <em>Inputs</em>}'.
+   * Returns the meta object for the attribute list '{@link org.xtext.example.myModel.cSharp.Model#getInputs <em>Inputs</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Inputs</em>'.
-   * @see org.xtext.example.myModel.cSharp.Model#isInputs()
+   * @return the meta object for the attribute list '<em>Inputs</em>'.
+   * @see org.xtext.example.myModel.cSharp.Model#getInputs()
    * @see #getModel()
    * @generated
    */
@@ -139,7 +139,7 @@ public interface CSharpPackage extends EPackage
     EClass MODEL = eINSTANCE.getModel();
 
     /**
-     * The meta object literal for the '<em><b>Inputs</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Inputs</b></em>' attribute list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
