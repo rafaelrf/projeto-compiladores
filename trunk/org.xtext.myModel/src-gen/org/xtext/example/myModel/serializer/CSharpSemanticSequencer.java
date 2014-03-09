@@ -34,7 +34,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     inputs+=Input*
+	 *     inputs+=CompilationUnit
 	 */
 	protected void sequence_Model(EObject context, Model semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
