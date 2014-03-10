@@ -25,19 +25,19 @@ import org.eclipse.emf.ecore.EObject;
 public interface Model extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Inputs</b></em>' attribute list.
-   * The list contents are of type {@link java.lang.String}.
+   * Returns the value of the '<em><b>Inputs</b></em>' containment reference list.
+   * The list contents are of type {@link org.xtext.example.myModel.cSharp.CompilationUnit}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Inputs</em>' attribute list isn't clear,
+   * If the meaning of the '<em>Inputs</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Inputs</em>' attribute list.
+   * @return the value of the '<em>Inputs</em>' containment reference list.
    * @see org.xtext.example.myModel.cSharp.CSharpPackage#getModel_Inputs()
-   * @model unique="false"
+   * @model containment="true"
    * @generated
    */
-  EList<String> getInputs();
+  EList<CompilationUnit> getInputs();
 
 } // Model

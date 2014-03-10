@@ -4,15 +4,20 @@ package org.xtext.example.myModel.cSharp.impl;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EDataTypeEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.xtext.example.myModel.cSharp.CSharpPackage;
+import org.xtext.example.myModel.cSharp.CompilationUnit;
 import org.xtext.example.myModel.cSharp.Model;
 
 /**
@@ -31,14 +36,14 @@ import org.xtext.example.myModel.cSharp.Model;
 public class ModelImpl extends MinimalEObjectImpl.Container implements Model
 {
   /**
-   * The cached value of the '{@link #getInputs() <em>Inputs</em>}' attribute list.
+   * The cached value of the '{@link #getInputs() <em>Inputs</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getInputs()
    * @generated
    * @ordered
    */
-  protected EList<String> inputs;
+  protected EList<CompilationUnit> inputs;
 
   /**
    * <!-- begin-user-doc -->
@@ -66,13 +71,29 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<String> getInputs()
+  public EList<CompilationUnit> getInputs()
   {
     if (inputs == null)
     {
-      inputs = new EDataTypeEList<String>(String.class, this, CSharpPackage.MODEL__INPUTS);
+      inputs = new EObjectContainmentEList<CompilationUnit>(CompilationUnit.class, this, CSharpPackage.MODEL__INPUTS);
     }
     return inputs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case CSharpPackage.MODEL__INPUTS:
+        return ((InternalEList<?>)getInputs()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -104,7 +125,7 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
     {
       case CSharpPackage.MODEL__INPUTS:
         getInputs().clear();
-        getInputs().addAll((Collection<? extends String>)newValue);
+        getInputs().addAll((Collection<? extends CompilationUnit>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -141,23 +162,6 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
         return inputs != null && !inputs.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (inputs: ");
-    result.append(inputs);
-    result.append(')');
-    return result.toString();
   }
 
 } //ModelImpl

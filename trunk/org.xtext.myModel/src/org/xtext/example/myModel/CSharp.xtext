@@ -1,11 +1,11 @@
-grammar org.xtext.example.myModel.CSharp  hidden(WS, ML_COMMENT, SL_COMMENT)
+grammar org.xtext.example.myModel.CSharp hidden(WS, ML_COMMENT, SL_COMMENT)
 
 generate cSharp 'http://www.xtext.org/example/myModel/CSharp'
 import 'http://www.eclipse.org/emf/2002/Ecore' as ecore
 
 Model:
-  	inputs+=CompilationUnit
-;
+	inputs+=CompilationUnit;
+
 PredefinedType:
 	'bool'
 	| 'byte'
@@ -22,643 +22,554 @@ PredefinedType:
 	| 'uint'
 	| 'ulong'
 	'ushort';
+
 Literal:
-    BooleanLiteral
-    |IntegerLiteral
-    |RealLiteral
-    |CharacterLiteral
-    |StringLiteral
-    |NullLiteral;
+	BooleanLiteral
+	| IntegerLiteral
+	| RealLiteral
+	| CharacterLiteral
+	| StringLiteral
+	| NullLiteral;
 
 NullLiteral:
-  'null'
-;
+	'null';
 
 BooleanLiteral:
 	'true'
-    |'false'
-;
-	
-
+	| 'false';
 
 IntegerLiteral:
-	('0x'|'0X') HEX_DIGIT+ INTEGER_TYPE_SUFFIX
-	|INT (INTEGER_TYPE_SUFFIX)?
-	;	
+	('0x' | '0X') HEX_DIGIT+ INTEGER_TYPE_SUFFIX
+	| INT (INTEGER_TYPE_SUFFIX)?;
+
 RealLiteral:
 	INT '.' INT ExponentPart? REAL_TYPE_SUFFIX?
-    | INT ExponentPart REAL_TYPE_SUFFIX?
-    | INT REAL_TYPE_SUFFIX
-;
+	| INT ExponentPart REAL_TYPE_SUFFIX?
+	| INT REAL_TYPE_SUFFIX;
+
 ExponentPart:
-  'e' OPERATOR_OR_SIGN? INT
-  |'E' OPERATOR_OR_SIGN? INT
-;
+	'e' OPERATOR_OR_SIGN? INT
+	| 'E' OPERATOR_OR_SIGN? INT;
+
 CharacterLiteral:
-	  "'" Character "'"
-;
+	"'" Character "'";
+
 Character:
 	SINGLE_CHARACTER
-    |'\\' EscapeSequence
-;
+	| '\\' EscapeSequence;
+
 EscapeSequence:
 	ESCAPE_SEQUENCE
-    | HexadecimalEscapeSequence
-    | UnicodeCharacterEscapeSequence
-	
-;
+	| HexadecimalEscapeSequence
+	| UnicodeCharacterEscapeSequence;
+
 UnicodeCharacterEscapeSequence:
-	 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT 
-	 |'U' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT 
-;
+	'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT
+	| 'U' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT;
+
 HexadecimalEscapeSequence:
-	'x' HEX_DIGIT (HEX_DIGIT(HEX_DIGIT HEX_DIGIT?)?)?
-;
+	'x' HEX_DIGIT (HEX_DIGIT (HEX_DIGIT HEX_DIGIT?)?)?;
+
 StringLiteral:
-	 '"' RegularStringCharacter* '"'
-    |'@' VerbatimStringCharacter* '"'	
-;
+	'"' RegularStringCharacter* '"'
+	| '@' VerbatimStringCharacter* '"';
+
 VerbatimStringCharacter:
-	  SINGLE_CHARACTER //Any character except "
-	  |QUOTE_ESCAPE_SEQUENCE
-;
+	SINGLE_CHARACTER //Any character except "
+	| QUOTE_ESCAPE_SEQUENCE;
+
 RegularStringCharacter:
-	 SINGLE_CHARACTER //Any character except " (U+0022), \ (U+005C), and new-line-character
-    |'\\' ESCAPE_SEQUENCE
-;
+	SINGLE_CHARACTER //Any character except " (U+0022), \ (U+005C), and new-line-character
+	| '\\' ESCAPE_SEQUENCE;
+
 Comment:
 	SL_COMMENT
 	| ML_COMMENT;
-Identifier:
+
+Identifier returns Identifier:
+	{Identifier}
 	AvailableIdentifier
-    |'@' IDENTIFIER_START_CHARACTER
-;
+	| '@' IDENTIFIER_START_CHARACTER;
+
 AvailableIdentifier:
-	IdentifierOrKeyword
-;
+	IdentifierOrKeyword;
+
 IdentifierOrKeyword:
- IDENTIFIER_START_CHARACTER IdentifierPartCharacter*	
-;
+	IDENTIFIER_START_CHARACTER IdentifierPartCharacter*;
+
 IdentifierPartCharacter:
 	LETTER
-    |INT/*
+	| INT /*
     |connecting-character
     |combining-character
-    |formatting-character */
-;
+    |formatting-character */;
 //FIM LEXICA 
 
 
 //SINTAXE
 CompilationUnit:
-    UsingDirective* GlobalAttributes NamespaceMemberDeclaration*    
-;
+	usingDirectives+=UsingDirective* globalAtt=GlobalAttributes nameSpaces+=NamespaceMemberDeclaration*;
 
-NamespaceMemberDeclaration:
-	 NamespaceDeclaration
-    |TypeDeclaration
-;
+NamespaceMemberDeclaration returns NamespaceMemberDeclaration:
+	{NamespaceMemberDeclaration}
+	nameDeclaretion=NamespaceDeclaration
+	| typeDeclaration=TypeDeclaration;
 
+NamespaceDeclaration returns NamespaceDeclaration:
+	'namespace' qId=QualifiedIdentifier nameBody=NamespaceBody SEMICOLON?;
 
-NamespaceDeclaration:
-	    "namespace" QualifiedIdentifier NamespaceBody ";"?
-;
+NamespaceBody returns NamespaceBody:
+	{NamespaceBody}
+	'{' usingDirectives+=UsingDirective* nameSpaces+=NamespaceMemberDeclaration* '}';
 
-NamespaceBody:
-	 "{" UsingDirective* NamespaceMemberDeclaration* "}"
-;
-
-TypeDeclaration:
-   (ClassDeclaration
-   	|Modifier*(StructDeclaration
-    	|InterfaceDeclaration
-    	|EnumDeclaration
-    	|DelegateDeclaration
-    	)
-   )
-;
+TypeDeclaration returns TypeDeclaration:
+	{TypeDeclaration}
+	(classDeclaration=ClassDeclaration
+	| mod+=Modifier* (structDeclaration=StructDeclaration
+	| interfaceDeclaration=InterfaceDeclaration
+	| enumDeclaration=EnumDeclaration
+	| delegateDeclaration=DelegateDeclaration));
 
 DelegateDeclaration:
-   "delegate" TypeOrVoid Identifier "(" FormalParameterList? ")" ";"
-;
+	'delegate' TypeOrVoid name=Identifier '(' formalParameters=FormalParameterList? ')' SEMICOLON;
 
 EnumDeclaration:
-  "enum" Identifier ( ":" IntegralType )? EnumBody ";"?
-;
+	'enum' name=Identifier (':' intType=IntegralType)? enumBody=EnumBody SEMICOLON?;
 
 InterfaceDeclaration:
- "struct" Identifier ( ":" QualifiedIdentifierList )? InterfaceBody ";"?
-;
+	'struct' name=Identifier (':' qIdentifiers=QualifiedIdentifierList)? interBody=InterfaceBody? SEMICOLON?;
 
 Modifier:
-	"new"
-    |"public"
-    |"protected"
-    |"internal"
-    |"private"
-;
+	'new'
+	| 'public'
+	| 'protected'
+	| 'internal'
+	| 'private';
 
-InterfaceBody:
- "{"InterfaceMemberDeclaration* "}"
-;
+InterfaceBody returns InterfaceBody:
+	{InterfaceBody}
+	'{' interfaceMemberDeclarations+=InterfaceMemberDeclaration* '}';
 
-InterfaceMemberDeclaration:
-   'new'? 
-  (InterfaceMethodDeclaration
-  |InterfaceEventDeclaration
-  |Type (InterfaceIndexerDeclaration|InterfacePropertyDeclaration))
-;
+InterfaceMemberDeclaration returns InterfaceMemberDeclaration:
+	{InterfaceMemberDeclaration}
+	'new'?
+	(intermethodDeclaration=InterfaceMethodDeclaration
+	| interEventDeclaration=InterfaceEventDeclaration
+	| type1=Type (interfaceIndexerDecla=InterfaceIndexerDeclaration | interProperty=InterfacePropertyDeclaration));
 
-InterfaceIndexerDeclaration:
-	"this" "[" FormalParameterList "]" "{" InterfaceAccessors "}"
-;
+InterfaceIndexerDeclaration returns InterfaceIndexerDeclaration:
+	{InterfaceIndexerDeclaration}
+	'this' '[' parameterList=FormalParameterList ']' '{' interAccessors=InterfaceAccessors '}';
 
-InterfaceEventDeclaration:
-	"event" Type Identifier ";"
-;
+InterfaceEventDeclaration returns InterfaceEventDeclaration:
+	{InterfaceEventDeclaration}
+	'event' type=Type name=Identifier SEMICOLON;
 
-InterfacePropertyDeclaration:
-	Identifier "{" InterfaceAccessors "}"
-;
+InterfacePropertyDeclaration returns InterfacePropertyDeclaration:
+	{InterfacePropertyDeclaration}
+	name=Identifier '{' interAccessor=InterfaceAccessors '}';
 
 InterfaceAccessors:
-	 Attributes ("get" ";" ( Attributes "set" ";" )? | "set" ";" ( Attributes "get" ";" )?)
-;
+	att=Attributes ('get' SEMICOLON (newAtt=Attributes 'set' SEMICOLON)? | 'set' SEMICOLON (otherAtt=Attributes 'get'
+	SEMICOLON)?);
 
 InterfaceMethodDeclaration:
-	TypeOrVoid Identifier "(" FormalParameterList? ")" ";"
-;
+	type=TypeOrVoid name=Identifier '(' parameterList=FormalParameterList? ')' SEMICOLON;
 
-StructDeclaration:
-  "struct" Identifier ( ":" QualifiedIdentifierList )? StructBody ";"?
-;
+StructDeclaration returns StructDeclaration:
+	'struct' name=Identifier (':' qualId=QualifiedIdentifierList)? structbody=StructBody SEMICOLON?;
 
 StructBody:
-  "{" StructMemberDeclaration* "}"
-;
+	'{' structMember+=StructMemberDeclaration* '}';
 
 StructMemberDeclarations:
-  StructMemberDeclaration (StructMemberDeclarations2)*
-;
+	StructMemberDeclaration (structMember2+=StructMemberDeclarations2)*;
 
 StructMemberDeclarations2:
-	StructMemberDeclaration StructMemberDeclarations2
-;
+	StructMemberDeclaration structMember2+=StructMemberDeclarations2;
 
 StructMemberDeclaration:
 	ConstantDeclaration
-    |FieldDeclaration
-    |MethodDeclaration
-    |PropertyDeclaration
-    |EventDeclaration
-    |IndexerDeclaration
-    |OperatorDeclaration
-    |ConstructorDeclaration
-    |StaticConstructorDeclaration
-    |TypeDeclaration
-;
+	| FieldDeclaration
+	| MethodDeclaration
+	| PropertyDeclaration
+	| EventDeclaration
+	| IndexerDeclaration
+	| OperatorDeclaration
+	| ConstructorDeclaration
+	| StaticConstructorDeclaration
+	| TypeDeclaration;
 
+ClassDeclaration returns ClassDeclaration:
+	{ClassDeclaration}
+	classModifier+=ClassModifier* 'class' className=Identifier classBase=ClassBase? classBody=ClassBody SEMICOLON?;
 
-ClassDeclaration:
-	ClassModifier* "class" Identifier ClassBase? ClassBody ";"?
-;
+ClassBody returns ClassBody:
+	{ClassBody}
+	'{' classDeclaration+=ClassMemberDeclaration* '}';
 
-ClassBody:
-	"{" ClassMemberDeclaration* "}"
-;
-
-ClassMemberDeclaration:
-	
-	MethodDeclaration| 
-	Attributes (ConstantDeclaration
-    |FieldDeclaration
-    |PropertyDeclaration
-    |EventDeclaration
-    |IndexerDeclaration
-    |OperatorDeclaration
-    |ConstructorDeclaration
-    |DestructorDeclaration
-    |StaticConstructorDeclaration
-    |TypeDeclaration) 
-;
+ClassMemberDeclaration returns ClassMemberDeclaration:
+	MethodDeclaration |
+	classAtt=Attributes (constDeclaration=ConstantDeclaration
+	| fieldDeclaration=FieldDeclaration
+	| propertyDeclaration=PropertyDeclaration
+	| eventDeclaration=EventDeclaration
+	| indexDeclaration=IndexerDeclaration
+	| opDeclaration=OperatorDeclaration
+	| constructorDeclaration=ConstructorDeclaration
+	| destructorDeclaration=DestructorDeclaration
+	| staticDeclaration=StaticConstructorDeclaration
+	| typeDeclaration=TypeDeclaration);
 
 StaticConstructorDeclaration:
-  StaticConstructorModifiers Identifier "(" ")" MaybeEmptyBlock
-;
+	staticCosntModifier=StaticConstructorModifiers name=Identifier '(' ')' emptyBlock=MaybeEmptyBlock;
 
 StaticConstructorModifiers:
-	"extern"? "static"
-    |"static" "extern"
-;
+	'extern'? 'static'
+	| 'static' 'extern';
 
 DestructorDeclaration:
-	"extern"? "~" Identifier "(" ")" MaybeEmptyBlock
-;
+	'extern'? '~' name=Identifier '(' ')' emptyBlock=MaybeEmptyBlock;
 
 ConstructorDeclaration:
-  ConstructorModifier* ConstructorDeclarator MaybeEmptyBlock
-;
+	constModifier+=ConstructorModifier* constrDeclarator=ConstructorDeclarator emptyBlock=MaybeEmptyBlock;
 
 ConstructorDeclarator:
-   Identifier "(" FormalParameterList? ")" ConstructorInitializer?
-;
+	Identifier '(' formalList=FormalParameterList? ')' constInitializer=ConstructorInitializer?;
 
 ConstructorInitializer:
-   ":" "base" "(" ArgumentList ")"
-   |":" "this" "(" ArgumentList ")"
-;
+	':' 'base' '(' ArgumentList ')'
+	| ':' 'this' '(' ArgumentList ')';
 
-ArgumentList:
-	(Argument",")*
-;
+ArgumentList returns ArgumentList:
+	{ArgumentList}
+	(arg+=Argument ',')*;
 
 Argument:
-  RefOrOut? Expression	
-;
+	RefOrOut? Expression;
 
 RefOrOut:
-  "ref"
-  |"out"
-;
+	'ref'
+	| 'out';
 
 ConstructorModifier:
-	"public"
-    |"protected"
-    |"internal"
-    |"private"
-    |"extern"
-;
+	'public'
+	| 'protected'
+	| 'internal'
+	| 'private'
+	| 'extern';
 
 OperatorDeclaration:
-	OperatorModifier+ OperatorDeclarator MaybeEmptyBlock
-;
+	opModifier+=OperatorModifier+ opDeclarator=OperatorDeclarator emptyBlock=MaybeEmptyBlock;
 
 OperatorDeclarator:
-	 UnaryOperatorDeclarator
-    |BinaryOperatorDeclarator
-    |ConversionOperatorDeclarator
-;
+	UnaryOperatorDeclarator
+	| BinaryOperatorDeclarator
+	| ConversionOperatorDeclarator;
 
 ConversionOperatorDeclarator:
-	    ConversionKind "operator" Type "(" Type Identifier ")"
-	
-;
+	ConversionKind 'operator' firstType=Type '(' type=Type conversionName=Identifier ')';
 
 ConversionKind:
-	"implicit"
-    |"explicit"
-	
-;
+	'implicit'
+	| 'explicit';
 
 BinaryOperatorDeclarator:
-	Type "operator" OverloadableBinaryOperator "(" Type Identifier "," Type Identifier ")"
-;
+	binType=Type 'operator' overBinOperator=OverloadableBinaryOperator '(' type=Type otherName=Identifier ','
+	secondType=Type secondName=Identifier ')';
 
 OverloadableBinaryOperator:
-	 OPERATOR_OR_SIGN
-    |"*"
-    |"/"
-    |"%"
-    |AMPERSAND
-    |BAR
-    |"^"
-    |"<<"
-    |">>"
-    |"=="
-    |"!="
-    |GREATER_THAN
-    |LESS_THAN
-    |">="
-    |"<="
-	
-;
+	OPERATOR_OR_SIGN
+	| '*'
+	| '/'
+	| '%'
+	| AMPERSAND
+	| BAR
+	| '^'
+	| '<<'
+	| '>>'
+	| '=='
+	| '!='
+	| GREATER_THAN
+	| LESS_THAN
+	| '>='
+	| '<=';
 
 UnaryOperatorDeclarator:
-	Type "operator" OverloadableUnaryOperator "(" Type Identifier ")"
-;
+	type=Type 'operator' OverloadableUnaryOperator '(' otherType=Type name=Identifier ')';
 
 OverloadableUnaryOperator:
-	 OPERATOR_OR_SIGN
-    |INCREMENT_DECREMENT
-    |"!"
-    |"~"
-    |"true"
-    |"false"
-;
+	OPERATOR_OR_SIGN
+	| INCREMENT_DECREMENT
+	| '!'
+	| '~'
+	| 'true'
+	| 'false';
 
 OperatorModifier:
-	"public"
-    |"static"
-    |"extern"
-;
+	'public'
+	| 'static'
+	| 'extern';
 
 IndexerDeclaration:
-   IndexerModifier* IndexerDeclarator "{" AccessorDeclarations "}"
-;
+	idModifier+=IndexerModifier* indexerDeclarator=IndexerDeclarator '{' accDeclaration=AccessorDeclarations '}';
 
 IndexerDeclarator:
-	Type ("this" "[" FormalParameterList "]"
-    |QualifiedIdentifier "." "this" "[" FormalParameterList "]")
-	
-;
+	type=Type ('this' '[' formalList=FormalParameterList ']'
+	| qualifiedId=QualifiedIdentifier '.' 'this' '[' formalList=FormalParameterList ']');
 
 IndexerModifier:
-	 "new"
-    |"public"
-    |"protected"
-    |"internal"
-    |"private"
-    |"virtual"
-    |"sealed"
-    |"override"
-    |"abstract"
-    |"extern"
-;
+	'new'
+	| 'public'
+	| 'protected'
+	| 'internal'
+	| 'private'
+	| 'virtual'
+	| 'sealed'
+	| 'override'
+	| 'abstract'
+	| 'extern';
 
 EventDeclaration:
-  EventModifier* "event" Type ((VariableDeclarator ",")+ ";"|QualifiedIdentifier "{" EventAccessorDeclarations "}")
-;
+	EventModifier* 'event' Type ((variableDeclarator+=VariableDeclarator ',')+ SEMICOLON | qIdent=QualifiedIdentifier '{'
+	eventAccessorDeclarations=EventAccessorDeclarations '}');
 
 EventAccessorDeclarations:
-	Attributes (AddAccessorDeclaration  Attributes RemoveAccessorDeclaration
-                |RemoveAccessorDeclaration  Attributes AddAccessorDeclaration)
-;
+	att1=Attributes (addAccessor=AddAccessorDeclaration att=Attributes removAccessor=RemoveAccessorDeclaration
+	| removAccessor=RemoveAccessorDeclaration att=Attributes addAccessor=AddAccessorDeclaration);
 
 RemoveAccessorDeclaration:
-	    "remove" //Block	
-;
+	'remove' Block;
 
 AddAccessorDeclaration:
-	     "add" //Block
-;
+	'add' Block;
 
 EventModifier:
-	"new"
-    |"public"
-    |"protected"
-    |"internal"
-    |"private"
-    |"static"
-    |"virtual"
-    |"sealed"
-    |"override"
-    |"abstract"
-    |"extern"
-;
+	'new'
+	| 'public'
+	| 'protected'
+	| 'internal'
+	| 'private'
+	| 'static'
+	| 'virtual'
+	| 'sealed'
+	| 'override'
+	| 'abstract'
+	| 'extern';
 
 PropertyDeclaration:
-   PropertyModifier* Type QualifiedIdentifier "{" AccessorDeclarations "}"
-;
+	PropertyModifier* Type qualifiedId=QualifiedIdentifier '{' accDeclarate=AccessorDeclarations '}';
 
 AccessorDeclarations:
-	Attributes  (GetAccessorDeclaration  Attributes (SetAccessorDeclaration)?
-    			|SetAccessorDeclaration  Attributes (GetAccessorDeclaration)?)
-;
+	att=Attributes (getAcc=GetAccessorDeclaration att2=Attributes (setAcc=SetAccessorDeclaration)?
+	| setAcc=SetAccessorDeclaration att2=Attributes (getAcc=GetAccessorDeclaration)?);
 
 SetAccessorDeclaration:
-	  "set" MaybeEmptyBlock	
-;
+	'set' MaybeEmptyBlock;
+
 GetAccessorDeclaration:
-	 "get" MaybeEmptyBlock
-;
+	'get' MaybeEmptyBlock;
 
 PropertyModifier:
-	"new"
-    |"public"
-    |"protected"
-    |"internal"
-    |"private"
-    |"static"
-    |"virtual"
-    |"sealed"
-    |"override"
-    |"abstract"
-    |"extern"
-;
+	'new'
+	| 'public'
+	| 'protected'
+	| 'internal'
+	| 'private'
+	| 'static'
+	| 'virtual'
+	| 'sealed'
+	| 'override'
+	| 'abstract'
+	| 'extern';
 
 MethodDeclaration:
-	MethodHeader MaybeEmptyBlock
-;
+	methodHeader=MethodHeader maybeEmpty=MaybeEmptyBlock;
 
 MethodHeader:
-	Attributes MethodModifier* TypeOrVoid QualifiedIdentifier "(" FormalParameterList? ")"
-;
+	Attributes MethodModifier* typeOrVoid=TypeOrVoid qualifiedID=QualifiedIdentifier '('
+	formalParameters=FormalParameterList? ')';
 
 FormalParameterList:
-	FixedParameters ("," ParameterArray
-					 |ParameterArray)
-	
-;
+	FixedParameters (',' parameterArray=ParameterArray
+	| parameterArray=ParameterArray);
 
-ParameterArray:
-	    Attributes "params" ArrayType Identifier
-;
+ParameterArray returns ParameterArray:
+	{ParameterArray}
+	att=Attributes 'params' array=ArrayType name=Identifier;
 
-FixedParameters:
-	 (=>FixedParameter ",")+
-;
+FixedParameters returns FixedParameters:
+	(fixParameters+=FixedParameter ',')+;
 
-FixedParameter:
-    ParameterModifier? Type Identifier
-;
+FixedParameter returns FixedParameter:
+	ParameterModifier? type=Type name=Identifier;
 
 ParameterModifier:
-	 "ref"
-    |"out"
-;
+	'ref'
+	| 'out';
 
-TypeOrVoid:
-	 Type
-    |"void"
-;
+TypeOrVoid returns TypeOrVoid:
+	{TypeOrVoid}
+	type=Type
+	| {Void} 'void';
 
 MethodModifier:
-	 "new"
-    |"public"
-    |"protected"
-    |"internal"
-    |"private"
-    |"static"
-    |"virtual"
-    |"sealed"
-    |"override"
-    |"abstract"
-    |"extern"
-	
-;
+	'new'
+	| 'public'
+	| 'protected'
+	| 'internal'
+	| 'private'
+	| 'static'
+	| 'virtual'
+	| 'sealed'
+	| 'override'
+	| 'abstract'
+	| 'extern';
 
-FieldDeclaration:
-  FieldModifier* Type (VariableDeclarator ",")+ ";"
-;
+FieldDeclaration returns FieldDeclaration:
+	FieldModifier* Type (variables+=VariableDeclarator ',')+ SEMICOLON;
 
 VariableDeclarator:
-	Identifier
-    Identifier "=" VariableInitializer
-;
+	name=Identifier ('=' variable=VariableInitializer)?;
 
-VariableInitializer:
-	//Expression|
-	ArrayInitializer
-;
+VariableInitializer returns VariableInitializer:
+	Expression | ArrayInitializer;
 
-ArrayInitializer:
-	 "{" "}"
-    |"{" (VariableInitializer ",") + ","? "}"
-;
+ArrayInitializer returns ArrayInitializer:
+	{ArrayInitializer}
+	'{' '}'
+	| '{' (variableInitalizers+=VariableInitializer ',')+ ','? '}';
 
 FieldModifier:
-	"new"
-    |"public"
-    |"protected"
-    |"internal"
-    |"private"
-    |"static"
-    |"readonly"
-    |"volatile"
-;
+	'new'
+	| 'public'
+	| 'protected'
+	| 'internal'
+	| 'private'
+	| 'static'
+	| 'readonly'
+	| 'volatile';
 
 ConstantDeclaration:
-	ConstantModifier* "const" Type (ConstantDeclarator ",") + ";"
-;
+	ConstantModifier* 'const' Type (constDeclarators+=ConstantDeclarator ',')+ SEMICOLON;
 
 ConstantModifier:
-	 "new"
-    |"public"
-    |"protected"
-    |"internal"
-    |"private"
-;
+	'new'
+	| 'public'
+	| 'protected'
+	| 'internal'
+	| 'private';
 
-ConstantDeclarator: 
-	 Identifier "=" Expression
-;
-
+ConstantDeclarator returns ConstantDeclarator:
+	{ConstantDeclarator}
+	name=Identifier '=' exp=Expression;
 
 ClassBase:
-	":" (QualifiedIdentifierList | BuiltInClassType ( "," QualifiedIdentifierList )?)
-;
+	':' (QualifiedIdentifierList | BuiltInClassType (',' QualifiedIdentifierList)?);
 
-QualifiedIdentifierList:
-	    (QualifiedIdentifier ",")+
-;
+QualifiedIdentifierList returns QualifiedIdentifierList:
+	(ids+=QualifiedIdentifier ',')+;
 
 ClassModifier:
 	Modifier
-    |"abstract"
-    |"sealed"
-;
-GlobalAttributes:
-	  GlobalAttributeSection*
-;
+	| 'abstract'
+	| 'sealed';
+
+GlobalAttributes returns GlobalAttributes:
+	{GlobalAttributes}
+	globalAttSections+=GlobalAttributeSection*;
 
 GlobalAttributeSection:
-	'[' 'assembly' ':' AttributeList ','? ']'
-;
+	'[' 'assembly' ':' AttributeList ','? ']';
 
-Attributes:
- AttributeSection*
-;
+Attributes returns Attributes:
+	{Attributes} attributes+=AttributeSection*;
 
 AttributeSection:
-    '[' ( AttributeTarget ':' )? AttributeList ','? ']'	
-;
+	'[' (AttributeTarget ':')? AttributeList ','? ']';
 
 AttributeTarget:
-	 'field'
-    |'event'
-    |'method'
-    |'module'
-    |'param'
-    |'property'
-    |'return'
-    |'type'
-;
+	'field'
+	| 'event'
+	| 'method'
+	| 'module'
+	| 'param'
+	| 'property'
+	| 'return'
+	| 'type';
 
-AttributeList:
-	  (Attribute ',') +
-;
+AttributeList returns AttributeList:
+	{AttributeList}
+	(attributes+=Attribute ',')+;
 
-Attribute:// AQUI
-	 AttributeName AttributeArguments?
-;
+Attribute:
+	attName=AttributeName attArguments=AttributeArguments?;
 
-AttributeArguments:
-	    "(" ExpressionList? ")"
-;
+AttributeArguments returns AttributeArguments:
+	{AttributeArguments}
+	'(' expresions+=ExpressionList? ')';
 
 ExpressionList:
-   (Expression ",")+
-;
+	(expresions+=Expression ',')+;
 
-Expression:
-   	UnaryExpression  (Expression2|BAR Expression Expression2)
-;
+Expression returns Expression:
+	{Expression}
+	unary=UnaryExpression (exp2=Expression2 | BAR exp=Expression otherExp2=Expression2);
 
-Expression2:
-	("?" Expression ":" Expression Expression2 
-	|"||" Expression Expression2
-    | "&&" Expression Expression2
-    |BAR Expression Expression2
-    | "^" Expression Expression2
-    | AMPERSAND Expression Expression2
-    |EXPRESSION_EQUALITY_OPERATOR Expression Expression2
-    |ExpressionRelationalOperator Expression Expression2
-    |"is" BuiltInType Expression2
-    |ExpressionShiftOperator Expression Expression2
-    |OPERATOR_OR_SIGN Expression Expression2
-    |"*" Expression Expression2
-    |"/" Expression Expression2
-    |"%" Expression  Expression2)*
-;
+Expression2 returns Expression2:
+	{Expression2}
+	('?' internalExp+=Expression ':' exp+=Expression internalExp2+=Expression2
+	| '||' exp+=Expression internalExp2+=Expression2
+	| '&&' exp+=Expression internalExp2+=Expression2
+	| BAR exp+=Expression internalExp2+=Expression2
+	| '^' exp+=Expression internalExp2+=Expression2
+	| AMPERSAND exp+=Expression internalExp2+=Expression2
+	| EXPRESSION_EQUALITY_OPERATOR exp+=Expression internalExp2+=Expression2
+	| ExpressionRelationalOperator exp+=Expression internalExp2+=Expression2
+	| 'is' buildInType+=BuiltInType internalExp2+=Expression2
+	| ExpressionShiftOperator exp+=Expression internalExp2+=Expression2
+	| OPERATOR_OR_SIGN exp+=Expression internalExp2+=Expression2
+	| '*' exp+=Expression internalExp2+=Expression2
+	| '/' exp+=Expression internalExp2+=Expression2
+	| '%' exp+=Expression internalExp2+=Expression2)*;
 
-
-
-
-UnaryExpression:
-	 ExpressionUnaryOperator UnaryExpression
-    |"(" Type ")" UnaryExpression
-//    |PrimaryExpression
-;
-
+UnaryExpression returns UnaryExpression:
+	{UnaryExpression}
+	(expUnaryOperator=ExpressionUnaryOperator | '(' type=Type ')') unaryExp=UnaryExpression
+	| primaryExp=PrimaryExpression;
 
 ExpressionUnaryOperator:
-	 OPERATOR_OR_PUNCTUATOR
-    |INCREMENT_DECREMENT
-    |"!"
-    |"~"
-    |"*"
-;
-
+	OPERATOR_OR_PUNCTUATOR
+	| INCREMENT_DECREMENT
+	| '!'
+	| '~'
+	| '*';
 
 ExpressionShiftOperator:
-	"<<"
-    |">>"
-;
+	'<<'
+	| '>>';
 
 ExpressionRelationalOperator:
 	LESS_THAN
-    |GREATER_THAN
-    |"<="
-    |">="
-    |"is"
-    |"as"
-;
+	| GREATER_THAN
+	| '<='
+	| '>='
+	| 'is'
+	| 'as';
 
+AttributeName returns AttributeName:
+	{AttributeName}
+	qualifiedId=QualifiedIdentifier;
 
-AttributeName:
-	 QualifiedIdentifier
-;
+UsingDirective returns UsingDirective:
+	{UsingDirective} 'using' (name=Identifier '=')? usings=QualifiedIdentifier SEMICOLON;
 
-UsingDirective:
-	 'using' (Identifier '=')? QualifiedIdentifier ';'
-;
+Type returns Type:
+	{Type}
+	(nonArray=NonArrayType) RANK_SPECIFIER*;
 
-Type:
-	NonArrayType RANK_SPECIFIER*
-;
-
-
-IntegralType:
+IntegralType returns IntegralType:
+	{IntegralType}
 	'sbyte'
 	| 'byte'
 	| 'short'
@@ -673,191 +584,198 @@ ArrayType:
 	NonArrayType RANK_SPECIFIER+;
 
 EnumType:
-	Attributes EnumModifier* 'enum' ID (':' IntegralType)? EnumBody
-	';'?;
+	Attributes EnumModifier* 'enum' ID (':' type=IntegralType)? enumBody=EnumBody SEMICOLON?;
 
-NonArrayType:
-//QualifiedIdentifier|
-	BuiltInType;
-	
-QualifiedIdentifier:
-   (Identifier '.')+
-   ;
- 
-BuiltInType:
-	IntegralType | BuiltInClassType | 'bool' | 'decimal' | 'float' | 'double';
+NonArrayType returns NonArrayType:
+	{NonArrayType}
+	(qualified=QualifiedIdentifier | builtType=BuiltInType);
+
+QualifiedIdentifier returns QualifiedIdentifier:
+	{QualifiedIdentifier}
+	(ids+=Identifier '.')+;
+
+BuiltInType returns BuiltInType:
+	{BuiltInType}
+	BuiltInClassType
+	| 'bool'
+	| 'decimal'
+	| 'float'
+	| 'double';
 
 BuiltInClassType:
 	'object' | 'string';
 
-EnumBody:
+EnumBody returns EnumBody:
+	{EnumBody}
 	'{' '}'
-	|'{' (EnumMemberDeclaration ',')+ ','? '}'
-;
+	| '{' (enumDeclarations+=EnumMemberDeclaration ',')+ ','? '}';
 
-EnumMemberDeclaration:
-	  Attributes Identifier ( "=" Expression )?
-;
-
+EnumMemberDeclaration returns EnumMemberDeclaration:
+	att=Attributes name=Identifier ('=' exp=Expression)?;
 
 EnumModifier:
 	'new' | 'public' | 'protected' | 'internal' | 'private';
-	
-	Statement:
-	LabeledStatement 
-	|DeclarationStatement 
-    |EmbeddedStatement;
 
-DeclarationStatement:
-	LocalVariableDeclaration ";"
-    |LocalConstantDeclaration ";"
-;
+Statement returns Statement:
+	{Statement}
+	labelStat=LabeledStatement
+	| declareStat=DeclarationStatement
+	| embeddedStat=EmbeddedStatement;
 
-LocalConstantDeclaration:
-	 'const' Type (ConstantDeclarator ",") +
-;
+DeclarationStatement returns DeclarationStatment:
+	{DeclarationStatment}
+	(localVariableDeclaration=LocalVariableDeclaration 
+	| localCOnstant=LocalConstantDeclaration ) SEMICOLON;
 
-LabeledStatement:
-  Identifier ":" Statement
-;
+LocalConstantDeclaration returns LocalconstantDeclaration:
+	{LocalconstantDeclaration}
+	'const' (tipo=Type) (constDeclarator+=ConstantDeclarator ",")+;
 
-EmbeddedStatement:
-	MaybeEmptyBlock 
-	| StatementExpression ';' 
-	| SelectionStatement 
-	| IterationStatement 
-	| JumpStatement 
-	| TryStatement 
-	|('checked'|'unchecked') Block 
-	| LockStatement 
-	| UsingStatement;
+LabeledStatement returns LabeledStatement:
+	{LabeledStatement}
+	(id=Identifier) ":" stat=Statement;
 
-UsingStatement:
-	'using' '(' ResourceAquisition ')' EmbeddedStatement;
+EmbeddedStatement returns EmbeddedStatement:
+	{EmbeddedStatement}
+	 (maybeEmpty=MaybeEmptyBlock
+	| statExp=StatementExpression SEMICOLON
+	| selectionStat=SelectionStatement
+	| iterationStat=IterationStatement
+	| jumpStat=JumpStatement
+	| tryStat=TryStatement
+	| ('checked' | 'unchecked') block=Block
+	| lockStat=LockStatement
+	| usingStat=UsingStatement);
 
-ResourceAquisition:
+UsingStatement returns UsingStatement:
+	{UsingStatement} ('using' '(' resourcAquisition=ResourceAquisition ')' embeddedStat=EmbeddedStatement);
+
+ResourceAquisition returns ResourceAquisition:
 	LocalVariableDeclaration | Expression;
 
-LocalVariableDeclaration:
-	Type (VariableDeclarator ',')+;
+LocalVariableDeclaration returns LocalVariableDeclaration:
+	{LocalVariableDeclaration} (tipo=Type) (variable+=VariableDeclarator ',')+;
 
-LockStatement:
-	'lock' '(' Expression ')' EmbeddedStatement;
+LockStatement returns LockStatement:
+	{LockStatement} 'lock' '(' exp=Expression ')' embeddedStat=EmbeddedStatement;
 
-TryStatement:
-	'try' Block( (CatchClauses (FinallyClause)?) | (FinallyClause));
+TryStatement returns TryStatement:
+	{TryStatement} 'try' (block=Block) ((catchClauses=CatchClauses (finally=FinallyClause)?) | (finallyClause=FinallyClause));
 
-FinallyClause:
-	'finally' Block;
+FinallyClause returns FinallyClause:
+	{FinallyClause} 'finally' (block=Block);
 
-CatchClauses:
-	(SpecificCatchClause)+ (GeneralCatchClause)? | (SpecificCatchClause)* =>GeneralCatchClause;
+CatchClauses returns CatchClauses:
+	{CatchClauses} ((speciCatchClause+=SpecificCatchClause)+ (genCatchClause=GeneralCatchClause)? | (specCatchClause=SpecificCatchClause)* => genCatchClause=GeneralCatchClause);
 
-GeneralCatchClause:
-	'catch' Block;
+GeneralCatchClause returns GeneralCatchclause:
+	{GeneralCatchclause} 'catch' block=Block;
 
-SpecificCatchClause:
-	'catch' '(' (BuiltInClassType| QualifiedIdentifier) Identifier? ')' Block;
+SpecificCatchClause returns SpecificCatchClause:
+	{SpecificCatchClause} 'catch' '(' (BuiltInClassType | qualiId=QualifiedIdentifier) id=Identifier? ')' block=Block;
 
-JumpStatement:
-	BreakStatement 
-	| ContinueStatement 
-	| GotoStatement 
-	| ReturnStatement 
-	| ThrowStatement;
+JumpStatement returns JumpStatement:
+	{JumpStatement} 
+	(breakStat=BreakStatement
+	| continueStat=ContinueStatement
+	| gotoStat=GotoStatement
+	| returnStat=ReturnStatement
+	| throwStat=ThrowStatement);
 
-ThrowStatement:
-	'throw' Expression? ';';
+ThrowStatement returns ThrowStatement:
+	{ThrowStatement} 'throw' expression=Expression? SEMICOLON ;
 
-ReturnStatement:
-	'return' Expression? ';';
+ReturnStatement returns ReturnStatement:
+	{ReturnStatement} ('return' expression=Expression? SEMICOLON);
 
-GotoStatement:
-	'goto' Identifier ';' 'goto' 'case' Expression ';' 'goto' 'default' ';';
+GotoStatement returns GotoStatement:
+	{GotoStatement} ('goto' id=Identifier SEMICOLON 'goto' 'case' expression=Expression SEMICOLON 'goto' 'default' SEMICOLON);
 
-ContinueStatement:
-	'continue' ';';
+ContinueStatement returns ContinueStatement:
+	{ContinueStatement} 'continue' SEMICOLON;
 
-BreakStatement:
-	'break' ';';
+BreakStatement returns BreakStatement:
+	{BreakStatement} 'break' SEMICOLON;
 
-IterationStatement:
-	WhileStatement 
-	| DoStatement 
-	| ForStatement 
-	| ForeachStatement;
+IterationStatement returns IterationStatement:
+	{IterationStatement}(
+	whileStatement=WhileStatement 
+	| doStatement=DoStatement 
+	| forStatement=ForStatement 
+	| foreachStatement=ForeachStatement);
 
-ForeachStatement:
-	'foreach' '(' Type Identifier 'in' Expression ')' EmbeddedStatement;
+ForeachStatement returns ForeachStatement:
+	{ForeachStatement}('foreach' '(' tipo=Type id=Identifier 'in' expression=Expression ')' embeddedStatement=EmbeddedStatement);
 
-ForStatement:
-	'for' '(' ForInitializer? ';' Expression? ';' StatementExpressionList? ')' EmbeddedStatement;
+ForStatement returns ForStatement:
+	{ForStatement}('for' '(' forInitializer+=ForInitializer? SEMICOLON expression+=Expression? SEMICOLON statementExpressionList+=StatementExpressionList? ')' embeddedStatement=EmbeddedStatement);
 
-ForInitializer:
-	LocalVariableDeclaration 
-	| StatementExpressionList;
+ForInitializer returns ForInitializer:
+	{ForInitializer}(localVariableDeclaration=LocalVariableDeclaration 
+	| statementExpressionList=StatementExpressionList);
 
-StatementExpressionList:
-	(StatementExpression ',')+;
+StatementExpressionList returns StatementExpressionList:
+	{StatementExpressionList}((list+=StatementExpression) ',')+;
 
-StatementExpression:
-	(PrimaryExpression (('(' ArgumentList ')') | (INCREMENT_DECREMENT))) 
-	| 'new' Type '(' ArgumentList ')' 
-	| UnaryExpression ASSIGNEMENT_OPERATOR Expression 
-	| INCREMENT_DECREMENT PrimaryExpression;
+StatementExpression returns StatementExpression:
+	{StatementExpression}(primaryExpression=PrimaryExpression (('(' argumentList=ArgumentList ')') | (incrimentDecrement=INCREMENT_DECREMENT))) 
+	| 'new' tipo=Type '(' argumentList=ArgumentList ')' 
+	| unaryExpression=UnaryExpression assignementOperator=ASSIGNEMENT_OPERATOR expression=Expression 
+	| incrimentDecrement=INCREMENT_DECREMENT primaryExpression=PrimaryExpression;
 
-PrimaryExpression:
-		(('new' ((NonArrayType '[' ExpressionList ']' RANK_SPECIFIER* ArrayInitializer?)
-		    |(ArrayType ArrayInitializer) 
-			| (Type	'(' ArgumentList ')'))) 
-		| (Identifier)
-		| Literal 
-		|'(' Expression ')'
-		| ('base' (('.' Identifier) 
-		| ('[' ExpressionList ']'))) 
-		| PredefinedType '.' Identifier 
-		| ('this') | ('typeof' '(' TypeOrVoid ')') 
-		| ('checked' '(' Expression ')')
-		| ('unchecked' '(' Expression ')')) PrimaryExpression2;
+PrimaryExpression returns PrimaryExpression:
+		{PrimaryExpression}((('new' ((nonArrayType=NonArrayType '[' expressionList=ExpressionList ']' rankSpecifier+=RANK_SPECIFIER* arrayInitializer+=ArrayInitializer?)
+		    |(arrayType=ArrayType arrayInitializer2=ArrayInitializer) 
+			| (tipo=Type	'(' argumentList=ArgumentList ')'))) 
+		| (id=Identifier)
+		| literal=Literal 
+		|'(' expression=Expression ')'
+		| ('base' (('.' id=Identifier) 
+		| ('[' expressionList=ExpressionList ']'))) 
+		| predefinedType=PredefinedType '.' id=Identifier 
+		| ('this') | ('typeof' '(' typeOrVoid=TypeOrVoid ')') 
+		| ('checked' '(' expression=Expression ')')
+		| ('unchecked' '(' expression=Expression ')')) primaryExoression2=PrimaryExpression2);
 
-PrimaryExpression2:
-	((('.' Identifier) 
-	  |('(' ArgumentList ')') 
-	  |('[' ExpressionList ']') 
-	  | (INCREMENT_DECREMENT)
-	) PrimaryExpression2)*;
+PrimaryExpression2 returns PrimaryExpression2:
+	{PrimaryExpression2}((('.' id+=Identifier) 
+	  |('(' argumentList+=ArgumentList ')') 
+	  |('[' expressionList+=ExpressionList ']') 
+	  | (incrementeDecrement+=INCREMENT_DECREMENT)
+	) primaryExpression2+=PrimaryExpression2)*;
 
-DoStatement:
-	'do' EmbeddedStatement 'while' '(' Expression ')' ';';
+DoStatement returns DoStatement:
+	{DoStatement}('do' embeddedStatement=EmbeddedStatement 'while' '(' expression=Expression ')' SEMICOLON);
 
-WhileStatement:
-	'while' '(' Expression ')' EmbeddedStatement;
+WhileStatement returns WhileStatement:
+	{WhileStatement}'while' '(' expression=Expression ')' embeddedStatement=EmbeddedStatement;
 
-SelectionStatement:
-	IfStatement | SwitchStatement;
+SelectionStatement returns SelectionStatement:
+	{SelectionStatement}(ifStatement=IfStatement | switchStatement=SwitchStatement);
 
-SwitchStatement:
-	'switch' '(' Expression ')' '{' SwitchSection* '}';
+SwitchStatement returns SwitchStatement:
+	{SwitchStatement}('switch' '(' expression=Expression ')' '{' switchSection+=SwitchSection* '}');
 
-SwitchSection:
-	SwitchLabel+ Statement+;
+SwitchSection returns SwitchSection:
+	{SwitchSection}(switchlabel+=SwitchLabel+ statement+=Statement+);
 
-SwitchLabel:
-	'case' Expression ':' | 'default' ':';
+SwitchLabel returns SwitchLabel:
+	{SwitchLabel}('case' expression=Expression ':' | 'default' ':');
 
-IfStatement:
-	'if' '(' Expression ')' EmbeddedStatement ElsePart?;
+IfStatement returns IfStatement:
+	{IfStatement}('if' '(' expression=Expression ')' embeddedStatement=EmbeddedStatement elsePart=ElsePart?);
 
-ElsePart:
-	'else' EmbeddedStatement;
+ElsePart returns ElsePart:
+	{ElsePart}('else' embeddedStatement=EmbeddedStatement);
 
-Block:
-	'{' Statement* '}';
+Block returns Block:
+	{Block}('{' statement+=Statement* '}');
 
-MaybeEmptyBlock:
-	'{' (Statement)* '}' | ';';
-
+MaybeEmptyBlock returns MaybeEmptyBlock:
+	{MaybeEmptyBlock}('{' statement+=Statement* '}' | SEMICOLON);
 	
+terminal SEMICOLON:
+	';';
 
 terminal ASSIGNEMENT_OPERATOR:
 	'=' |
@@ -872,82 +790,125 @@ terminal ASSIGNEMENT_OPERATOR:
 	'>>=';
 
 terminal EXPRESSION_EQUALITY_OPERATOR:
-	"=="
-    |"!="
-;
-terminal LESS_THAN:	'<';
-terminal GREATER_THAN: '>';
-terminal BAR: '|';
-terminal AMPERSAND: '&';
-terminal INCREMENT_DECREMENT: "++"|"--";
-terminal OPERATOR_OR_SIGN: '+'|'-';
-terminal REAL_TYPE_SUFFIX:	'F'|'f'|'D'|'d'|'M'|'m';
-terminal LETTER:('A'..'Z') | ('a'..'z');
-terminal IDENTIFIER_START_CHARACTER: LETTER|'_';
-terminal QUOTE_ESCAPE_SEQUENCE:	'""';
-terminal ESCAPE_SEQUENCE:("'"|'"'|"\\"|'0'|'a'|'b'|'f'|'n'|'r'|'t'|'v');
-terminal NEW_LINE:	 ('\r'|'\n')*EOF;
-terminal RANK_SPECIFIER: '[' ','* ']';
-terminal INTEGER_TYPE_SUFFIX:'U' | 'u' | 'L' | 'l' | 'UL' | 'Ul' | 'uL' | 'ul' | 'LU' | 'Lu' | 'lU' | 'lu';
-terminal HEX_DIGIT:	('0'..'9')|(('A'..'F') | ('a'..'f'));
+	'=='
+	| '!=';
+
+terminal LESS_THAN:
+	'<';
+
+terminal GREATER_THAN:
+	'>';
+
+terminal BAR:
+	'|';
+
+terminal AMPERSAND:
+	'&';
+
+terminal INCREMENT_DECREMENT:
+	'++' | '--';
+
+terminal OPERATOR_OR_SIGN:
+	'+' | '-';
+
+terminal REAL_TYPE_SUFFIX:
+	'F' | 'f' | 'D' | 'd' | 'M' | 'm';
+
+terminal LETTER:
+	('A'..'Z') | ('a'..'z');
+
+terminal IDENTIFIER_START_CHARACTER:
+	LETTER | '_';
+
+terminal QUOTE_ESCAPE_SEQUENCE:
+	'""';
+
+terminal ESCAPE_SEQUENCE:
+	("'" | '"' | "\\" | '0' | 'a' | 'b' | 'f' | 'n' | 'r' | 't' | 'v');
+
+terminal NEW_LINE:
+	('\r' | '\n')*;
+
+terminal RANK_SPECIFIER:
+	'[' ','* ']';
+
+terminal INTEGER_TYPE_SUFFIX:
+	'U' | 'u' | 'L' | 'l' | 'UL' | 'Ul' | 'uL' | 'ul' | 'LU' | 'Lu' | 'lU' | 'lu';
+
+terminal HEX_DIGIT:
+	('0'..'9') | (('A'..'F') | ('a'..'f'));
+
 terminal OPERATOR_OR_PUNCTUATOR:
 	'{'
-    |'}'
-    |'['
-    |']'
-    |'('
-    |')'
-    |'.'
-    |','
-    |':'
-    |';'
-    |'+'
-    |'-'
-    |'*'
-    |'/'
-    |'%'
-    |'&'
-    |'|'
-    |'^'
-    |'!'
-    |'~'
-    |'='
-    |'<'
-    |'>'
-    |'?'
-    |'++'
-    |'--'
-    |'&&'
-    |'||'
-    |'<<'
-    |'>>'
-    |'=='
-    |'!='
-    |'<='
-    |'>='
-    |'+='
-    |'-='
-    |'*='
-    |'/='
-    |'%='
-    |'&='
-    |'|='
-    |'^='
-    |'<<='
-    |'>>='
-    |'->'	
-;
-terminal SINGLE_CHARACTER: .?;
-terminal ID: '^'?('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
-terminal INT returns ecore::EInt: ('0'..'9')+;
-terminal STRING	: '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' 
-			|"'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* "'"; 
-terminal ML_COMMENT: '/*' -> '*/';
-terminal SL_COMMENT:'//' !('\n'|'\r')* ('\r'? '\n')?;
-terminal WS: (' '|'\t'|'\r'|'\n')+;
-terminal QUOTES :
-	'{' -> '}'
-;
+	| '}'
+	| '['
+	| ']'
+	| '('
+	| ')'
+	| '.'
+	| ','
+	| ':'
+	| SEMICOLON
+	| '+'
+	| '-'
+	| '*'
+	| '/'
+	| '%'
+	| '&'
+	| '|'
+	| '^'
+	| '!'
+	| '~'
+	| '='
+	| '<'
+	| '>'
+	| '?'
+	| '++'
+	| '--'
+	| '&&'
+	| '||'
+	| '<<'
+	| '>>'
+	| '=='
+	| '!='
+	| '<='
+	| '>='
+	| '+='
+	| '-='
+	| '*='
+	| '/='
+	| '%='
+	| '&='
+	| '|='
+	| '^='
+	| '<<='
+	| '>>='
+	| '->';
+
+terminal SINGLE_CHARACTER:
+	.?;
+
+terminal ID:
+	'^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
+
+terminal INT returns ecore::EInt:
+	('0'..'9')+;
+
+terminal STRING:
+	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"'))* '"'
+	| "'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'"))* "'";
+
+terminal ML_COMMENT:
+	'/*'->'*/';
+
+terminal SL_COMMENT:
+	'//' !('\n' | '\r')* ('\r'? '\n')?;
+
+terminal WS:
+	(' ' | '\t' | '\r' | '\n')+;
+
+terminal QUOTES:
+	'{'->'}';
 
 
  
