@@ -21,10 +21,13 @@ import org.xtext.example.myModel.cSharp.AttributeSection;
 import org.xtext.example.myModel.cSharp.Attributes;
 import org.xtext.example.myModel.cSharp.BinaryOperatorDeclarator;
 import org.xtext.example.myModel.cSharp.Block;
+import org.xtext.example.myModel.cSharp.Bool;
 import org.xtext.example.myModel.cSharp.BreakStatement;
+import org.xtext.example.myModel.cSharp.BuiltInClassType;
 import org.xtext.example.myModel.cSharp.BuiltInType;
 import org.xtext.example.myModel.cSharp.CSharpPackage;
 import org.xtext.example.myModel.cSharp.CatchClauses;
+import org.xtext.example.myModel.cSharp.Char;
 import org.xtext.example.myModel.cSharp.ClassBase;
 import org.xtext.example.myModel.cSharp.ClassBody;
 import org.xtext.example.myModel.cSharp.ClassDeclaration;
@@ -37,6 +40,7 @@ import org.xtext.example.myModel.cSharp.ConstructorDeclarator;
 import org.xtext.example.myModel.cSharp.ConstructorInitializer;
 import org.xtext.example.myModel.cSharp.ContinueStatement;
 import org.xtext.example.myModel.cSharp.ConversionOperatorDeclarator;
+import org.xtext.example.myModel.cSharp.Decimal;
 import org.xtext.example.myModel.cSharp.DeclarationStatment;
 import org.xtext.example.myModel.cSharp.DelegateDeclaration;
 import org.xtext.example.myModel.cSharp.DestructorDeclaration;
@@ -46,7 +50,6 @@ import org.xtext.example.myModel.cSharp.EmbeddedStatement;
 import org.xtext.example.myModel.cSharp.EnumBody;
 import org.xtext.example.myModel.cSharp.EnumDeclaration;
 import org.xtext.example.myModel.cSharp.EnumMemberDeclaration;
-import org.xtext.example.myModel.cSharp.EnumType;
 import org.xtext.example.myModel.cSharp.EventAccessorDeclarations;
 import org.xtext.example.myModel.cSharp.EventDeclaration;
 import org.xtext.example.myModel.cSharp.Expression;
@@ -69,6 +72,7 @@ import org.xtext.example.myModel.cSharp.Identifier;
 import org.xtext.example.myModel.cSharp.IfStatement;
 import org.xtext.example.myModel.cSharp.IndexerDeclaration;
 import org.xtext.example.myModel.cSharp.IndexerDeclarator;
+import org.xtext.example.myModel.cSharp.Int;
 import org.xtext.example.myModel.cSharp.IntegralType;
 import org.xtext.example.myModel.cSharp.InterfaceAccessors;
 import org.xtext.example.myModel.cSharp.InterfaceBody;
@@ -87,7 +91,6 @@ import org.xtext.example.myModel.cSharp.LockStatement;
 import org.xtext.example.myModel.cSharp.MaybeEmptyBlock;
 import org.xtext.example.myModel.cSharp.MethodDeclaration;
 import org.xtext.example.myModel.cSharp.MethodHeader;
-import org.xtext.example.myModel.cSharp.Model;
 import org.xtext.example.myModel.cSharp.NamespaceBody;
 import org.xtext.example.myModel.cSharp.NamespaceDeclaration;
 import org.xtext.example.myModel.cSharp.NamespaceMemberDeclaration;
@@ -103,6 +106,7 @@ import org.xtext.example.myModel.cSharp.QualifiedIdentifierList;
 import org.xtext.example.myModel.cSharp.RemoveAccessorDeclaration;
 import org.xtext.example.myModel.cSharp.ResourceAquisition;
 import org.xtext.example.myModel.cSharp.ReturnStatement;
+import org.xtext.example.myModel.cSharp.SByte;
 import org.xtext.example.myModel.cSharp.SelectionStatement;
 import org.xtext.example.myModel.cSharp.SetAccessorDeclaration;
 import org.xtext.example.myModel.cSharp.SpecificCatchClause;
@@ -110,11 +114,6 @@ import org.xtext.example.myModel.cSharp.Statement;
 import org.xtext.example.myModel.cSharp.StatementExpression;
 import org.xtext.example.myModel.cSharp.StatementExpressionList;
 import org.xtext.example.myModel.cSharp.StaticConstructorDeclaration;
-import org.xtext.example.myModel.cSharp.StructBody;
-import org.xtext.example.myModel.cSharp.StructDeclaration;
-import org.xtext.example.myModel.cSharp.StructMemberDeclaration;
-import org.xtext.example.myModel.cSharp.StructMemberDeclarations;
-import org.xtext.example.myModel.cSharp.StructMemberDeclarations2;
 import org.xtext.example.myModel.cSharp.SwitchLabel;
 import org.xtext.example.myModel.cSharp.SwitchSection;
 import org.xtext.example.myModel.cSharp.SwitchStatement;
@@ -123,6 +122,9 @@ import org.xtext.example.myModel.cSharp.TryStatement;
 import org.xtext.example.myModel.cSharp.Type;
 import org.xtext.example.myModel.cSharp.TypeDeclaration;
 import org.xtext.example.myModel.cSharp.TypeOrVoid;
+import org.xtext.example.myModel.cSharp.UInt;
+import org.xtext.example.myModel.cSharp.ULong;
+import org.xtext.example.myModel.cSharp.UShort;
 import org.xtext.example.myModel.cSharp.UnaryExpression;
 import org.xtext.example.myModel.cSharp.UnaryOperatorDeclarator;
 import org.xtext.example.myModel.cSharp.UsingDirective;
@@ -194,10 +196,10 @@ public class CSharpSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
-      case CSharpPackage.MODEL:
+      case CSharpPackage.COMPILATION_UNIT:
       {
-        Model model = (Model)theEObject;
-        T result = caseModel(model);
+        CompilationUnit compilationUnit = (CompilationUnit)theEObject;
+        T result = caseCompilationUnit(compilationUnit);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -205,14 +207,187 @@ public class CSharpSwitch<T> extends Switch<T>
       {
         Identifier identifier = (Identifier)theEObject;
         T result = caseIdentifier(identifier);
-        if (result == null) result = caseConstructorDeclarator(identifier);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case CSharpPackage.COMPILATION_UNIT:
+      case CSharpPackage.USING_DIRECTIVE:
       {
-        CompilationUnit compilationUnit = (CompilationUnit)theEObject;
-        T result = caseCompilationUnit(compilationUnit);
+        UsingDirective usingDirective = (UsingDirective)theEObject;
+        T result = caseUsingDirective(usingDirective);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.ARRAY_TYPE:
+      {
+        ArrayType arrayType = (ArrayType)theEObject;
+        T result = caseArrayType(arrayType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.GLOBAL_ATTRIBUTES:
+      {
+        GlobalAttributes globalAttributes = (GlobalAttributes)theEObject;
+        T result = caseGlobalAttributes(globalAttributes);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.GLOBAL_ATTRIBUTE_SECTION:
+      {
+        GlobalAttributeSection globalAttributeSection = (GlobalAttributeSection)theEObject;
+        T result = caseGlobalAttributeSection(globalAttributeSection);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.ATTRIBUTES:
+      {
+        Attributes attributes = (Attributes)theEObject;
+        T result = caseAttributes(attributes);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.ATTRIBUTE_SECTION:
+      {
+        AttributeSection attributeSection = (AttributeSection)theEObject;
+        T result = caseAttributeSection(attributeSection);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.ATTRIBUTE_LIST:
+      {
+        AttributeList attributeList = (AttributeList)theEObject;
+        T result = caseAttributeList(attributeList);
+        if (result == null) result = caseAttributeSection(attributeList);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.ATTRIBUTE:
+      {
+        Attribute attribute = (Attribute)theEObject;
+        T result = caseAttribute(attribute);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.ATTRIBUTE_ARGUMENTS:
+      {
+        AttributeArguments attributeArguments = (AttributeArguments)theEObject;
+        T result = caseAttributeArguments(attributeArguments);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.EXPRESSION_LIST:
+      {
+        ExpressionList expressionList = (ExpressionList)theEObject;
+        T result = caseExpressionList(expressionList);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.EXPRESSION:
+      {
+        Expression expression = (Expression)theEObject;
+        T result = caseExpression(expression);
+        if (result == null) result = caseVariableInitializer(expression);
+        if (result == null) result = caseArgument(expression);
+        if (result == null) result = caseResourceAquisition(expression);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.EXPRESSION2:
+      {
+        Expression2 expression2 = (Expression2)theEObject;
+        T result = caseExpression2(expression2);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.UNARY_EXPRESSION:
+      {
+        UnaryExpression unaryExpression = (UnaryExpression)theEObject;
+        T result = caseUnaryExpression(unaryExpression);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.PRIMARY_EXPRESSION:
+      {
+        PrimaryExpression primaryExpression = (PrimaryExpression)theEObject;
+        T result = casePrimaryExpression(primaryExpression);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.PRIMARY_EXPRESSION2:
+      {
+        PrimaryExpression2 primaryExpression2 = (PrimaryExpression2)theEObject;
+        T result = casePrimaryExpression2(primaryExpression2);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.ARRAY_INITIALIZER:
+      {
+        ArrayInitializer arrayInitializer = (ArrayInitializer)theEObject;
+        T result = caseArrayInitializer(arrayInitializer);
+        if (result == null) result = caseVariableInitializer(arrayInitializer);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.VARIABLE_INITIALIZER:
+      {
+        VariableInitializer variableInitializer = (VariableInitializer)theEObject;
+        T result = caseVariableInitializer(variableInitializer);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.ATTRIBUTE_NAME:
+      {
+        AttributeName attributeName = (AttributeName)theEObject;
+        T result = caseAttributeName(attributeName);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.TYPE:
+      {
+        Type type = (Type)theEObject;
+        T result = caseType(type);
+        if (result == null) result = caseEventDeclaration(type);
+        if (result == null) result = casePropertyDeclaration(type);
+        if (result == null) result = caseFieldDeclaration(type);
+        if (result == null) result = caseConstantDeclaration(type);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.INTEGRAL_TYPE:
+      {
+        IntegralType integralType = (IntegralType)theEObject;
+        T result = caseIntegralType(integralType);
+        if (result == null) result = caseBuiltInType(integralType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.NON_ARRAY_TYPE:
+      {
+        NonArrayType nonArrayType = (NonArrayType)theEObject;
+        T result = caseNonArrayType(nonArrayType);
+        if (result == null) result = caseArrayType(nonArrayType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.BUILT_IN_TYPE:
+      {
+        BuiltInType builtInType = (BuiltInType)theEObject;
+        T result = caseBuiltInType(builtInType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.BUILT_IN_CLASS_TYPE:
+      {
+        BuiltInClassType builtInClassType = (BuiltInClassType)theEObject;
+        T result = caseBuiltInClassType(builtInClassType);
+        if (result == null) result = caseBuiltInType(builtInClassType);
+        if (result == null) result = caseClassBase(builtInClassType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.QUALIFIED_IDENTIFIER:
+      {
+        QualifiedIdentifier qualifiedIdentifier = (QualifiedIdentifier)theEObject;
+        T result = caseQualifiedIdentifier(qualifiedIdentifier);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -241,9 +416,6 @@ public class CSharpSwitch<T> extends Switch<T>
       {
         TypeDeclaration typeDeclaration = (TypeDeclaration)theEObject;
         T result = caseTypeDeclaration(typeDeclaration);
-        if (result == null) result = caseStructMemberDeclaration(typeDeclaration);
-        if (result == null) result = caseStructMemberDeclarations(typeDeclaration);
-        if (result == null) result = caseStructMemberDeclarations2(typeDeclaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -258,6 +430,20 @@ public class CSharpSwitch<T> extends Switch<T>
       {
         EnumDeclaration enumDeclaration = (EnumDeclaration)theEObject;
         T result = caseEnumDeclaration(enumDeclaration);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.ENUM_BODY:
+      {
+        EnumBody enumBody = (EnumBody)theEObject;
+        T result = caseEnumBody(enumBody);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.ENUM_MEMBER_DECLARATION:
+      {
+        EnumMemberDeclaration enumMemberDeclaration = (EnumMemberDeclaration)theEObject;
+        T result = caseEnumMemberDeclaration(enumMemberDeclaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -317,43 +503,6 @@ public class CSharpSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case CSharpPackage.STRUCT_DECLARATION:
-      {
-        StructDeclaration structDeclaration = (StructDeclaration)theEObject;
-        T result = caseStructDeclaration(structDeclaration);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.STRUCT_BODY:
-      {
-        StructBody structBody = (StructBody)theEObject;
-        T result = caseStructBody(structBody);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.STRUCT_MEMBER_DECLARATIONS:
-      {
-        StructMemberDeclarations structMemberDeclarations = (StructMemberDeclarations)theEObject;
-        T result = caseStructMemberDeclarations(structMemberDeclarations);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.STRUCT_MEMBER_DECLARATIONS2:
-      {
-        StructMemberDeclarations2 structMemberDeclarations2 = (StructMemberDeclarations2)theEObject;
-        T result = caseStructMemberDeclarations2(structMemberDeclarations2);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.STRUCT_MEMBER_DECLARATION:
-      {
-        StructMemberDeclaration structMemberDeclaration = (StructMemberDeclaration)theEObject;
-        T result = caseStructMemberDeclaration(structMemberDeclaration);
-        if (result == null) result = caseStructMemberDeclarations(structMemberDeclaration);
-        if (result == null) result = caseStructMemberDeclarations2(structMemberDeclaration);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case CSharpPackage.CLASS_DECLARATION:
       {
         ClassDeclaration classDeclaration = (ClassDeclaration)theEObject;
@@ -379,9 +528,6 @@ public class CSharpSwitch<T> extends Switch<T>
       {
         StaticConstructorDeclaration staticConstructorDeclaration = (StaticConstructorDeclaration)theEObject;
         T result = caseStaticConstructorDeclaration(staticConstructorDeclaration);
-        if (result == null) result = caseStructMemberDeclaration(staticConstructorDeclaration);
-        if (result == null) result = caseStructMemberDeclarations(staticConstructorDeclaration);
-        if (result == null) result = caseStructMemberDeclarations2(staticConstructorDeclaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -396,9 +542,6 @@ public class CSharpSwitch<T> extends Switch<T>
       {
         ConstructorDeclaration constructorDeclaration = (ConstructorDeclaration)theEObject;
         T result = caseConstructorDeclaration(constructorDeclaration);
-        if (result == null) result = caseStructMemberDeclaration(constructorDeclaration);
-        if (result == null) result = caseStructMemberDeclarations(constructorDeclaration);
-        if (result == null) result = caseStructMemberDeclarations2(constructorDeclaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -435,9 +578,6 @@ public class CSharpSwitch<T> extends Switch<T>
       {
         OperatorDeclaration operatorDeclaration = (OperatorDeclaration)theEObject;
         T result = caseOperatorDeclaration(operatorDeclaration);
-        if (result == null) result = caseStructMemberDeclaration(operatorDeclaration);
-        if (result == null) result = caseStructMemberDeclarations(operatorDeclaration);
-        if (result == null) result = caseStructMemberDeclarations2(operatorDeclaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -476,9 +616,6 @@ public class CSharpSwitch<T> extends Switch<T>
       {
         IndexerDeclaration indexerDeclaration = (IndexerDeclaration)theEObject;
         T result = caseIndexerDeclaration(indexerDeclaration);
-        if (result == null) result = caseStructMemberDeclaration(indexerDeclaration);
-        if (result == null) result = caseStructMemberDeclarations(indexerDeclaration);
-        if (result == null) result = caseStructMemberDeclarations2(indexerDeclaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -493,9 +630,6 @@ public class CSharpSwitch<T> extends Switch<T>
       {
         EventDeclaration eventDeclaration = (EventDeclaration)theEObject;
         T result = caseEventDeclaration(eventDeclaration);
-        if (result == null) result = caseStructMemberDeclaration(eventDeclaration);
-        if (result == null) result = caseStructMemberDeclarations(eventDeclaration);
-        if (result == null) result = caseStructMemberDeclarations2(eventDeclaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -524,9 +658,6 @@ public class CSharpSwitch<T> extends Switch<T>
       {
         PropertyDeclaration propertyDeclaration = (PropertyDeclaration)theEObject;
         T result = casePropertyDeclaration(propertyDeclaration);
-        if (result == null) result = caseStructMemberDeclaration(propertyDeclaration);
-        if (result == null) result = caseStructMemberDeclarations(propertyDeclaration);
-        if (result == null) result = caseStructMemberDeclarations2(propertyDeclaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -555,10 +686,6 @@ public class CSharpSwitch<T> extends Switch<T>
       {
         MethodDeclaration methodDeclaration = (MethodDeclaration)theEObject;
         T result = caseMethodDeclaration(methodDeclaration);
-        if (result == null) result = caseStructMemberDeclaration(methodDeclaration);
-        if (result == null) result = caseClassMemberDeclaration(methodDeclaration);
-        if (result == null) result = caseStructMemberDeclarations(methodDeclaration);
-        if (result == null) result = caseStructMemberDeclarations2(methodDeclaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -610,9 +737,6 @@ public class CSharpSwitch<T> extends Switch<T>
       {
         FieldDeclaration fieldDeclaration = (FieldDeclaration)theEObject;
         T result = caseFieldDeclaration(fieldDeclaration);
-        if (result == null) result = caseStructMemberDeclaration(fieldDeclaration);
-        if (result == null) result = caseStructMemberDeclarations(fieldDeclaration);
-        if (result == null) result = caseStructMemberDeclarations2(fieldDeclaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -623,28 +747,10 @@ public class CSharpSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case CSharpPackage.VARIABLE_INITIALIZER:
-      {
-        VariableInitializer variableInitializer = (VariableInitializer)theEObject;
-        T result = caseVariableInitializer(variableInitializer);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.ARRAY_INITIALIZER:
-      {
-        ArrayInitializer arrayInitializer = (ArrayInitializer)theEObject;
-        T result = caseArrayInitializer(arrayInitializer);
-        if (result == null) result = caseVariableInitializer(arrayInitializer);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case CSharpPackage.CONSTANT_DECLARATION:
       {
         ConstantDeclaration constantDeclaration = (ConstantDeclaration)theEObject;
         T result = caseConstantDeclaration(constantDeclaration);
-        if (result == null) result = caseStructMemberDeclaration(constantDeclaration);
-        if (result == null) result = caseStructMemberDeclarations(constantDeclaration);
-        if (result == null) result = caseStructMemberDeclarations2(constantDeclaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -666,176 +772,6 @@ public class CSharpSwitch<T> extends Switch<T>
       {
         QualifiedIdentifierList qualifiedIdentifierList = (QualifiedIdentifierList)theEObject;
         T result = caseQualifiedIdentifierList(qualifiedIdentifierList);
-        if (result == null) result = caseClassBase(qualifiedIdentifierList);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.GLOBAL_ATTRIBUTES:
-      {
-        GlobalAttributes globalAttributes = (GlobalAttributes)theEObject;
-        T result = caseGlobalAttributes(globalAttributes);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.GLOBAL_ATTRIBUTE_SECTION:
-      {
-        GlobalAttributeSection globalAttributeSection = (GlobalAttributeSection)theEObject;
-        T result = caseGlobalAttributeSection(globalAttributeSection);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.ATTRIBUTES:
-      {
-        Attributes attributes = (Attributes)theEObject;
-        T result = caseAttributes(attributes);
-        if (result == null) result = caseMethodHeader(attributes);
-        if (result == null) result = caseEnumType(attributes);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.ATTRIBUTE_SECTION:
-      {
-        AttributeSection attributeSection = (AttributeSection)theEObject;
-        T result = caseAttributeSection(attributeSection);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.ATTRIBUTE_LIST:
-      {
-        AttributeList attributeList = (AttributeList)theEObject;
-        T result = caseAttributeList(attributeList);
-        if (result == null) result = caseGlobalAttributeSection(attributeList);
-        if (result == null) result = caseAttributeSection(attributeList);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.ATTRIBUTE:
-      {
-        Attribute attribute = (Attribute)theEObject;
-        T result = caseAttribute(attribute);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.ATTRIBUTE_ARGUMENTS:
-      {
-        AttributeArguments attributeArguments = (AttributeArguments)theEObject;
-        T result = caseAttributeArguments(attributeArguments);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.EXPRESSION_LIST:
-      {
-        ExpressionList expressionList = (ExpressionList)theEObject;
-        T result = caseExpressionList(expressionList);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.EXPRESSION:
-      {
-        Expression expression = (Expression)theEObject;
-        T result = caseExpression(expression);
-        if (result == null) result = caseArgument(expression);
-        if (result == null) result = caseVariableInitializer(expression);
-        if (result == null) result = caseResourceAquisition(expression);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.EXPRESSION2:
-      {
-        Expression2 expression2 = (Expression2)theEObject;
-        T result = caseExpression2(expression2);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.UNARY_EXPRESSION:
-      {
-        UnaryExpression unaryExpression = (UnaryExpression)theEObject;
-        T result = caseUnaryExpression(unaryExpression);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.ATTRIBUTE_NAME:
-      {
-        AttributeName attributeName = (AttributeName)theEObject;
-        T result = caseAttributeName(attributeName);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.USING_DIRECTIVE:
-      {
-        UsingDirective usingDirective = (UsingDirective)theEObject;
-        T result = caseUsingDirective(usingDirective);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.TYPE:
-      {
-        Type type = (Type)theEObject;
-        T result = caseType(type);
-        if (result == null) result = caseEventDeclaration(type);
-        if (result == null) result = casePropertyDeclaration(type);
-        if (result == null) result = caseFieldDeclaration(type);
-        if (result == null) result = caseConstantDeclaration(type);
-        if (result == null) result = caseStructMemberDeclaration(type);
-        if (result == null) result = caseStructMemberDeclarations(type);
-        if (result == null) result = caseStructMemberDeclarations2(type);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.INTEGRAL_TYPE:
-      {
-        IntegralType integralType = (IntegralType)theEObject;
-        T result = caseIntegralType(integralType);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.ARRAY_TYPE:
-      {
-        ArrayType arrayType = (ArrayType)theEObject;
-        T result = caseArrayType(arrayType);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.ENUM_TYPE:
-      {
-        EnumType enumType = (EnumType)theEObject;
-        T result = caseEnumType(enumType);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.NON_ARRAY_TYPE:
-      {
-        NonArrayType nonArrayType = (NonArrayType)theEObject;
-        T result = caseNonArrayType(nonArrayType);
-        if (result == null) result = caseArrayType(nonArrayType);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.QUALIFIED_IDENTIFIER:
-      {
-        QualifiedIdentifier qualifiedIdentifier = (QualifiedIdentifier)theEObject;
-        T result = caseQualifiedIdentifier(qualifiedIdentifier);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.BUILT_IN_TYPE:
-      {
-        BuiltInType builtInType = (BuiltInType)theEObject;
-        T result = caseBuiltInType(builtInType);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.ENUM_BODY:
-      {
-        EnumBody enumBody = (EnumBody)theEObject;
-        T result = caseEnumBody(enumBody);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.ENUM_MEMBER_DECLARATION:
-      {
-        EnumMemberDeclaration enumMemberDeclaration = (EnumMemberDeclaration)theEObject;
-        T result = caseEnumMemberDeclaration(enumMemberDeclaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -1022,20 +958,6 @@ public class CSharpSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case CSharpPackage.PRIMARY_EXPRESSION:
-      {
-        PrimaryExpression primaryExpression = (PrimaryExpression)theEObject;
-        T result = casePrimaryExpression(primaryExpression);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CSharpPackage.PRIMARY_EXPRESSION2:
-      {
-        PrimaryExpression2 primaryExpression2 = (PrimaryExpression2)theEObject;
-        T result = casePrimaryExpression2(primaryExpression2);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case CSharpPackage.DO_STATEMENT:
       {
         DoStatement doStatement = (DoStatement)theEObject;
@@ -1098,6 +1020,9 @@ public class CSharpSwitch<T> extends Switch<T>
         T result = caseBlock(block);
         if (result == null) result = caseRemoveAccessorDeclaration(block);
         if (result == null) result = caseAddAccessorDeclaration(block);
+        if (result == null) result = caseMaybeEmptyBlock(block);
+        if (result == null) result = caseSetAccessorDeclaration(block);
+        if (result == null) result = caseGetAccessorDeclaration(block);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -1107,6 +1032,139 @@ public class CSharpSwitch<T> extends Switch<T>
         T result = caseMaybeEmptyBlock(maybeEmptyBlock);
         if (result == null) result = caseSetAccessorDeclaration(maybeEmptyBlock);
         if (result == null) result = caseGetAccessorDeclaration(maybeEmptyBlock);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.SBYTE:
+      {
+        SByte sByte = (SByte)theEObject;
+        T result = caseSByte(sByte);
+        if (result == null) result = caseIntegralType(sByte);
+        if (result == null) result = caseBuiltInType(sByte);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.BYTE:
+      {
+        org.xtext.example.myModel.cSharp.Byte byte_ = (org.xtext.example.myModel.cSharp.Byte)theEObject;
+        T result = caseByte(byte_);
+        if (result == null) result = caseIntegralType(byte_);
+        if (result == null) result = caseBuiltInType(byte_);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.SHORT:
+      {
+        org.xtext.example.myModel.cSharp.Short short_ = (org.xtext.example.myModel.cSharp.Short)theEObject;
+        T result = caseShort(short_);
+        if (result == null) result = caseIntegralType(short_);
+        if (result == null) result = caseBuiltInType(short_);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.USHORT:
+      {
+        UShort uShort = (UShort)theEObject;
+        T result = caseUShort(uShort);
+        if (result == null) result = caseIntegralType(uShort);
+        if (result == null) result = caseBuiltInType(uShort);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.INT:
+      {
+        Int int_ = (Int)theEObject;
+        T result = caseInt(int_);
+        if (result == null) result = caseIntegralType(int_);
+        if (result == null) result = caseBuiltInType(int_);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.UINT:
+      {
+        UInt uInt = (UInt)theEObject;
+        T result = caseUInt(uInt);
+        if (result == null) result = caseIntegralType(uInt);
+        if (result == null) result = caseBuiltInType(uInt);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.LONG:
+      {
+        org.xtext.example.myModel.cSharp.Long long_ = (org.xtext.example.myModel.cSharp.Long)theEObject;
+        T result = caseLong(long_);
+        if (result == null) result = caseIntegralType(long_);
+        if (result == null) result = caseBuiltInType(long_);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.ULONG:
+      {
+        ULong uLong = (ULong)theEObject;
+        T result = caseULong(uLong);
+        if (result == null) result = caseIntegralType(uLong);
+        if (result == null) result = caseBuiltInType(uLong);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.CHAR:
+      {
+        Char char_ = (Char)theEObject;
+        T result = caseChar(char_);
+        if (result == null) result = caseIntegralType(char_);
+        if (result == null) result = caseBuiltInType(char_);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.BOOL:
+      {
+        Bool bool = (Bool)theEObject;
+        T result = caseBool(bool);
+        if (result == null) result = caseBuiltInType(bool);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.DECIMAL:
+      {
+        Decimal decimal = (Decimal)theEObject;
+        T result = caseDecimal(decimal);
+        if (result == null) result = caseBuiltInType(decimal);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.FLOAT:
+      {
+        org.xtext.example.myModel.cSharp.Float float_ = (org.xtext.example.myModel.cSharp.Float)theEObject;
+        T result = caseFloat(float_);
+        if (result == null) result = caseBuiltInType(float_);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.DOUBLE:
+      {
+        org.xtext.example.myModel.cSharp.Double double_ = (org.xtext.example.myModel.cSharp.Double)theEObject;
+        T result = caseDouble(double_);
+        if (result == null) result = caseBuiltInType(double_);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.OBJECT:
+      {
+        org.xtext.example.myModel.cSharp.Object object = (org.xtext.example.myModel.cSharp.Object)theEObject;
+        T result = caseObject(object);
+        if (result == null) result = caseBuiltInClassType(object);
+        if (result == null) result = caseBuiltInType(object);
+        if (result == null) result = caseClassBase(object);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CSharpPackage.STRING:
+      {
+        org.xtext.example.myModel.cSharp.String string = (org.xtext.example.myModel.cSharp.String)theEObject;
+        T result = caseString(string);
+        if (result == null) result = caseBuiltInClassType(string);
+        if (result == null) result = caseBuiltInType(string);
+        if (result == null) result = caseClassBase(string);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -1124,17 +1182,17 @@ public class CSharpSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Model</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Compilation Unit</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Model</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Compilation Unit</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseModel(Model object)
+  public T caseCompilationUnit(CompilationUnit object)
   {
     return null;
   }
@@ -1156,17 +1214,385 @@ public class CSharpSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Compilation Unit</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Using Directive</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Compilation Unit</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Using Directive</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseCompilationUnit(CompilationUnit object)
+  public T caseUsingDirective(UsingDirective object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Array Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Array Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseArrayType(ArrayType object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Global Attributes</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Global Attributes</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGlobalAttributes(GlobalAttributes object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Global Attribute Section</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Global Attribute Section</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGlobalAttributeSection(GlobalAttributeSection object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Attributes</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Attributes</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAttributes(Attributes object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Attribute Section</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Attribute Section</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAttributeSection(AttributeSection object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Attribute List</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Attribute List</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAttributeList(AttributeList object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Attribute</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Attribute</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAttribute(Attribute object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Attribute Arguments</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Attribute Arguments</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAttributeArguments(AttributeArguments object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Expression List</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Expression List</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseExpressionList(ExpressionList object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseExpression(Expression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Expression2</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Expression2</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseExpression2(Expression2 object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Unary Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Unary Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseUnaryExpression(UnaryExpression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Primary Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Primary Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePrimaryExpression(PrimaryExpression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Primary Expression2</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Primary Expression2</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePrimaryExpression2(PrimaryExpression2 object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Array Initializer</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Array Initializer</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseArrayInitializer(ArrayInitializer object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Variable Initializer</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Variable Initializer</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseVariableInitializer(VariableInitializer object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Attribute Name</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Attribute Name</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAttributeName(AttributeName object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseType(Type object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Integral Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Integral Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseIntegralType(IntegralType object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Non Array Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Non Array Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNonArrayType(NonArrayType object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Built In Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Built In Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseBuiltInType(BuiltInType object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Built In Class Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Built In Class Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseBuiltInClassType(BuiltInClassType object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Qualified Identifier</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Qualified Identifier</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseQualifiedIdentifier(QualifiedIdentifier object)
   {
     return null;
   }
@@ -1263,6 +1689,38 @@ public class CSharpSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseEnumDeclaration(EnumDeclaration object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Enum Body</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Enum Body</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEnumBody(EnumBody object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Enum Member Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Enum Member Declaration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEnumMemberDeclaration(EnumMemberDeclaration object)
   {
     return null;
   }
@@ -1391,86 +1849,6 @@ public class CSharpSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseInterfaceMethodDeclaration(InterfaceMethodDeclaration object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Struct Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Struct Declaration</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseStructDeclaration(StructDeclaration object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Struct Body</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Struct Body</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseStructBody(StructBody object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Struct Member Declarations</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Struct Member Declarations</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseStructMemberDeclarations(StructMemberDeclarations object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Struct Member Declarations2</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Struct Member Declarations2</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseStructMemberDeclarations2(StructMemberDeclarations2 object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Struct Member Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Struct Member Declaration</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseStructMemberDeclaration(StructMemberDeclaration object)
   {
     return null;
   }
@@ -2020,38 +2398,6 @@ public class CSharpSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Variable Initializer</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Variable Initializer</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseVariableInitializer(VariableInitializer object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Array Initializer</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Array Initializer</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseArrayInitializer(ArrayInitializer object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Constant Declaration</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -2111,358 +2457,6 @@ public class CSharpSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseQualifiedIdentifierList(QualifiedIdentifierList object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Global Attributes</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Global Attributes</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseGlobalAttributes(GlobalAttributes object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Global Attribute Section</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Global Attribute Section</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseGlobalAttributeSection(GlobalAttributeSection object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Attributes</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Attributes</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAttributes(Attributes object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Attribute Section</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Attribute Section</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAttributeSection(AttributeSection object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Attribute List</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Attribute List</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAttributeList(AttributeList object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Attribute</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Attribute</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAttribute(Attribute object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Attribute Arguments</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Attribute Arguments</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAttributeArguments(AttributeArguments object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Expression List</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Expression List</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseExpressionList(ExpressionList object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Expression</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Expression</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseExpression(Expression object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Expression2</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Expression2</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseExpression2(Expression2 object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Unary Expression</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Unary Expression</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseUnaryExpression(UnaryExpression object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Attribute Name</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Attribute Name</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAttributeName(AttributeName object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Using Directive</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Using Directive</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseUsingDirective(UsingDirective object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Type</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Type</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseType(Type object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Integral Type</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Integral Type</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseIntegralType(IntegralType object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Array Type</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Array Type</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseArrayType(ArrayType object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Enum Type</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Enum Type</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseEnumType(EnumType object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Non Array Type</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Non Array Type</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseNonArrayType(NonArrayType object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Qualified Identifier</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Qualified Identifier</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseQualifiedIdentifier(QualifiedIdentifier object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Built In Type</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Built In Type</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseBuiltInType(BuiltInType object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Enum Body</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Enum Body</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseEnumBody(EnumBody object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Enum Member Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Enum Member Declaration</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseEnumMemberDeclaration(EnumMemberDeclaration object)
   {
     return null;
   }
@@ -2884,38 +2878,6 @@ public class CSharpSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Primary Expression</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Primary Expression</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T casePrimaryExpression(PrimaryExpression object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Primary Expression2</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Primary Expression2</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T casePrimaryExpression2(PrimaryExpression2 object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Do Statement</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -3071,6 +3033,246 @@ public class CSharpSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseMaybeEmptyBlock(MaybeEmptyBlock object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>SByte</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>SByte</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSByte(SByte object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Byte</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Byte</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseByte(org.xtext.example.myModel.cSharp.Byte object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Short</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Short</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseShort(org.xtext.example.myModel.cSharp.Short object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>UShort</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>UShort</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseUShort(UShort object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Int</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Int</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseInt(Int object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>UInt</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>UInt</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseUInt(UInt object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Long</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Long</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLong(org.xtext.example.myModel.cSharp.Long object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>ULong</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>ULong</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseULong(ULong object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Char</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Char</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseChar(Char object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Bool</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Bool</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseBool(Bool object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Decimal</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Decimal</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDecimal(Decimal object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Float</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Float</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseFloat(org.xtext.example.myModel.cSharp.Float object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Double</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Double</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDouble(org.xtext.example.myModel.cSharp.Double object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Object</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Object</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseObject(org.xtext.example.myModel.cSharp.Object object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>String</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>String</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseString(org.xtext.example.myModel.cSharp.String object)
   {
     return null;
   }

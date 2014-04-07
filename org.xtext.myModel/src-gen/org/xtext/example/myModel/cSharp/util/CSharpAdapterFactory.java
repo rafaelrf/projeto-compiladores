@@ -23,10 +23,13 @@ import org.xtext.example.myModel.cSharp.AttributeSection;
 import org.xtext.example.myModel.cSharp.Attributes;
 import org.xtext.example.myModel.cSharp.BinaryOperatorDeclarator;
 import org.xtext.example.myModel.cSharp.Block;
+import org.xtext.example.myModel.cSharp.Bool;
 import org.xtext.example.myModel.cSharp.BreakStatement;
+import org.xtext.example.myModel.cSharp.BuiltInClassType;
 import org.xtext.example.myModel.cSharp.BuiltInType;
 import org.xtext.example.myModel.cSharp.CSharpPackage;
 import org.xtext.example.myModel.cSharp.CatchClauses;
+import org.xtext.example.myModel.cSharp.Char;
 import org.xtext.example.myModel.cSharp.ClassBase;
 import org.xtext.example.myModel.cSharp.ClassBody;
 import org.xtext.example.myModel.cSharp.ClassDeclaration;
@@ -39,6 +42,7 @@ import org.xtext.example.myModel.cSharp.ConstructorDeclarator;
 import org.xtext.example.myModel.cSharp.ConstructorInitializer;
 import org.xtext.example.myModel.cSharp.ContinueStatement;
 import org.xtext.example.myModel.cSharp.ConversionOperatorDeclarator;
+import org.xtext.example.myModel.cSharp.Decimal;
 import org.xtext.example.myModel.cSharp.DeclarationStatment;
 import org.xtext.example.myModel.cSharp.DelegateDeclaration;
 import org.xtext.example.myModel.cSharp.DestructorDeclaration;
@@ -48,7 +52,6 @@ import org.xtext.example.myModel.cSharp.EmbeddedStatement;
 import org.xtext.example.myModel.cSharp.EnumBody;
 import org.xtext.example.myModel.cSharp.EnumDeclaration;
 import org.xtext.example.myModel.cSharp.EnumMemberDeclaration;
-import org.xtext.example.myModel.cSharp.EnumType;
 import org.xtext.example.myModel.cSharp.EventAccessorDeclarations;
 import org.xtext.example.myModel.cSharp.EventDeclaration;
 import org.xtext.example.myModel.cSharp.Expression;
@@ -71,6 +74,7 @@ import org.xtext.example.myModel.cSharp.Identifier;
 import org.xtext.example.myModel.cSharp.IfStatement;
 import org.xtext.example.myModel.cSharp.IndexerDeclaration;
 import org.xtext.example.myModel.cSharp.IndexerDeclarator;
+import org.xtext.example.myModel.cSharp.Int;
 import org.xtext.example.myModel.cSharp.IntegralType;
 import org.xtext.example.myModel.cSharp.InterfaceAccessors;
 import org.xtext.example.myModel.cSharp.InterfaceBody;
@@ -89,7 +93,6 @@ import org.xtext.example.myModel.cSharp.LockStatement;
 import org.xtext.example.myModel.cSharp.MaybeEmptyBlock;
 import org.xtext.example.myModel.cSharp.MethodDeclaration;
 import org.xtext.example.myModel.cSharp.MethodHeader;
-import org.xtext.example.myModel.cSharp.Model;
 import org.xtext.example.myModel.cSharp.NamespaceBody;
 import org.xtext.example.myModel.cSharp.NamespaceDeclaration;
 import org.xtext.example.myModel.cSharp.NamespaceMemberDeclaration;
@@ -105,6 +108,7 @@ import org.xtext.example.myModel.cSharp.QualifiedIdentifierList;
 import org.xtext.example.myModel.cSharp.RemoveAccessorDeclaration;
 import org.xtext.example.myModel.cSharp.ResourceAquisition;
 import org.xtext.example.myModel.cSharp.ReturnStatement;
+import org.xtext.example.myModel.cSharp.SByte;
 import org.xtext.example.myModel.cSharp.SelectionStatement;
 import org.xtext.example.myModel.cSharp.SetAccessorDeclaration;
 import org.xtext.example.myModel.cSharp.SpecificCatchClause;
@@ -112,11 +116,6 @@ import org.xtext.example.myModel.cSharp.Statement;
 import org.xtext.example.myModel.cSharp.StatementExpression;
 import org.xtext.example.myModel.cSharp.StatementExpressionList;
 import org.xtext.example.myModel.cSharp.StaticConstructorDeclaration;
-import org.xtext.example.myModel.cSharp.StructBody;
-import org.xtext.example.myModel.cSharp.StructDeclaration;
-import org.xtext.example.myModel.cSharp.StructMemberDeclaration;
-import org.xtext.example.myModel.cSharp.StructMemberDeclarations;
-import org.xtext.example.myModel.cSharp.StructMemberDeclarations2;
 import org.xtext.example.myModel.cSharp.SwitchLabel;
 import org.xtext.example.myModel.cSharp.SwitchSection;
 import org.xtext.example.myModel.cSharp.SwitchStatement;
@@ -125,6 +124,9 @@ import org.xtext.example.myModel.cSharp.TryStatement;
 import org.xtext.example.myModel.cSharp.Type;
 import org.xtext.example.myModel.cSharp.TypeDeclaration;
 import org.xtext.example.myModel.cSharp.TypeOrVoid;
+import org.xtext.example.myModel.cSharp.UInt;
+import org.xtext.example.myModel.cSharp.ULong;
+import org.xtext.example.myModel.cSharp.UShort;
 import org.xtext.example.myModel.cSharp.UnaryExpression;
 import org.xtext.example.myModel.cSharp.UnaryOperatorDeclarator;
 import org.xtext.example.myModel.cSharp.UsingDirective;
@@ -197,9 +199,9 @@ public class CSharpAdapterFactory extends AdapterFactoryImpl
     new CSharpSwitch<Adapter>()
     {
       @Override
-      public Adapter caseModel(Model object)
+      public Adapter caseCompilationUnit(CompilationUnit object)
       {
-        return createModelAdapter();
+        return createCompilationUnitAdapter();
       }
       @Override
       public Adapter caseIdentifier(Identifier object)
@@ -207,9 +209,124 @@ public class CSharpAdapterFactory extends AdapterFactoryImpl
         return createIdentifierAdapter();
       }
       @Override
-      public Adapter caseCompilationUnit(CompilationUnit object)
+      public Adapter caseUsingDirective(UsingDirective object)
       {
-        return createCompilationUnitAdapter();
+        return createUsingDirectiveAdapter();
+      }
+      @Override
+      public Adapter caseArrayType(ArrayType object)
+      {
+        return createArrayTypeAdapter();
+      }
+      @Override
+      public Adapter caseGlobalAttributes(GlobalAttributes object)
+      {
+        return createGlobalAttributesAdapter();
+      }
+      @Override
+      public Adapter caseGlobalAttributeSection(GlobalAttributeSection object)
+      {
+        return createGlobalAttributeSectionAdapter();
+      }
+      @Override
+      public Adapter caseAttributes(Attributes object)
+      {
+        return createAttributesAdapter();
+      }
+      @Override
+      public Adapter caseAttributeSection(AttributeSection object)
+      {
+        return createAttributeSectionAdapter();
+      }
+      @Override
+      public Adapter caseAttributeList(AttributeList object)
+      {
+        return createAttributeListAdapter();
+      }
+      @Override
+      public Adapter caseAttribute(Attribute object)
+      {
+        return createAttributeAdapter();
+      }
+      @Override
+      public Adapter caseAttributeArguments(AttributeArguments object)
+      {
+        return createAttributeArgumentsAdapter();
+      }
+      @Override
+      public Adapter caseExpressionList(ExpressionList object)
+      {
+        return createExpressionListAdapter();
+      }
+      @Override
+      public Adapter caseExpression(Expression object)
+      {
+        return createExpressionAdapter();
+      }
+      @Override
+      public Adapter caseExpression2(Expression2 object)
+      {
+        return createExpression2Adapter();
+      }
+      @Override
+      public Adapter caseUnaryExpression(UnaryExpression object)
+      {
+        return createUnaryExpressionAdapter();
+      }
+      @Override
+      public Adapter casePrimaryExpression(PrimaryExpression object)
+      {
+        return createPrimaryExpressionAdapter();
+      }
+      @Override
+      public Adapter casePrimaryExpression2(PrimaryExpression2 object)
+      {
+        return createPrimaryExpression2Adapter();
+      }
+      @Override
+      public Adapter caseArrayInitializer(ArrayInitializer object)
+      {
+        return createArrayInitializerAdapter();
+      }
+      @Override
+      public Adapter caseVariableInitializer(VariableInitializer object)
+      {
+        return createVariableInitializerAdapter();
+      }
+      @Override
+      public Adapter caseAttributeName(AttributeName object)
+      {
+        return createAttributeNameAdapter();
+      }
+      @Override
+      public Adapter caseType(Type object)
+      {
+        return createTypeAdapter();
+      }
+      @Override
+      public Adapter caseIntegralType(IntegralType object)
+      {
+        return createIntegralTypeAdapter();
+      }
+      @Override
+      public Adapter caseNonArrayType(NonArrayType object)
+      {
+        return createNonArrayTypeAdapter();
+      }
+      @Override
+      public Adapter caseBuiltInType(BuiltInType object)
+      {
+        return createBuiltInTypeAdapter();
+      }
+      @Override
+      public Adapter caseBuiltInClassType(BuiltInClassType object)
+      {
+        return createBuiltInClassTypeAdapter();
+      }
+      @Override
+      public Adapter caseQualifiedIdentifier(QualifiedIdentifier object)
+      {
+        return createQualifiedIdentifierAdapter();
       }
       @Override
       public Adapter caseNamespaceMemberDeclaration(NamespaceMemberDeclaration object)
@@ -240,6 +357,16 @@ public class CSharpAdapterFactory extends AdapterFactoryImpl
       public Adapter caseEnumDeclaration(EnumDeclaration object)
       {
         return createEnumDeclarationAdapter();
+      }
+      @Override
+      public Adapter caseEnumBody(EnumBody object)
+      {
+        return createEnumBodyAdapter();
+      }
+      @Override
+      public Adapter caseEnumMemberDeclaration(EnumMemberDeclaration object)
+      {
+        return createEnumMemberDeclarationAdapter();
       }
       @Override
       public Adapter caseInterfaceDeclaration(InterfaceDeclaration object)
@@ -280,31 +407,6 @@ public class CSharpAdapterFactory extends AdapterFactoryImpl
       public Adapter caseInterfaceMethodDeclaration(InterfaceMethodDeclaration object)
       {
         return createInterfaceMethodDeclarationAdapter();
-      }
-      @Override
-      public Adapter caseStructDeclaration(StructDeclaration object)
-      {
-        return createStructDeclarationAdapter();
-      }
-      @Override
-      public Adapter caseStructBody(StructBody object)
-      {
-        return createStructBodyAdapter();
-      }
-      @Override
-      public Adapter caseStructMemberDeclarations(StructMemberDeclarations object)
-      {
-        return createStructMemberDeclarationsAdapter();
-      }
-      @Override
-      public Adapter caseStructMemberDeclarations2(StructMemberDeclarations2 object)
-      {
-        return createStructMemberDeclarations2Adapter();
-      }
-      @Override
-      public Adapter caseStructMemberDeclaration(StructMemberDeclaration object)
-      {
-        return createStructMemberDeclarationAdapter();
       }
       @Override
       public Adapter caseClassDeclaration(ClassDeclaration object)
@@ -477,16 +579,6 @@ public class CSharpAdapterFactory extends AdapterFactoryImpl
         return createVariableDeclaratorAdapter();
       }
       @Override
-      public Adapter caseVariableInitializer(VariableInitializer object)
-      {
-        return createVariableInitializerAdapter();
-      }
-      @Override
-      public Adapter caseArrayInitializer(ArrayInitializer object)
-      {
-        return createArrayInitializerAdapter();
-      }
-      @Override
       public Adapter caseConstantDeclaration(ConstantDeclaration object)
       {
         return createConstantDeclarationAdapter();
@@ -505,116 +597,6 @@ public class CSharpAdapterFactory extends AdapterFactoryImpl
       public Adapter caseQualifiedIdentifierList(QualifiedIdentifierList object)
       {
         return createQualifiedIdentifierListAdapter();
-      }
-      @Override
-      public Adapter caseGlobalAttributes(GlobalAttributes object)
-      {
-        return createGlobalAttributesAdapter();
-      }
-      @Override
-      public Adapter caseGlobalAttributeSection(GlobalAttributeSection object)
-      {
-        return createGlobalAttributeSectionAdapter();
-      }
-      @Override
-      public Adapter caseAttributes(Attributes object)
-      {
-        return createAttributesAdapter();
-      }
-      @Override
-      public Adapter caseAttributeSection(AttributeSection object)
-      {
-        return createAttributeSectionAdapter();
-      }
-      @Override
-      public Adapter caseAttributeList(AttributeList object)
-      {
-        return createAttributeListAdapter();
-      }
-      @Override
-      public Adapter caseAttribute(Attribute object)
-      {
-        return createAttributeAdapter();
-      }
-      @Override
-      public Adapter caseAttributeArguments(AttributeArguments object)
-      {
-        return createAttributeArgumentsAdapter();
-      }
-      @Override
-      public Adapter caseExpressionList(ExpressionList object)
-      {
-        return createExpressionListAdapter();
-      }
-      @Override
-      public Adapter caseExpression(Expression object)
-      {
-        return createExpressionAdapter();
-      }
-      @Override
-      public Adapter caseExpression2(Expression2 object)
-      {
-        return createExpression2Adapter();
-      }
-      @Override
-      public Adapter caseUnaryExpression(UnaryExpression object)
-      {
-        return createUnaryExpressionAdapter();
-      }
-      @Override
-      public Adapter caseAttributeName(AttributeName object)
-      {
-        return createAttributeNameAdapter();
-      }
-      @Override
-      public Adapter caseUsingDirective(UsingDirective object)
-      {
-        return createUsingDirectiveAdapter();
-      }
-      @Override
-      public Adapter caseType(Type object)
-      {
-        return createTypeAdapter();
-      }
-      @Override
-      public Adapter caseIntegralType(IntegralType object)
-      {
-        return createIntegralTypeAdapter();
-      }
-      @Override
-      public Adapter caseArrayType(ArrayType object)
-      {
-        return createArrayTypeAdapter();
-      }
-      @Override
-      public Adapter caseEnumType(EnumType object)
-      {
-        return createEnumTypeAdapter();
-      }
-      @Override
-      public Adapter caseNonArrayType(NonArrayType object)
-      {
-        return createNonArrayTypeAdapter();
-      }
-      @Override
-      public Adapter caseQualifiedIdentifier(QualifiedIdentifier object)
-      {
-        return createQualifiedIdentifierAdapter();
-      }
-      @Override
-      public Adapter caseBuiltInType(BuiltInType object)
-      {
-        return createBuiltInTypeAdapter();
-      }
-      @Override
-      public Adapter caseEnumBody(EnumBody object)
-      {
-        return createEnumBodyAdapter();
-      }
-      @Override
-      public Adapter caseEnumMemberDeclaration(EnumMemberDeclaration object)
-      {
-        return createEnumMemberDeclarationAdapter();
       }
       @Override
       public Adapter caseStatement(Statement object)
@@ -747,16 +729,6 @@ public class CSharpAdapterFactory extends AdapterFactoryImpl
         return createStatementExpressionAdapter();
       }
       @Override
-      public Adapter casePrimaryExpression(PrimaryExpression object)
-      {
-        return createPrimaryExpressionAdapter();
-      }
-      @Override
-      public Adapter casePrimaryExpression2(PrimaryExpression2 object)
-      {
-        return createPrimaryExpression2Adapter();
-      }
-      @Override
       public Adapter caseDoStatement(DoStatement object)
       {
         return createDoStatementAdapter();
@@ -807,6 +779,81 @@ public class CSharpAdapterFactory extends AdapterFactoryImpl
         return createMaybeEmptyBlockAdapter();
       }
       @Override
+      public Adapter caseSByte(SByte object)
+      {
+        return createSByteAdapter();
+      }
+      @Override
+      public Adapter caseByte(org.xtext.example.myModel.cSharp.Byte object)
+      {
+        return createByteAdapter();
+      }
+      @Override
+      public Adapter caseShort(org.xtext.example.myModel.cSharp.Short object)
+      {
+        return createShortAdapter();
+      }
+      @Override
+      public Adapter caseUShort(UShort object)
+      {
+        return createUShortAdapter();
+      }
+      @Override
+      public Adapter caseInt(Int object)
+      {
+        return createIntAdapter();
+      }
+      @Override
+      public Adapter caseUInt(UInt object)
+      {
+        return createUIntAdapter();
+      }
+      @Override
+      public Adapter caseLong(org.xtext.example.myModel.cSharp.Long object)
+      {
+        return createLongAdapter();
+      }
+      @Override
+      public Adapter caseULong(ULong object)
+      {
+        return createULongAdapter();
+      }
+      @Override
+      public Adapter caseChar(Char object)
+      {
+        return createCharAdapter();
+      }
+      @Override
+      public Adapter caseBool(Bool object)
+      {
+        return createBoolAdapter();
+      }
+      @Override
+      public Adapter caseDecimal(Decimal object)
+      {
+        return createDecimalAdapter();
+      }
+      @Override
+      public Adapter caseFloat(org.xtext.example.myModel.cSharp.Float object)
+      {
+        return createFloatAdapter();
+      }
+      @Override
+      public Adapter caseDouble(org.xtext.example.myModel.cSharp.Double object)
+      {
+        return createDoubleAdapter();
+      }
+      @Override
+      public Adapter caseObject(org.xtext.example.myModel.cSharp.Object object)
+      {
+        return createObjectAdapter();
+      }
+      @Override
+      public Adapter caseString(org.xtext.example.myModel.cSharp.String object)
+      {
+        return createStringAdapter();
+      }
+      @Override
       public Adapter caseVoid(org.xtext.example.myModel.cSharp.Void object)
       {
         return createVoidAdapter();
@@ -834,16 +881,16 @@ public class CSharpAdapterFactory extends AdapterFactoryImpl
 
 
   /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Model <em>Model</em>}'.
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.CompilationUnit <em>Compilation Unit</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.Model
+   * @see org.xtext.example.myModel.cSharp.CompilationUnit
    * @generated
    */
-  public Adapter createModelAdapter()
+  public Adapter createCompilationUnitAdapter()
   {
     return null;
   }
@@ -864,16 +911,361 @@ public class CSharpAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.CompilationUnit <em>Compilation Unit</em>}'.
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.UsingDirective <em>Using Directive</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.CompilationUnit
+   * @see org.xtext.example.myModel.cSharp.UsingDirective
    * @generated
    */
-  public Adapter createCompilationUnitAdapter()
+  public Adapter createUsingDirectiveAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.ArrayType <em>Array Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.ArrayType
+   * @generated
+   */
+  public Adapter createArrayTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.GlobalAttributes <em>Global Attributes</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.GlobalAttributes
+   * @generated
+   */
+  public Adapter createGlobalAttributesAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.GlobalAttributeSection <em>Global Attribute Section</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.GlobalAttributeSection
+   * @generated
+   */
+  public Adapter createGlobalAttributeSectionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Attributes <em>Attributes</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.Attributes
+   * @generated
+   */
+  public Adapter createAttributesAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.AttributeSection <em>Attribute Section</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.AttributeSection
+   * @generated
+   */
+  public Adapter createAttributeSectionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.AttributeList <em>Attribute List</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.AttributeList
+   * @generated
+   */
+  public Adapter createAttributeListAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Attribute <em>Attribute</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.Attribute
+   * @generated
+   */
+  public Adapter createAttributeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.AttributeArguments <em>Attribute Arguments</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.AttributeArguments
+   * @generated
+   */
+  public Adapter createAttributeArgumentsAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.ExpressionList <em>Expression List</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.ExpressionList
+   * @generated
+   */
+  public Adapter createExpressionListAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Expression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.Expression
+   * @generated
+   */
+  public Adapter createExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Expression2 <em>Expression2</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.Expression2
+   * @generated
+   */
+  public Adapter createExpression2Adapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.UnaryExpression <em>Unary Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.UnaryExpression
+   * @generated
+   */
+  public Adapter createUnaryExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.PrimaryExpression <em>Primary Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.PrimaryExpression
+   * @generated
+   */
+  public Adapter createPrimaryExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.PrimaryExpression2 <em>Primary Expression2</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.PrimaryExpression2
+   * @generated
+   */
+  public Adapter createPrimaryExpression2Adapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.ArrayInitializer <em>Array Initializer</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.ArrayInitializer
+   * @generated
+   */
+  public Adapter createArrayInitializerAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.VariableInitializer <em>Variable Initializer</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.VariableInitializer
+   * @generated
+   */
+  public Adapter createVariableInitializerAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.AttributeName <em>Attribute Name</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.AttributeName
+   * @generated
+   */
+  public Adapter createAttributeNameAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Type <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.Type
+   * @generated
+   */
+  public Adapter createTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.IntegralType <em>Integral Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.IntegralType
+   * @generated
+   */
+  public Adapter createIntegralTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.NonArrayType <em>Non Array Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.NonArrayType
+   * @generated
+   */
+  public Adapter createNonArrayTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.BuiltInType <em>Built In Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.BuiltInType
+   * @generated
+   */
+  public Adapter createBuiltInTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.BuiltInClassType <em>Built In Class Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.BuiltInClassType
+   * @generated
+   */
+  public Adapter createBuiltInClassTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.QualifiedIdentifier <em>Qualified Identifier</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.QualifiedIdentifier
+   * @generated
+   */
+  public Adapter createQualifiedIdentifierAdapter()
   {
     return null;
   }
@@ -964,6 +1356,36 @@ public class CSharpAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createEnumDeclarationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.EnumBody <em>Enum Body</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.EnumBody
+   * @generated
+   */
+  public Adapter createEnumBodyAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.EnumMemberDeclaration <em>Enum Member Declaration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.EnumMemberDeclaration
+   * @generated
+   */
+  public Adapter createEnumMemberDeclarationAdapter()
   {
     return null;
   }
@@ -1084,81 +1506,6 @@ public class CSharpAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createInterfaceMethodDeclarationAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.StructDeclaration <em>Struct Declaration</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.StructDeclaration
-   * @generated
-   */
-  public Adapter createStructDeclarationAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.StructBody <em>Struct Body</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.StructBody
-   * @generated
-   */
-  public Adapter createStructBodyAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.StructMemberDeclarations <em>Struct Member Declarations</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.StructMemberDeclarations
-   * @generated
-   */
-  public Adapter createStructMemberDeclarationsAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.StructMemberDeclarations2 <em>Struct Member Declarations2</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.StructMemberDeclarations2
-   * @generated
-   */
-  public Adapter createStructMemberDeclarations2Adapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.StructMemberDeclaration <em>Struct Member Declaration</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.StructMemberDeclaration
-   * @generated
-   */
-  public Adapter createStructMemberDeclarationAdapter()
   {
     return null;
   }
@@ -1674,36 +2021,6 @@ public class CSharpAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.VariableInitializer <em>Variable Initializer</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.VariableInitializer
-   * @generated
-   */
-  public Adapter createVariableInitializerAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.ArrayInitializer <em>Array Initializer</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.ArrayInitializer
-   * @generated
-   */
-  public Adapter createArrayInitializerAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.ConstantDeclaration <em>Constant Declaration</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -1759,336 +2076,6 @@ public class CSharpAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createQualifiedIdentifierListAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.GlobalAttributes <em>Global Attributes</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.GlobalAttributes
-   * @generated
-   */
-  public Adapter createGlobalAttributesAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.GlobalAttributeSection <em>Global Attribute Section</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.GlobalAttributeSection
-   * @generated
-   */
-  public Adapter createGlobalAttributeSectionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Attributes <em>Attributes</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.Attributes
-   * @generated
-   */
-  public Adapter createAttributesAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.AttributeSection <em>Attribute Section</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.AttributeSection
-   * @generated
-   */
-  public Adapter createAttributeSectionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.AttributeList <em>Attribute List</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.AttributeList
-   * @generated
-   */
-  public Adapter createAttributeListAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Attribute <em>Attribute</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.Attribute
-   * @generated
-   */
-  public Adapter createAttributeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.AttributeArguments <em>Attribute Arguments</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.AttributeArguments
-   * @generated
-   */
-  public Adapter createAttributeArgumentsAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.ExpressionList <em>Expression List</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.ExpressionList
-   * @generated
-   */
-  public Adapter createExpressionListAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Expression <em>Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.Expression
-   * @generated
-   */
-  public Adapter createExpressionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Expression2 <em>Expression2</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.Expression2
-   * @generated
-   */
-  public Adapter createExpression2Adapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.UnaryExpression <em>Unary Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.UnaryExpression
-   * @generated
-   */
-  public Adapter createUnaryExpressionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.AttributeName <em>Attribute Name</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.AttributeName
-   * @generated
-   */
-  public Adapter createAttributeNameAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.UsingDirective <em>Using Directive</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.UsingDirective
-   * @generated
-   */
-  public Adapter createUsingDirectiveAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Type <em>Type</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.Type
-   * @generated
-   */
-  public Adapter createTypeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.IntegralType <em>Integral Type</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.IntegralType
-   * @generated
-   */
-  public Adapter createIntegralTypeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.ArrayType <em>Array Type</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.ArrayType
-   * @generated
-   */
-  public Adapter createArrayTypeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.EnumType <em>Enum Type</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.EnumType
-   * @generated
-   */
-  public Adapter createEnumTypeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.NonArrayType <em>Non Array Type</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.NonArrayType
-   * @generated
-   */
-  public Adapter createNonArrayTypeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.QualifiedIdentifier <em>Qualified Identifier</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.QualifiedIdentifier
-   * @generated
-   */
-  public Adapter createQualifiedIdentifierAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.BuiltInType <em>Built In Type</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.BuiltInType
-   * @generated
-   */
-  public Adapter createBuiltInTypeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.EnumBody <em>Enum Body</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.EnumBody
-   * @generated
-   */
-  public Adapter createEnumBodyAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.EnumMemberDeclaration <em>Enum Member Declaration</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.EnumMemberDeclaration
-   * @generated
-   */
-  public Adapter createEnumMemberDeclarationAdapter()
   {
     return null;
   }
@@ -2484,36 +2471,6 @@ public class CSharpAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.PrimaryExpression <em>Primary Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.PrimaryExpression
-   * @generated
-   */
-  public Adapter createPrimaryExpressionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.PrimaryExpression2 <em>Primary Expression2</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.myModel.cSharp.PrimaryExpression2
-   * @generated
-   */
-  public Adapter createPrimaryExpression2Adapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.DoStatement <em>Do Statement</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -2659,6 +2616,231 @@ public class CSharpAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createMaybeEmptyBlockAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.SByte <em>SByte</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.SByte
+   * @generated
+   */
+  public Adapter createSByteAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Byte <em>Byte</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.Byte
+   * @generated
+   */
+  public Adapter createByteAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Short <em>Short</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.Short
+   * @generated
+   */
+  public Adapter createShortAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.UShort <em>UShort</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.UShort
+   * @generated
+   */
+  public Adapter createUShortAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Int <em>Int</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.Int
+   * @generated
+   */
+  public Adapter createIntAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.UInt <em>UInt</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.UInt
+   * @generated
+   */
+  public Adapter createUIntAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Long <em>Long</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.Long
+   * @generated
+   */
+  public Adapter createLongAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.ULong <em>ULong</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.ULong
+   * @generated
+   */
+  public Adapter createULongAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Char <em>Char</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.Char
+   * @generated
+   */
+  public Adapter createCharAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Bool <em>Bool</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.Bool
+   * @generated
+   */
+  public Adapter createBoolAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Decimal <em>Decimal</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.Decimal
+   * @generated
+   */
+  public Adapter createDecimalAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Float <em>Float</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.Float
+   * @generated
+   */
+  public Adapter createFloatAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Double <em>Double</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.Double
+   * @generated
+   */
+  public Adapter createDoubleAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.Object <em>Object</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.Object
+   * @generated
+   */
+  public Adapter createObjectAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.myModel.cSharp.String <em>String</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.myModel.cSharp.String
+   * @generated
+   */
+  public Adapter createStringAdapter()
   {
     return null;
   }

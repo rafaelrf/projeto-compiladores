@@ -24,11 +24,14 @@ import org.xtext.example.myModel.cSharp.AttributeSection;
 import org.xtext.example.myModel.cSharp.Attributes;
 import org.xtext.example.myModel.cSharp.BinaryOperatorDeclarator;
 import org.xtext.example.myModel.cSharp.Block;
+import org.xtext.example.myModel.cSharp.Bool;
 import org.xtext.example.myModel.cSharp.BreakStatement;
+import org.xtext.example.myModel.cSharp.BuiltInClassType;
 import org.xtext.example.myModel.cSharp.BuiltInType;
 import org.xtext.example.myModel.cSharp.CSharpFactory;
 import org.xtext.example.myModel.cSharp.CSharpPackage;
 import org.xtext.example.myModel.cSharp.CatchClauses;
+import org.xtext.example.myModel.cSharp.Char;
 import org.xtext.example.myModel.cSharp.ClassBase;
 import org.xtext.example.myModel.cSharp.ClassBody;
 import org.xtext.example.myModel.cSharp.ClassDeclaration;
@@ -41,6 +44,7 @@ import org.xtext.example.myModel.cSharp.ConstructorDeclarator;
 import org.xtext.example.myModel.cSharp.ConstructorInitializer;
 import org.xtext.example.myModel.cSharp.ContinueStatement;
 import org.xtext.example.myModel.cSharp.ConversionOperatorDeclarator;
+import org.xtext.example.myModel.cSharp.Decimal;
 import org.xtext.example.myModel.cSharp.DeclarationStatment;
 import org.xtext.example.myModel.cSharp.DelegateDeclaration;
 import org.xtext.example.myModel.cSharp.DestructorDeclaration;
@@ -50,7 +54,6 @@ import org.xtext.example.myModel.cSharp.EmbeddedStatement;
 import org.xtext.example.myModel.cSharp.EnumBody;
 import org.xtext.example.myModel.cSharp.EnumDeclaration;
 import org.xtext.example.myModel.cSharp.EnumMemberDeclaration;
-import org.xtext.example.myModel.cSharp.EnumType;
 import org.xtext.example.myModel.cSharp.EventAccessorDeclarations;
 import org.xtext.example.myModel.cSharp.EventDeclaration;
 import org.xtext.example.myModel.cSharp.Expression;
@@ -73,6 +76,7 @@ import org.xtext.example.myModel.cSharp.Identifier;
 import org.xtext.example.myModel.cSharp.IfStatement;
 import org.xtext.example.myModel.cSharp.IndexerDeclaration;
 import org.xtext.example.myModel.cSharp.IndexerDeclarator;
+import org.xtext.example.myModel.cSharp.Int;
 import org.xtext.example.myModel.cSharp.IntegralType;
 import org.xtext.example.myModel.cSharp.InterfaceAccessors;
 import org.xtext.example.myModel.cSharp.InterfaceBody;
@@ -91,7 +95,6 @@ import org.xtext.example.myModel.cSharp.LockStatement;
 import org.xtext.example.myModel.cSharp.MaybeEmptyBlock;
 import org.xtext.example.myModel.cSharp.MethodDeclaration;
 import org.xtext.example.myModel.cSharp.MethodHeader;
-import org.xtext.example.myModel.cSharp.Model;
 import org.xtext.example.myModel.cSharp.NamespaceBody;
 import org.xtext.example.myModel.cSharp.NamespaceDeclaration;
 import org.xtext.example.myModel.cSharp.NamespaceMemberDeclaration;
@@ -107,6 +110,7 @@ import org.xtext.example.myModel.cSharp.QualifiedIdentifierList;
 import org.xtext.example.myModel.cSharp.RemoveAccessorDeclaration;
 import org.xtext.example.myModel.cSharp.ResourceAquisition;
 import org.xtext.example.myModel.cSharp.ReturnStatement;
+import org.xtext.example.myModel.cSharp.SByte;
 import org.xtext.example.myModel.cSharp.SelectionStatement;
 import org.xtext.example.myModel.cSharp.SetAccessorDeclaration;
 import org.xtext.example.myModel.cSharp.SpecificCatchClause;
@@ -114,11 +118,6 @@ import org.xtext.example.myModel.cSharp.Statement;
 import org.xtext.example.myModel.cSharp.StatementExpression;
 import org.xtext.example.myModel.cSharp.StatementExpressionList;
 import org.xtext.example.myModel.cSharp.StaticConstructorDeclaration;
-import org.xtext.example.myModel.cSharp.StructBody;
-import org.xtext.example.myModel.cSharp.StructDeclaration;
-import org.xtext.example.myModel.cSharp.StructMemberDeclaration;
-import org.xtext.example.myModel.cSharp.StructMemberDeclarations;
-import org.xtext.example.myModel.cSharp.StructMemberDeclarations2;
 import org.xtext.example.myModel.cSharp.SwitchLabel;
 import org.xtext.example.myModel.cSharp.SwitchSection;
 import org.xtext.example.myModel.cSharp.SwitchStatement;
@@ -127,6 +126,9 @@ import org.xtext.example.myModel.cSharp.TryStatement;
 import org.xtext.example.myModel.cSharp.Type;
 import org.xtext.example.myModel.cSharp.TypeDeclaration;
 import org.xtext.example.myModel.cSharp.TypeOrVoid;
+import org.xtext.example.myModel.cSharp.UInt;
+import org.xtext.example.myModel.cSharp.ULong;
+import org.xtext.example.myModel.cSharp.UShort;
 import org.xtext.example.myModel.cSharp.UnaryExpression;
 import org.xtext.example.myModel.cSharp.UnaryOperatorDeclarator;
 import org.xtext.example.myModel.cSharp.UsingDirective;
@@ -187,15 +189,40 @@ public class CSharpFactoryImpl extends EFactoryImpl implements CSharpFactory
   {
     switch (eClass.getClassifierID())
     {
-      case CSharpPackage.MODEL: return createModel();
-      case CSharpPackage.IDENTIFIER: return createIdentifier();
       case CSharpPackage.COMPILATION_UNIT: return createCompilationUnit();
+      case CSharpPackage.IDENTIFIER: return createIdentifier();
+      case CSharpPackage.USING_DIRECTIVE: return createUsingDirective();
+      case CSharpPackage.ARRAY_TYPE: return createArrayType();
+      case CSharpPackage.GLOBAL_ATTRIBUTES: return createGlobalAttributes();
+      case CSharpPackage.GLOBAL_ATTRIBUTE_SECTION: return createGlobalAttributeSection();
+      case CSharpPackage.ATTRIBUTES: return createAttributes();
+      case CSharpPackage.ATTRIBUTE_SECTION: return createAttributeSection();
+      case CSharpPackage.ATTRIBUTE_LIST: return createAttributeList();
+      case CSharpPackage.ATTRIBUTE: return createAttribute();
+      case CSharpPackage.ATTRIBUTE_ARGUMENTS: return createAttributeArguments();
+      case CSharpPackage.EXPRESSION_LIST: return createExpressionList();
+      case CSharpPackage.EXPRESSION: return createExpression();
+      case CSharpPackage.EXPRESSION2: return createExpression2();
+      case CSharpPackage.UNARY_EXPRESSION: return createUnaryExpression();
+      case CSharpPackage.PRIMARY_EXPRESSION: return createPrimaryExpression();
+      case CSharpPackage.PRIMARY_EXPRESSION2: return createPrimaryExpression2();
+      case CSharpPackage.ARRAY_INITIALIZER: return createArrayInitializer();
+      case CSharpPackage.VARIABLE_INITIALIZER: return createVariableInitializer();
+      case CSharpPackage.ATTRIBUTE_NAME: return createAttributeName();
+      case CSharpPackage.TYPE: return createType();
+      case CSharpPackage.INTEGRAL_TYPE: return createIntegralType();
+      case CSharpPackage.NON_ARRAY_TYPE: return createNonArrayType();
+      case CSharpPackage.BUILT_IN_TYPE: return createBuiltInType();
+      case CSharpPackage.BUILT_IN_CLASS_TYPE: return createBuiltInClassType();
+      case CSharpPackage.QUALIFIED_IDENTIFIER: return createQualifiedIdentifier();
       case CSharpPackage.NAMESPACE_MEMBER_DECLARATION: return createNamespaceMemberDeclaration();
       case CSharpPackage.NAMESPACE_DECLARATION: return createNamespaceDeclaration();
       case CSharpPackage.NAMESPACE_BODY: return createNamespaceBody();
       case CSharpPackage.TYPE_DECLARATION: return createTypeDeclaration();
       case CSharpPackage.DELEGATE_DECLARATION: return createDelegateDeclaration();
       case CSharpPackage.ENUM_DECLARATION: return createEnumDeclaration();
+      case CSharpPackage.ENUM_BODY: return createEnumBody();
+      case CSharpPackage.ENUM_MEMBER_DECLARATION: return createEnumMemberDeclaration();
       case CSharpPackage.INTERFACE_DECLARATION: return createInterfaceDeclaration();
       case CSharpPackage.INTERFACE_BODY: return createInterfaceBody();
       case CSharpPackage.INTERFACE_MEMBER_DECLARATION: return createInterfaceMemberDeclaration();
@@ -204,11 +231,6 @@ public class CSharpFactoryImpl extends EFactoryImpl implements CSharpFactory
       case CSharpPackage.INTERFACE_PROPERTY_DECLARATION: return createInterfacePropertyDeclaration();
       case CSharpPackage.INTERFACE_ACCESSORS: return createInterfaceAccessors();
       case CSharpPackage.INTERFACE_METHOD_DECLARATION: return createInterfaceMethodDeclaration();
-      case CSharpPackage.STRUCT_DECLARATION: return createStructDeclaration();
-      case CSharpPackage.STRUCT_BODY: return createStructBody();
-      case CSharpPackage.STRUCT_MEMBER_DECLARATIONS: return createStructMemberDeclarations();
-      case CSharpPackage.STRUCT_MEMBER_DECLARATIONS2: return createStructMemberDeclarations2();
-      case CSharpPackage.STRUCT_MEMBER_DECLARATION: return createStructMemberDeclaration();
       case CSharpPackage.CLASS_DECLARATION: return createClassDeclaration();
       case CSharpPackage.CLASS_BODY: return createClassBody();
       case CSharpPackage.CLASS_MEMBER_DECLARATION: return createClassMemberDeclaration();
@@ -243,34 +265,10 @@ public class CSharpFactoryImpl extends EFactoryImpl implements CSharpFactory
       case CSharpPackage.TYPE_OR_VOID: return createTypeOrVoid();
       case CSharpPackage.FIELD_DECLARATION: return createFieldDeclaration();
       case CSharpPackage.VARIABLE_DECLARATOR: return createVariableDeclarator();
-      case CSharpPackage.VARIABLE_INITIALIZER: return createVariableInitializer();
-      case CSharpPackage.ARRAY_INITIALIZER: return createArrayInitializer();
       case CSharpPackage.CONSTANT_DECLARATION: return createConstantDeclaration();
       case CSharpPackage.CONSTANT_DECLARATOR: return createConstantDeclarator();
       case CSharpPackage.CLASS_BASE: return createClassBase();
       case CSharpPackage.QUALIFIED_IDENTIFIER_LIST: return createQualifiedIdentifierList();
-      case CSharpPackage.GLOBAL_ATTRIBUTES: return createGlobalAttributes();
-      case CSharpPackage.GLOBAL_ATTRIBUTE_SECTION: return createGlobalAttributeSection();
-      case CSharpPackage.ATTRIBUTES: return createAttributes();
-      case CSharpPackage.ATTRIBUTE_SECTION: return createAttributeSection();
-      case CSharpPackage.ATTRIBUTE_LIST: return createAttributeList();
-      case CSharpPackage.ATTRIBUTE: return createAttribute();
-      case CSharpPackage.ATTRIBUTE_ARGUMENTS: return createAttributeArguments();
-      case CSharpPackage.EXPRESSION_LIST: return createExpressionList();
-      case CSharpPackage.EXPRESSION: return createExpression();
-      case CSharpPackage.EXPRESSION2: return createExpression2();
-      case CSharpPackage.UNARY_EXPRESSION: return createUnaryExpression();
-      case CSharpPackage.ATTRIBUTE_NAME: return createAttributeName();
-      case CSharpPackage.USING_DIRECTIVE: return createUsingDirective();
-      case CSharpPackage.TYPE: return createType();
-      case CSharpPackage.INTEGRAL_TYPE: return createIntegralType();
-      case CSharpPackage.ARRAY_TYPE: return createArrayType();
-      case CSharpPackage.ENUM_TYPE: return createEnumType();
-      case CSharpPackage.NON_ARRAY_TYPE: return createNonArrayType();
-      case CSharpPackage.QUALIFIED_IDENTIFIER: return createQualifiedIdentifier();
-      case CSharpPackage.BUILT_IN_TYPE: return createBuiltInType();
-      case CSharpPackage.ENUM_BODY: return createEnumBody();
-      case CSharpPackage.ENUM_MEMBER_DECLARATION: return createEnumMemberDeclaration();
       case CSharpPackage.STATEMENT: return createStatement();
       case CSharpPackage.DECLARATION_STATMENT: return createDeclarationStatment();
       case CSharpPackage.LOCALCONSTANT_DECLARATION: return createLocalconstantDeclaration();
@@ -297,8 +295,6 @@ public class CSharpFactoryImpl extends EFactoryImpl implements CSharpFactory
       case CSharpPackage.FOR_INITIALIZER: return createForInitializer();
       case CSharpPackage.STATEMENT_EXPRESSION_LIST: return createStatementExpressionList();
       case CSharpPackage.STATEMENT_EXPRESSION: return createStatementExpression();
-      case CSharpPackage.PRIMARY_EXPRESSION: return createPrimaryExpression();
-      case CSharpPackage.PRIMARY_EXPRESSION2: return createPrimaryExpression2();
       case CSharpPackage.DO_STATEMENT: return createDoStatement();
       case CSharpPackage.WHILE_STATEMENT: return createWhileStatement();
       case CSharpPackage.SELECTION_STATEMENT: return createSelectionStatement();
@@ -309,6 +305,21 @@ public class CSharpFactoryImpl extends EFactoryImpl implements CSharpFactory
       case CSharpPackage.ELSE_PART: return createElsePart();
       case CSharpPackage.BLOCK: return createBlock();
       case CSharpPackage.MAYBE_EMPTY_BLOCK: return createMaybeEmptyBlock();
+      case CSharpPackage.SBYTE: return createSByte();
+      case CSharpPackage.BYTE: return createByte();
+      case CSharpPackage.SHORT: return createShort();
+      case CSharpPackage.USHORT: return createUShort();
+      case CSharpPackage.INT: return createInt();
+      case CSharpPackage.UINT: return createUInt();
+      case CSharpPackage.LONG: return createLong();
+      case CSharpPackage.ULONG: return createULong();
+      case CSharpPackage.CHAR: return createChar();
+      case CSharpPackage.BOOL: return createBool();
+      case CSharpPackage.DECIMAL: return createDecimal();
+      case CSharpPackage.FLOAT: return createFloat();
+      case CSharpPackage.DOUBLE: return createDouble();
+      case CSharpPackage.OBJECT: return createObject();
+      case CSharpPackage.STRING: return createString();
       case CSharpPackage.VOID: return createVoid();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -320,10 +331,10 @@ public class CSharpFactoryImpl extends EFactoryImpl implements CSharpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Model createModel()
+  public CompilationUnit createCompilationUnit()
   {
-    ModelImpl model = new ModelImpl();
-    return model;
+    CompilationUnitImpl compilationUnit = new CompilationUnitImpl();
+    return compilationUnit;
   }
 
   /**
@@ -342,10 +353,263 @@ public class CSharpFactoryImpl extends EFactoryImpl implements CSharpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public CompilationUnit createCompilationUnit()
+  public UsingDirective createUsingDirective()
   {
-    CompilationUnitImpl compilationUnit = new CompilationUnitImpl();
-    return compilationUnit;
+    UsingDirectiveImpl usingDirective = new UsingDirectiveImpl();
+    return usingDirective;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ArrayType createArrayType()
+  {
+    ArrayTypeImpl arrayType = new ArrayTypeImpl();
+    return arrayType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public GlobalAttributes createGlobalAttributes()
+  {
+    GlobalAttributesImpl globalAttributes = new GlobalAttributesImpl();
+    return globalAttributes;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public GlobalAttributeSection createGlobalAttributeSection()
+  {
+    GlobalAttributeSectionImpl globalAttributeSection = new GlobalAttributeSectionImpl();
+    return globalAttributeSection;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Attributes createAttributes()
+  {
+    AttributesImpl attributes = new AttributesImpl();
+    return attributes;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AttributeSection createAttributeSection()
+  {
+    AttributeSectionImpl attributeSection = new AttributeSectionImpl();
+    return attributeSection;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AttributeList createAttributeList()
+  {
+    AttributeListImpl attributeList = new AttributeListImpl();
+    return attributeList;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Attribute createAttribute()
+  {
+    AttributeImpl attribute = new AttributeImpl();
+    return attribute;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AttributeArguments createAttributeArguments()
+  {
+    AttributeArgumentsImpl attributeArguments = new AttributeArgumentsImpl();
+    return attributeArguments;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ExpressionList createExpressionList()
+  {
+    ExpressionListImpl expressionList = new ExpressionListImpl();
+    return expressionList;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Expression createExpression()
+  {
+    ExpressionImpl expression = new ExpressionImpl();
+    return expression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Expression2 createExpression2()
+  {
+    Expression2Impl expression2 = new Expression2Impl();
+    return expression2;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public UnaryExpression createUnaryExpression()
+  {
+    UnaryExpressionImpl unaryExpression = new UnaryExpressionImpl();
+    return unaryExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PrimaryExpression createPrimaryExpression()
+  {
+    PrimaryExpressionImpl primaryExpression = new PrimaryExpressionImpl();
+    return primaryExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PrimaryExpression2 createPrimaryExpression2()
+  {
+    PrimaryExpression2Impl primaryExpression2 = new PrimaryExpression2Impl();
+    return primaryExpression2;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ArrayInitializer createArrayInitializer()
+  {
+    ArrayInitializerImpl arrayInitializer = new ArrayInitializerImpl();
+    return arrayInitializer;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public VariableInitializer createVariableInitializer()
+  {
+    VariableInitializerImpl variableInitializer = new VariableInitializerImpl();
+    return variableInitializer;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AttributeName createAttributeName()
+  {
+    AttributeNameImpl attributeName = new AttributeNameImpl();
+    return attributeName;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Type createType()
+  {
+    TypeImpl type = new TypeImpl();
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public IntegralType createIntegralType()
+  {
+    IntegralTypeImpl integralType = new IntegralTypeImpl();
+    return integralType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NonArrayType createNonArrayType()
+  {
+    NonArrayTypeImpl nonArrayType = new NonArrayTypeImpl();
+    return nonArrayType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public BuiltInType createBuiltInType()
+  {
+    BuiltInTypeImpl builtInType = new BuiltInTypeImpl();
+    return builtInType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public BuiltInClassType createBuiltInClassType()
+  {
+    BuiltInClassTypeImpl builtInClassType = new BuiltInClassTypeImpl();
+    return builtInClassType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public QualifiedIdentifier createQualifiedIdentifier()
+  {
+    QualifiedIdentifierImpl qualifiedIdentifier = new QualifiedIdentifierImpl();
+    return qualifiedIdentifier;
   }
 
   /**
@@ -412,6 +676,28 @@ public class CSharpFactoryImpl extends EFactoryImpl implements CSharpFactory
   {
     EnumDeclarationImpl enumDeclaration = new EnumDeclarationImpl();
     return enumDeclaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EnumBody createEnumBody()
+  {
+    EnumBodyImpl enumBody = new EnumBodyImpl();
+    return enumBody;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EnumMemberDeclaration createEnumMemberDeclaration()
+  {
+    EnumMemberDeclarationImpl enumMemberDeclaration = new EnumMemberDeclarationImpl();
+    return enumMemberDeclaration;
   }
 
   /**
@@ -500,61 +786,6 @@ public class CSharpFactoryImpl extends EFactoryImpl implements CSharpFactory
   {
     InterfaceMethodDeclarationImpl interfaceMethodDeclaration = new InterfaceMethodDeclarationImpl();
     return interfaceMethodDeclaration;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public StructDeclaration createStructDeclaration()
-  {
-    StructDeclarationImpl structDeclaration = new StructDeclarationImpl();
-    return structDeclaration;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public StructBody createStructBody()
-  {
-    StructBodyImpl structBody = new StructBodyImpl();
-    return structBody;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public StructMemberDeclarations createStructMemberDeclarations()
-  {
-    StructMemberDeclarationsImpl structMemberDeclarations = new StructMemberDeclarationsImpl();
-    return structMemberDeclarations;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public StructMemberDeclarations2 createStructMemberDeclarations2()
-  {
-    StructMemberDeclarations2Impl structMemberDeclarations2 = new StructMemberDeclarations2Impl();
-    return structMemberDeclarations2;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public StructMemberDeclaration createStructMemberDeclaration()
-  {
-    StructMemberDeclarationImpl structMemberDeclaration = new StructMemberDeclarationImpl();
-    return structMemberDeclaration;
   }
 
   /**
@@ -936,28 +1167,6 @@ public class CSharpFactoryImpl extends EFactoryImpl implements CSharpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public VariableInitializer createVariableInitializer()
-  {
-    VariableInitializerImpl variableInitializer = new VariableInitializerImpl();
-    return variableInitializer;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ArrayInitializer createArrayInitializer()
-  {
-    ArrayInitializerImpl arrayInitializer = new ArrayInitializerImpl();
-    return arrayInitializer;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public ConstantDeclaration createConstantDeclaration()
   {
     ConstantDeclarationImpl constantDeclaration = new ConstantDeclarationImpl();
@@ -995,248 +1204,6 @@ public class CSharpFactoryImpl extends EFactoryImpl implements CSharpFactory
   {
     QualifiedIdentifierListImpl qualifiedIdentifierList = new QualifiedIdentifierListImpl();
     return qualifiedIdentifierList;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public GlobalAttributes createGlobalAttributes()
-  {
-    GlobalAttributesImpl globalAttributes = new GlobalAttributesImpl();
-    return globalAttributes;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public GlobalAttributeSection createGlobalAttributeSection()
-  {
-    GlobalAttributeSectionImpl globalAttributeSection = new GlobalAttributeSectionImpl();
-    return globalAttributeSection;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Attributes createAttributes()
-  {
-    AttributesImpl attributes = new AttributesImpl();
-    return attributes;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public AttributeSection createAttributeSection()
-  {
-    AttributeSectionImpl attributeSection = new AttributeSectionImpl();
-    return attributeSection;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public AttributeList createAttributeList()
-  {
-    AttributeListImpl attributeList = new AttributeListImpl();
-    return attributeList;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Attribute createAttribute()
-  {
-    AttributeImpl attribute = new AttributeImpl();
-    return attribute;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public AttributeArguments createAttributeArguments()
-  {
-    AttributeArgumentsImpl attributeArguments = new AttributeArgumentsImpl();
-    return attributeArguments;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ExpressionList createExpressionList()
-  {
-    ExpressionListImpl expressionList = new ExpressionListImpl();
-    return expressionList;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Expression createExpression()
-  {
-    ExpressionImpl expression = new ExpressionImpl();
-    return expression;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Expression2 createExpression2()
-  {
-    Expression2Impl expression2 = new Expression2Impl();
-    return expression2;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public UnaryExpression createUnaryExpression()
-  {
-    UnaryExpressionImpl unaryExpression = new UnaryExpressionImpl();
-    return unaryExpression;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public AttributeName createAttributeName()
-  {
-    AttributeNameImpl attributeName = new AttributeNameImpl();
-    return attributeName;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public UsingDirective createUsingDirective()
-  {
-    UsingDirectiveImpl usingDirective = new UsingDirectiveImpl();
-    return usingDirective;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Type createType()
-  {
-    TypeImpl type = new TypeImpl();
-    return type;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public IntegralType createIntegralType()
-  {
-    IntegralTypeImpl integralType = new IntegralTypeImpl();
-    return integralType;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ArrayType createArrayType()
-  {
-    ArrayTypeImpl arrayType = new ArrayTypeImpl();
-    return arrayType;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EnumType createEnumType()
-  {
-    EnumTypeImpl enumType = new EnumTypeImpl();
-    return enumType;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NonArrayType createNonArrayType()
-  {
-    NonArrayTypeImpl nonArrayType = new NonArrayTypeImpl();
-    return nonArrayType;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public QualifiedIdentifier createQualifiedIdentifier()
-  {
-    QualifiedIdentifierImpl qualifiedIdentifier = new QualifiedIdentifierImpl();
-    return qualifiedIdentifier;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public BuiltInType createBuiltInType()
-  {
-    BuiltInTypeImpl builtInType = new BuiltInTypeImpl();
-    return builtInType;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EnumBody createEnumBody()
-  {
-    EnumBodyImpl enumBody = new EnumBodyImpl();
-    return enumBody;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EnumMemberDeclaration createEnumMemberDeclaration()
-  {
-    EnumMemberDeclarationImpl enumMemberDeclaration = new EnumMemberDeclarationImpl();
-    return enumMemberDeclaration;
   }
 
   /**
@@ -1530,28 +1497,6 @@ public class CSharpFactoryImpl extends EFactoryImpl implements CSharpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public PrimaryExpression createPrimaryExpression()
-  {
-    PrimaryExpressionImpl primaryExpression = new PrimaryExpressionImpl();
-    return primaryExpression;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public PrimaryExpression2 createPrimaryExpression2()
-  {
-    PrimaryExpression2Impl primaryExpression2 = new PrimaryExpression2Impl();
-    return primaryExpression2;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public DoStatement createDoStatement()
   {
     DoStatementImpl doStatement = new DoStatementImpl();
@@ -1655,6 +1600,171 @@ public class CSharpFactoryImpl extends EFactoryImpl implements CSharpFactory
   {
     MaybeEmptyBlockImpl maybeEmptyBlock = new MaybeEmptyBlockImpl();
     return maybeEmptyBlock;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SByte createSByte()
+  {
+    SByteImpl sByte = new SByteImpl();
+    return sByte;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public org.xtext.example.myModel.cSharp.Byte createByte()
+  {
+    ByteImpl byte_ = new ByteImpl();
+    return byte_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public org.xtext.example.myModel.cSharp.Short createShort()
+  {
+    ShortImpl short_ = new ShortImpl();
+    return short_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public UShort createUShort()
+  {
+    UShortImpl uShort = new UShortImpl();
+    return uShort;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Int createInt()
+  {
+    IntImpl int_ = new IntImpl();
+    return int_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public UInt createUInt()
+  {
+    UIntImpl uInt = new UIntImpl();
+    return uInt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public org.xtext.example.myModel.cSharp.Long createLong()
+  {
+    LongImpl long_ = new LongImpl();
+    return long_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ULong createULong()
+  {
+    ULongImpl uLong = new ULongImpl();
+    return uLong;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Char createChar()
+  {
+    CharImpl char_ = new CharImpl();
+    return char_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Bool createBool()
+  {
+    BoolImpl bool = new BoolImpl();
+    return bool;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Decimal createDecimal()
+  {
+    DecimalImpl decimal = new DecimalImpl();
+    return decimal;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public org.xtext.example.myModel.cSharp.Float createFloat()
+  {
+    FloatImpl float_ = new FloatImpl();
+    return float_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public org.xtext.example.myModel.cSharp.Double createDouble()
+  {
+    DoubleImpl double_ = new DoubleImpl();
+    return double_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public org.xtext.example.myModel.cSharp.Object createObject()
+  {
+    ObjectImpl object = new ObjectImpl();
+    return object;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public org.xtext.example.myModel.cSharp.String createString()
+  {
+    StringImpl string = new StringImpl();
+    return string;
   }
 
   /**
