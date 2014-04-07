@@ -23,13 +23,13 @@ public interface CSharpFactory extends EFactory
   CSharpFactory eINSTANCE = org.xtext.example.myModel.cSharp.impl.CSharpFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Model</em>'.
+   * Returns a new object of class '<em>Compilation Unit</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Model</em>'.
+   * @return a new object of class '<em>Compilation Unit</em>'.
    * @generated
    */
-  Model createModel();
+  CompilationUnit createCompilationUnit();
 
   /**
    * Returns a new object of class '<em>Identifier</em>'.
@@ -41,13 +41,220 @@ public interface CSharpFactory extends EFactory
   Identifier createIdentifier();
 
   /**
-   * Returns a new object of class '<em>Compilation Unit</em>'.
+   * Returns a new object of class '<em>Using Directive</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Compilation Unit</em>'.
+   * @return a new object of class '<em>Using Directive</em>'.
    * @generated
    */
-  CompilationUnit createCompilationUnit();
+  UsingDirective createUsingDirective();
+
+  /**
+   * Returns a new object of class '<em>Array Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Array Type</em>'.
+   * @generated
+   */
+  ArrayType createArrayType();
+
+  /**
+   * Returns a new object of class '<em>Global Attributes</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Global Attributes</em>'.
+   * @generated
+   */
+  GlobalAttributes createGlobalAttributes();
+
+  /**
+   * Returns a new object of class '<em>Global Attribute Section</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Global Attribute Section</em>'.
+   * @generated
+   */
+  GlobalAttributeSection createGlobalAttributeSection();
+
+  /**
+   * Returns a new object of class '<em>Attributes</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Attributes</em>'.
+   * @generated
+   */
+  Attributes createAttributes();
+
+  /**
+   * Returns a new object of class '<em>Attribute Section</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Attribute Section</em>'.
+   * @generated
+   */
+  AttributeSection createAttributeSection();
+
+  /**
+   * Returns a new object of class '<em>Attribute List</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Attribute List</em>'.
+   * @generated
+   */
+  AttributeList createAttributeList();
+
+  /**
+   * Returns a new object of class '<em>Attribute</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Attribute</em>'.
+   * @generated
+   */
+  Attribute createAttribute();
+
+  /**
+   * Returns a new object of class '<em>Attribute Arguments</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Attribute Arguments</em>'.
+   * @generated
+   */
+  AttributeArguments createAttributeArguments();
+
+  /**
+   * Returns a new object of class '<em>Expression List</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Expression List</em>'.
+   * @generated
+   */
+  ExpressionList createExpressionList();
+
+  /**
+   * Returns a new object of class '<em>Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Expression</em>'.
+   * @generated
+   */
+  Expression createExpression();
+
+  /**
+   * Returns a new object of class '<em>Expression2</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Expression2</em>'.
+   * @generated
+   */
+  Expression2 createExpression2();
+
+  /**
+   * Returns a new object of class '<em>Unary Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Unary Expression</em>'.
+   * @generated
+   */
+  UnaryExpression createUnaryExpression();
+
+  /**
+   * Returns a new object of class '<em>Primary Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Primary Expression</em>'.
+   * @generated
+   */
+  PrimaryExpression createPrimaryExpression();
+
+  /**
+   * Returns a new object of class '<em>Primary Expression2</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Primary Expression2</em>'.
+   * @generated
+   */
+  PrimaryExpression2 createPrimaryExpression2();
+
+  /**
+   * Returns a new object of class '<em>Array Initializer</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Array Initializer</em>'.
+   * @generated
+   */
+  ArrayInitializer createArrayInitializer();
+
+  /**
+   * Returns a new object of class '<em>Variable Initializer</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Variable Initializer</em>'.
+   * @generated
+   */
+  VariableInitializer createVariableInitializer();
+
+  /**
+   * Returns a new object of class '<em>Attribute Name</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Attribute Name</em>'.
+   * @generated
+   */
+  AttributeName createAttributeName();
+
+  /**
+   * Returns a new object of class '<em>Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Type</em>'.
+   * @generated
+   */
+  Type createType();
+
+  /**
+   * Returns a new object of class '<em>Integral Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Integral Type</em>'.
+   * @generated
+   */
+  IntegralType createIntegralType();
+
+  /**
+   * Returns a new object of class '<em>Non Array Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Non Array Type</em>'.
+   * @generated
+   */
+  NonArrayType createNonArrayType();
+
+  /**
+   * Returns a new object of class '<em>Built In Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Built In Type</em>'.
+   * @generated
+   */
+  BuiltInType createBuiltInType();
+
+  /**
+   * Returns a new object of class '<em>Built In Class Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Built In Class Type</em>'.
+   * @generated
+   */
+  BuiltInClassType createBuiltInClassType();
+
+  /**
+   * Returns a new object of class '<em>Qualified Identifier</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Qualified Identifier</em>'.
+   * @generated
+   */
+  QualifiedIdentifier createQualifiedIdentifier();
 
   /**
    * Returns a new object of class '<em>Namespace Member Declaration</em>'.
@@ -102,6 +309,24 @@ public interface CSharpFactory extends EFactory
    * @generated
    */
   EnumDeclaration createEnumDeclaration();
+
+  /**
+   * Returns a new object of class '<em>Enum Body</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Enum Body</em>'.
+   * @generated
+   */
+  EnumBody createEnumBody();
+
+  /**
+   * Returns a new object of class '<em>Enum Member Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Enum Member Declaration</em>'.
+   * @generated
+   */
+  EnumMemberDeclaration createEnumMemberDeclaration();
 
   /**
    * Returns a new object of class '<em>Interface Declaration</em>'.
@@ -174,51 +399,6 @@ public interface CSharpFactory extends EFactory
    * @generated
    */
   InterfaceMethodDeclaration createInterfaceMethodDeclaration();
-
-  /**
-   * Returns a new object of class '<em>Struct Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Struct Declaration</em>'.
-   * @generated
-   */
-  StructDeclaration createStructDeclaration();
-
-  /**
-   * Returns a new object of class '<em>Struct Body</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Struct Body</em>'.
-   * @generated
-   */
-  StructBody createStructBody();
-
-  /**
-   * Returns a new object of class '<em>Struct Member Declarations</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Struct Member Declarations</em>'.
-   * @generated
-   */
-  StructMemberDeclarations createStructMemberDeclarations();
-
-  /**
-   * Returns a new object of class '<em>Struct Member Declarations2</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Struct Member Declarations2</em>'.
-   * @generated
-   */
-  StructMemberDeclarations2 createStructMemberDeclarations2();
-
-  /**
-   * Returns a new object of class '<em>Struct Member Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Struct Member Declaration</em>'.
-   * @generated
-   */
-  StructMemberDeclaration createStructMemberDeclaration();
 
   /**
    * Returns a new object of class '<em>Class Declaration</em>'.
@@ -527,24 +707,6 @@ public interface CSharpFactory extends EFactory
   VariableDeclarator createVariableDeclarator();
 
   /**
-   * Returns a new object of class '<em>Variable Initializer</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Variable Initializer</em>'.
-   * @generated
-   */
-  VariableInitializer createVariableInitializer();
-
-  /**
-   * Returns a new object of class '<em>Array Initializer</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Array Initializer</em>'.
-   * @generated
-   */
-  ArrayInitializer createArrayInitializer();
-
-  /**
    * Returns a new object of class '<em>Constant Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -579,204 +741,6 @@ public interface CSharpFactory extends EFactory
    * @generated
    */
   QualifiedIdentifierList createQualifiedIdentifierList();
-
-  /**
-   * Returns a new object of class '<em>Global Attributes</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Global Attributes</em>'.
-   * @generated
-   */
-  GlobalAttributes createGlobalAttributes();
-
-  /**
-   * Returns a new object of class '<em>Global Attribute Section</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Global Attribute Section</em>'.
-   * @generated
-   */
-  GlobalAttributeSection createGlobalAttributeSection();
-
-  /**
-   * Returns a new object of class '<em>Attributes</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Attributes</em>'.
-   * @generated
-   */
-  Attributes createAttributes();
-
-  /**
-   * Returns a new object of class '<em>Attribute Section</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Attribute Section</em>'.
-   * @generated
-   */
-  AttributeSection createAttributeSection();
-
-  /**
-   * Returns a new object of class '<em>Attribute List</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Attribute List</em>'.
-   * @generated
-   */
-  AttributeList createAttributeList();
-
-  /**
-   * Returns a new object of class '<em>Attribute</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Attribute</em>'.
-   * @generated
-   */
-  Attribute createAttribute();
-
-  /**
-   * Returns a new object of class '<em>Attribute Arguments</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Attribute Arguments</em>'.
-   * @generated
-   */
-  AttributeArguments createAttributeArguments();
-
-  /**
-   * Returns a new object of class '<em>Expression List</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Expression List</em>'.
-   * @generated
-   */
-  ExpressionList createExpressionList();
-
-  /**
-   * Returns a new object of class '<em>Expression</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Expression</em>'.
-   * @generated
-   */
-  Expression createExpression();
-
-  /**
-   * Returns a new object of class '<em>Expression2</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Expression2</em>'.
-   * @generated
-   */
-  Expression2 createExpression2();
-
-  /**
-   * Returns a new object of class '<em>Unary Expression</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Unary Expression</em>'.
-   * @generated
-   */
-  UnaryExpression createUnaryExpression();
-
-  /**
-   * Returns a new object of class '<em>Attribute Name</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Attribute Name</em>'.
-   * @generated
-   */
-  AttributeName createAttributeName();
-
-  /**
-   * Returns a new object of class '<em>Using Directive</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Using Directive</em>'.
-   * @generated
-   */
-  UsingDirective createUsingDirective();
-
-  /**
-   * Returns a new object of class '<em>Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Type</em>'.
-   * @generated
-   */
-  Type createType();
-
-  /**
-   * Returns a new object of class '<em>Integral Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Integral Type</em>'.
-   * @generated
-   */
-  IntegralType createIntegralType();
-
-  /**
-   * Returns a new object of class '<em>Array Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Array Type</em>'.
-   * @generated
-   */
-  ArrayType createArrayType();
-
-  /**
-   * Returns a new object of class '<em>Enum Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Enum Type</em>'.
-   * @generated
-   */
-  EnumType createEnumType();
-
-  /**
-   * Returns a new object of class '<em>Non Array Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Non Array Type</em>'.
-   * @generated
-   */
-  NonArrayType createNonArrayType();
-
-  /**
-   * Returns a new object of class '<em>Qualified Identifier</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Qualified Identifier</em>'.
-   * @generated
-   */
-  QualifiedIdentifier createQualifiedIdentifier();
-
-  /**
-   * Returns a new object of class '<em>Built In Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Built In Type</em>'.
-   * @generated
-   */
-  BuiltInType createBuiltInType();
-
-  /**
-   * Returns a new object of class '<em>Enum Body</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Enum Body</em>'.
-   * @generated
-   */
-  EnumBody createEnumBody();
-
-  /**
-   * Returns a new object of class '<em>Enum Member Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Enum Member Declaration</em>'.
-   * @generated
-   */
-  EnumMemberDeclaration createEnumMemberDeclaration();
 
   /**
    * Returns a new object of class '<em>Statement</em>'.
@@ -1013,24 +977,6 @@ public interface CSharpFactory extends EFactory
   StatementExpression createStatementExpression();
 
   /**
-   * Returns a new object of class '<em>Primary Expression</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Primary Expression</em>'.
-   * @generated
-   */
-  PrimaryExpression createPrimaryExpression();
-
-  /**
-   * Returns a new object of class '<em>Primary Expression2</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Primary Expression2</em>'.
-   * @generated
-   */
-  PrimaryExpression2 createPrimaryExpression2();
-
-  /**
    * Returns a new object of class '<em>Do Statement</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1119,6 +1065,141 @@ public interface CSharpFactory extends EFactory
    * @generated
    */
   MaybeEmptyBlock createMaybeEmptyBlock();
+
+  /**
+   * Returns a new object of class '<em>SByte</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>SByte</em>'.
+   * @generated
+   */
+  SByte createSByte();
+
+  /**
+   * Returns a new object of class '<em>Byte</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Byte</em>'.
+   * @generated
+   */
+  Byte createByte();
+
+  /**
+   * Returns a new object of class '<em>Short</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Short</em>'.
+   * @generated
+   */
+  Short createShort();
+
+  /**
+   * Returns a new object of class '<em>UShort</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>UShort</em>'.
+   * @generated
+   */
+  UShort createUShort();
+
+  /**
+   * Returns a new object of class '<em>Int</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Int</em>'.
+   * @generated
+   */
+  Int createInt();
+
+  /**
+   * Returns a new object of class '<em>UInt</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>UInt</em>'.
+   * @generated
+   */
+  UInt createUInt();
+
+  /**
+   * Returns a new object of class '<em>Long</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Long</em>'.
+   * @generated
+   */
+  Long createLong();
+
+  /**
+   * Returns a new object of class '<em>ULong</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>ULong</em>'.
+   * @generated
+   */
+  ULong createULong();
+
+  /**
+   * Returns a new object of class '<em>Char</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Char</em>'.
+   * @generated
+   */
+  Char createChar();
+
+  /**
+   * Returns a new object of class '<em>Bool</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Bool</em>'.
+   * @generated
+   */
+  Bool createBool();
+
+  /**
+   * Returns a new object of class '<em>Decimal</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Decimal</em>'.
+   * @generated
+   */
+  Decimal createDecimal();
+
+  /**
+   * Returns a new object of class '<em>Float</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Float</em>'.
+   * @generated
+   */
+  Float createFloat();
+
+  /**
+   * Returns a new object of class '<em>Double</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Double</em>'.
+   * @generated
+   */
+  Double createDouble();
+
+  /**
+   * Returns a new object of class '<em>Object</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Object</em>'.
+   * @generated
+   */
+  Object createObject();
+
+  /**
+   * Returns a new object of class '<em>String</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>String</em>'.
+   * @generated
+   */
+  String createString();
 
   /**
    * Returns a new object of class '<em>Void</em>'.

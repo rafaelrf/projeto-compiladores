@@ -65,6 +65,7 @@ Workflow {
     
     		// The antlr parser generator fragment.
     		fragment = parser.antlr.XtextAntlrGeneratorFragment auto-inject {
+    			   antlrParam = "-Xconversiontimeout" antlrParam = "20000"
     		  options = {
     		     backtrack = true
     		     classSplitting = true
@@ -72,7 +73,7 @@ Workflow {
     		     methodsPerClass = '1500'
     		  }
     		}
-    
+    	    
     		// Xtend-based API for validation
     		fragment = validation.ValidatorFragment auto-inject {
     		//    composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
@@ -108,7 +109,15 @@ Workflow {
     		fragment = contentAssist.ContentAssistFragment auto-inject {}
     
     		// generates a more lightweight Antlr parser and lexer tailored for content assist
-    		fragment = parser.antlr.XtextAntlrUiGeneratorFragment auto-inject {}
+    		fragment = parser.antlr.XtextAntlrUiGeneratorFragment auto-inject {
+    			antlrParam = "-Xconversiontimeout"
+    			antlrParam = "20000"
+    			options = {
+    				classSplitting = true
+    				fieldsPerClass = '1500'
+    				methodsPerClass = '1500'
+    			}
+    		}
     
     		// generates junit test support classes into Generator#pathTestProject
     		fragment = junit.Junit4Fragment auto-inject {}

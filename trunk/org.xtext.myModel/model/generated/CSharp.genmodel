@@ -7,17 +7,138 @@
     editorPluginID="org.xtext.myModel.editor" runtimeVersion="2.9">
   <genPackages prefix="CSharp" basePackage="org.xtext.example.myModel" disposableProviderFactory="true"
       fileExtensions="cs" ecorePackage="CSharp.ecore#/">
-    <genClasses ecoreClass="CSharp.ecore#//Model">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Model/inputs"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//Identifier">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Identifier/formalList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Identifier/constInitializer"/>
-    </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//CompilationUnit">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//CompilationUnit/usingDirectives"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//CompilationUnit/globalAtt"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//CompilationUnit/nameSpaces"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//Identifier"/>
+    <genClasses ecoreClass="CSharp.ecore#//UsingDirective">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//UsingDirective/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//UsingDirective/usings"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//ArrayType"/>
+    <genClasses ecoreClass="CSharp.ecore#//GlobalAttributes">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//GlobalAttributes/globalAttSections"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//GlobalAttributeSection">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//GlobalAttributeSection/attributes"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//Attributes">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Attributes/attributes"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//AttributeSection"/>
+    <genClasses ecoreClass="CSharp.ecore#//AttributeList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//AttributeList/attribute"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//AttributeList/attributes"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//Attribute">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Attribute/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Attribute/attArguments"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//AttributeArguments">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//AttributeArguments/expresionList"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//ExpressionList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ExpressionList/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ExpressionList/expressions"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//Expression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression/unary"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression/exp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression/exp2"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//Expression2">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/interExp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/interExp2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/pipelineExp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/pipelineExp2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/inExp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/inExp2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/barExp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/barExp2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/exp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/exp2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/ampExp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/ampExp2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/equalityExp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/equalityExp2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/relopExp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/relopExp2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/buildInType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/shiftExp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/shiftExp2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/operatorExp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/operatorExp2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/multipExp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/multipExp2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/divExp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/divExp2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/modExp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/modExp2"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//UnaryExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//UnaryExpression/expUnaryOperator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//UnaryExpression/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//UnaryExpression/unaryExp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//UnaryExpression/primaryExp"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//PrimaryExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/nonArrayType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/expressionList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//PrimaryExpression/rankSpecifier"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/arrayInitializer"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/arrayType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/arrayInitializer2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/tipo"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/argumentList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//PrimaryExpression/literal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/expression"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//PrimaryExpression/predefinedType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/typeOrVoid"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/primaryExoression2"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//PrimaryExpression2">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression2/id"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression2/argumentList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression2/expressionList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//PrimaryExpression2/incrementeDecrement"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression2/primaryExpression2"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//ArrayInitializer">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ArrayInitializer/variableInitalizer"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ArrayInitializer/variableInitalizers"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//VariableInitializer"/>
+    <genClasses ecoreClass="CSharp.ecore#//AttributeName">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//AttributeName/qualifiedId"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//Type">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/nonArray"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/variableDeclarator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/variableDeclarators"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/qIdent"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/eventAccessorDeclarations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/qualifiedId"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/accDeclarate"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/variable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/variables"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/constDeclarator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/constDeclarators"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//IntegralType"/>
+    <genClasses ecoreClass="CSharp.ecore#//NonArrayType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//NonArrayType/builtType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//NonArrayType/qualified"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//BuiltInType"/>
+    <genClasses ecoreClass="CSharp.ecore#//BuiltInClassType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//BuiltInClassType/qID2"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//QualifiedIdentifier">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//QualifiedIdentifier/id"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//QualifiedIdentifier/ids"/>
     </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//NamespaceMemberDeclaration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//NamespaceMemberDeclaration/nameDeclaretion"/>
@@ -33,8 +154,6 @@
     </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//TypeDeclaration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//TypeDeclaration/classDeclaration"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//TypeDeclaration/mod"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//TypeDeclaration/structDeclaration"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//TypeDeclaration/interfaceDeclaration"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//TypeDeclaration/enumDeclaration"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//TypeDeclaration/delegateDeclaration"/>
@@ -44,6 +163,15 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//EnumDeclaration/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//EnumDeclaration/intType"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//EnumDeclaration/enumBody"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//EnumBody">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//EnumBody/enumDeclaration"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//EnumBody/enumDeclarations"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//EnumMemberDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//EnumMemberDeclaration/att"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//EnumMemberDeclaration/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//EnumMemberDeclaration/exp"/>
     </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//InterfaceDeclaration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//InterfaceDeclaration/name"/>
@@ -82,19 +210,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//InterfaceMethodDeclaration/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//InterfaceMethodDeclaration/parameterList"/>
     </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//StructDeclaration">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//StructDeclaration/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//StructDeclaration/qualId"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//StructDeclaration/structbody"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//StructBody">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//StructBody/structMember"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//StructMemberDeclarations"/>
-    <genClasses ecoreClass="CSharp.ecore#//StructMemberDeclarations2"/>
-    <genClasses ecoreClass="CSharp.ecore#//StructMemberDeclaration">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//StructMemberDeclaration/structMember2"/>
-    </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//ClassDeclaration">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//ClassDeclaration/classModifier"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassDeclaration/className"/>
@@ -102,20 +217,21 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassDeclaration/classBody"/>
     </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//ClassBody">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassBody/classAtt"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassBody/classDeclaration"/>
     </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//ClassMemberDeclaration">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassMemberDeclaration/classAtt"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassMemberDeclaration/constDeclaration"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassMemberDeclaration/fieldDeclaration"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassMemberDeclaration/methodDeclaration"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassMemberDeclaration/constDeclaration"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassMemberDeclaration/propertyDeclaration"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassMemberDeclaration/eventDeclaration"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassMemberDeclaration/indexDeclaration"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassMemberDeclaration/typeDeclaration"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassMemberDeclaration/opDeclaration"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassMemberDeclaration/constructorDeclaration"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassMemberDeclaration/destructorDeclaration"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassMemberDeclaration/staticDeclaration"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassMemberDeclaration/typeDeclaration"/>
     </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//StaticConstructorDeclaration">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//StaticConstructorDeclaration/staticCosntModifier"/>
@@ -131,10 +247,15 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ConstructorDeclaration/constrDeclarator"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ConstructorDeclaration/emptyBlock"/>
     </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//ConstructorDeclarator"/>
+    <genClasses ecoreClass="CSharp.ecore#//ConstructorDeclarator">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ConstructorDeclarator/className"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ConstructorDeclarator/formalList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ConstructorDeclarator/constInitializer"/>
+    </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//ConstructorInitializer"/>
     <genClasses ecoreClass="CSharp.ecore#//ArgumentList">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ArgumentList/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ArgumentList/args"/>
     </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//Argument"/>
     <genClasses ecoreClass="CSharp.ecore#//OperatorDeclaration">
@@ -192,18 +313,26 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//MethodDeclaration/methodHeader"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//MethodDeclaration/maybeEmpty"/>
     </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//MethodHeader"/>
-    <genClasses ecoreClass="CSharp.ecore#//FormalParameterList"/>
+    <genClasses ecoreClass="CSharp.ecore#//MethodHeader">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//MethodHeader/modifier"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//MethodHeader/typeOrVoid"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//MethodHeader/qualifiedIdentifier"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//MethodHeader/formalParameters"/>
+    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//FormalParameterList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//FormalParameterList/parameterArray"/>
+    </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//ParameterArray">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ParameterArray/att"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ParameterArray/array"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ParameterArray/name"/>
     </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//FixedParameters">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//FixedParameters/parameterArray"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//FixedParameters/fixParameter"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//FixedParameters/fixParameters"/>
     </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//FixedParameter">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//FixedParameter/Att"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//FixedParameter/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//FixedParameter/name"/>
     </genClasses>
@@ -214,101 +343,20 @@
     </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//FieldDeclaration"/>
     <genClasses ecoreClass="CSharp.ecore#//VariableDeclarator">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//VariableDeclarator/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//VariableDeclarator/variableName"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//VariableDeclarator/variable"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//VariableInitializer"/>
-    <genClasses ecoreClass="CSharp.ecore#//ArrayInitializer">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ArrayInitializer/variableInitalizers"/>
     </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//ConstantDeclaration"/>
     <genClasses ecoreClass="CSharp.ecore#//ConstantDeclarator">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ConstantDeclarator/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ConstantDeclarator/exp"/>
     </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//ClassBase"/>
+    <genClasses ecoreClass="CSharp.ecore#//ClassBase">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ClassBase/qIDs"/>
+    </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//QualifiedIdentifierList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//QualifiedIdentifierList/id"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//QualifiedIdentifierList/ids"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//GlobalAttributes">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//GlobalAttributes/globalAttSections"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//GlobalAttributeSection"/>
-    <genClasses ecoreClass="CSharp.ecore#//Attributes">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Attributes/typeOrVoid"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Attributes/qualifiedID"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Attributes/formalParameters"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Attributes/attributes"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Attributes/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Attributes/enumBody"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//AttributeSection"/>
-    <genClasses ecoreClass="CSharp.ecore#//AttributeList">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//AttributeList/attributes"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//Attribute">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Attribute/attName"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Attribute/attArguments"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//AttributeArguments">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//AttributeArguments/expresions"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//ExpressionList">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//ExpressionList/expresions"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//Expression">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression/unary"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression/exp2"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression/exp"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression/otherExp2"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//Expression2">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/internalExp"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/exp"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/internalExp2"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Expression2/buildInType"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//UnaryExpression">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//UnaryExpression/expUnaryOperator"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//UnaryExpression/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//UnaryExpression/unaryExp"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//UnaryExpression/primaryExp"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//AttributeName">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//AttributeName/qualifiedId"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//UsingDirective">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//UsingDirective/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//UsingDirective/usings"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//Type">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/variableDeclarator"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/qIdent"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/eventAccessorDeclarations"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/qualifiedId"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/accDeclarate"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/variables"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/constDeclarators"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Type/nonArray"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//IntegralType"/>
-    <genClasses ecoreClass="CSharp.ecore#//ArrayType"/>
-    <genClasses ecoreClass="CSharp.ecore#//EnumType"/>
-    <genClasses ecoreClass="CSharp.ecore#//NonArrayType">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//NonArrayType/qualified"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//NonArrayType/builtType"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//QualifiedIdentifier">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//QualifiedIdentifier/ids"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//BuiltInType"/>
-    <genClasses ecoreClass="CSharp.ecore#//EnumBody">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//EnumBody/enumDeclarations"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//EnumMemberDeclaration">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//EnumMemberDeclaration/att"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//EnumMemberDeclaration/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//EnumMemberDeclaration/exp"/>
     </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//Statement">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Statement/labelStat"/>
@@ -322,6 +370,7 @@
     <genClasses ecoreClass="CSharp.ecore#//LocalconstantDeclaration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//LocalconstantDeclaration/tipo"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//LocalconstantDeclaration/constDeclarator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//LocalconstantDeclaration/constDeclarators"/>
     </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//LabeledStatement">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//LabeledStatement/id"/>
@@ -346,6 +395,7 @@
     <genClasses ecoreClass="CSharp.ecore#//LocalVariableDeclaration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//LocalVariableDeclaration/tipo"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//LocalVariableDeclaration/variable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//LocalVariableDeclaration/variables"/>
     </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//LockStatement">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//LockStatement/exp"/>
@@ -369,6 +419,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//GeneralCatchclause/block"/>
     </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//SpecificCatchClause">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//SpecificCatchClause/classType"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//SpecificCatchClause/qualiId"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//SpecificCatchClause/id"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//SpecificCatchClause/block"/>
@@ -416,38 +467,16 @@
     </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//StatementExpressionList">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//StatementExpressionList/list"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//StatementExpressionList/lists"/>
     </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//StatementExpression">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//StatementExpression/primaryExpression"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//StatementExpression/argumentList"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//StatementExpression/incrimentDecrement"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//StatementExpression/tipo"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//StatementExpression/argumentList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//StatementExpression/primaryExpression"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//StatementExpression/incrimentDecrement"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//StatementExpression/unaryExpression"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//StatementExpression/assignementOperator"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//StatementExpression/expression"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//PrimaryExpression">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/nonArrayType"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/expressionList"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//PrimaryExpression/rankSpecifier"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/arrayInitializer"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/arrayType"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/arrayInitializer2"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/tipo"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/argumentList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//PrimaryExpression/literal"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/expression"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//PrimaryExpression/predefinedType"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/typeOrVoid"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression/primaryExoression2"/>
-    </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//PrimaryExpression2">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression2/id"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression2/argumentList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression2/expressionList"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSharp.ecore#//PrimaryExpression2/incrementeDecrement"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//PrimaryExpression2/primaryExpression2"/>
     </genClasses>
     <genClasses ecoreClass="CSharp.ecore#//DoStatement">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//DoStatement/embeddedStatement"/>
@@ -483,9 +512,22 @@
     <genClasses ecoreClass="CSharp.ecore#//Block">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//Block/statement"/>
     </genClasses>
-    <genClasses ecoreClass="CSharp.ecore#//MaybeEmptyBlock">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSharp.ecore#//MaybeEmptyBlock/statement"/>
-    </genClasses>
+    <genClasses ecoreClass="CSharp.ecore#//MaybeEmptyBlock"/>
+    <genClasses ecoreClass="CSharp.ecore#//SByte"/>
+    <genClasses ecoreClass="CSharp.ecore#//Byte"/>
+    <genClasses ecoreClass="CSharp.ecore#//Short"/>
+    <genClasses ecoreClass="CSharp.ecore#//UShort"/>
+    <genClasses ecoreClass="CSharp.ecore#//Int"/>
+    <genClasses ecoreClass="CSharp.ecore#//UInt"/>
+    <genClasses ecoreClass="CSharp.ecore#//Long"/>
+    <genClasses ecoreClass="CSharp.ecore#//ULong"/>
+    <genClasses ecoreClass="CSharp.ecore#//Char"/>
+    <genClasses ecoreClass="CSharp.ecore#//Bool"/>
+    <genClasses ecoreClass="CSharp.ecore#//Decimal"/>
+    <genClasses ecoreClass="CSharp.ecore#//Float"/>
+    <genClasses ecoreClass="CSharp.ecore#//Double"/>
+    <genClasses ecoreClass="CSharp.ecore#//Object"/>
+    <genClasses ecoreClass="CSharp.ecore#//String"/>
     <genClasses ecoreClass="CSharp.ecore#//Void"/>
   </genPackages>
 </genmodel:GenModel>

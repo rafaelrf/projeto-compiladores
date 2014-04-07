@@ -23,18 +23,22 @@ import org.xtext.example.myModel.cSharp.AttributeName;
 import org.xtext.example.myModel.cSharp.Attributes;
 import org.xtext.example.myModel.cSharp.BinaryOperatorDeclarator;
 import org.xtext.example.myModel.cSharp.Block;
+import org.xtext.example.myModel.cSharp.Bool;
 import org.xtext.example.myModel.cSharp.BreakStatement;
-import org.xtext.example.myModel.cSharp.BuiltInType;
 import org.xtext.example.myModel.cSharp.CSharpPackage;
 import org.xtext.example.myModel.cSharp.CatchClauses;
+import org.xtext.example.myModel.cSharp.Char;
+import org.xtext.example.myModel.cSharp.ClassBase;
 import org.xtext.example.myModel.cSharp.ClassBody;
 import org.xtext.example.myModel.cSharp.ClassDeclaration;
 import org.xtext.example.myModel.cSharp.ClassMemberDeclaration;
 import org.xtext.example.myModel.cSharp.CompilationUnit;
 import org.xtext.example.myModel.cSharp.ConstantDeclarator;
 import org.xtext.example.myModel.cSharp.ConstructorDeclaration;
+import org.xtext.example.myModel.cSharp.ConstructorDeclarator;
 import org.xtext.example.myModel.cSharp.ContinueStatement;
 import org.xtext.example.myModel.cSharp.ConversionOperatorDeclarator;
+import org.xtext.example.myModel.cSharp.Decimal;
 import org.xtext.example.myModel.cSharp.DeclarationStatment;
 import org.xtext.example.myModel.cSharp.DestructorDeclaration;
 import org.xtext.example.myModel.cSharp.DoStatement;
@@ -53,14 +57,16 @@ import org.xtext.example.myModel.cSharp.FixedParameters;
 import org.xtext.example.myModel.cSharp.ForInitializer;
 import org.xtext.example.myModel.cSharp.ForStatement;
 import org.xtext.example.myModel.cSharp.ForeachStatement;
+import org.xtext.example.myModel.cSharp.FormalParameterList;
 import org.xtext.example.myModel.cSharp.GeneralCatchclause;
+import org.xtext.example.myModel.cSharp.GlobalAttributeSection;
 import org.xtext.example.myModel.cSharp.GlobalAttributes;
 import org.xtext.example.myModel.cSharp.GotoStatement;
 import org.xtext.example.myModel.cSharp.Identifier;
 import org.xtext.example.myModel.cSharp.IfStatement;
 import org.xtext.example.myModel.cSharp.IndexerDeclaration;
 import org.xtext.example.myModel.cSharp.IndexerDeclarator;
-import org.xtext.example.myModel.cSharp.IntegralType;
+import org.xtext.example.myModel.cSharp.Int;
 import org.xtext.example.myModel.cSharp.InterfaceAccessors;
 import org.xtext.example.myModel.cSharp.InterfaceBody;
 import org.xtext.example.myModel.cSharp.InterfaceDeclaration;
@@ -77,7 +83,7 @@ import org.xtext.example.myModel.cSharp.LocalconstantDeclaration;
 import org.xtext.example.myModel.cSharp.LockStatement;
 import org.xtext.example.myModel.cSharp.MaybeEmptyBlock;
 import org.xtext.example.myModel.cSharp.MethodDeclaration;
-import org.xtext.example.myModel.cSharp.Model;
+import org.xtext.example.myModel.cSharp.MethodHeader;
 import org.xtext.example.myModel.cSharp.NamespaceBody;
 import org.xtext.example.myModel.cSharp.NamespaceDeclaration;
 import org.xtext.example.myModel.cSharp.NamespaceMemberDeclaration;
@@ -89,14 +95,13 @@ import org.xtext.example.myModel.cSharp.PrimaryExpression2;
 import org.xtext.example.myModel.cSharp.QualifiedIdentifier;
 import org.xtext.example.myModel.cSharp.QualifiedIdentifierList;
 import org.xtext.example.myModel.cSharp.ReturnStatement;
+import org.xtext.example.myModel.cSharp.SByte;
 import org.xtext.example.myModel.cSharp.SelectionStatement;
 import org.xtext.example.myModel.cSharp.SpecificCatchClause;
 import org.xtext.example.myModel.cSharp.Statement;
 import org.xtext.example.myModel.cSharp.StatementExpression;
 import org.xtext.example.myModel.cSharp.StatementExpressionList;
 import org.xtext.example.myModel.cSharp.StaticConstructorDeclaration;
-import org.xtext.example.myModel.cSharp.StructBody;
-import org.xtext.example.myModel.cSharp.StructDeclaration;
 import org.xtext.example.myModel.cSharp.SwitchLabel;
 import org.xtext.example.myModel.cSharp.SwitchSection;
 import org.xtext.example.myModel.cSharp.SwitchStatement;
@@ -105,6 +110,9 @@ import org.xtext.example.myModel.cSharp.TryStatement;
 import org.xtext.example.myModel.cSharp.Type;
 import org.xtext.example.myModel.cSharp.TypeDeclaration;
 import org.xtext.example.myModel.cSharp.TypeOrVoid;
+import org.xtext.example.myModel.cSharp.UInt;
+import org.xtext.example.myModel.cSharp.ULong;
+import org.xtext.example.myModel.cSharp.UShort;
 import org.xtext.example.myModel.cSharp.UnaryExpression;
 import org.xtext.example.myModel.cSharp.UnaryOperatorDeclarator;
 import org.xtext.example.myModel.cSharp.UsingDirective;
@@ -155,8 +163,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				else break;
 			case CSharpPackage.ATTRIBUTE_LIST:
 				if(context == grammarAccess.getAttributeListRule() ||
-				   context == grammarAccess.getAttributeSectionRule() ||
-				   context == grammarAccess.getGlobalAttributeSectionRule()) {
+				   context == grammarAccess.getAttributeSectionRule()) {
 					sequence_AttributeList(context, (AttributeList) semanticObject); 
 					return; 
 				}
@@ -172,14 +179,6 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 					sequence_Attributes(context, (Attributes) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getEnumTypeRule()) {
-					sequence_Attributes_EnumType(context, (Attributes) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getMethodHeaderRule()) {
-					sequence_Attributes_MethodHeader(context, (Attributes) semanticObject); 
-					return; 
-				}
 				else break;
 			case CSharpPackage.BINARY_OPERATOR_DECLARATOR:
 				if(context == grammarAccess.getBinaryOperatorDeclaratorRule() ||
@@ -191,8 +190,17 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case CSharpPackage.BLOCK:
 				if(context == grammarAccess.getAddAccessorDeclarationRule() ||
 				   context == grammarAccess.getBlockRule() ||
-				   context == grammarAccess.getRemoveAccessorDeclarationRule()) {
+				   context == grammarAccess.getGetAccessorDeclarationRule() ||
+				   context == grammarAccess.getMaybeEmptyBlockRule() ||
+				   context == grammarAccess.getRemoveAccessorDeclarationRule() ||
+				   context == grammarAccess.getSetAccessorDeclarationRule()) {
 					sequence_Block(context, (Block) semanticObject); 
+					return; 
+				}
+				else break;
+			case CSharpPackage.BOOL:
+				if(context == grammarAccess.getBuiltInTypeRule()) {
+					sequence_BuiltInType(context, (Bool) semanticObject); 
 					return; 
 				}
 				else break;
@@ -202,15 +210,29 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 					return; 
 				}
 				else break;
-			case CSharpPackage.BUILT_IN_TYPE:
-				if(context == grammarAccess.getBuiltInTypeRule()) {
-					sequence_BuiltInType(context, (BuiltInType) semanticObject); 
+			case CSharpPackage.BYTE:
+				if(context == grammarAccess.getBuiltInTypeRule() ||
+				   context == grammarAccess.getIntegralTypeRule()) {
+					sequence_IntegralType(context, (org.xtext.example.myModel.cSharp.Byte) semanticObject); 
 					return; 
 				}
 				else break;
 			case CSharpPackage.CATCH_CLAUSES:
 				if(context == grammarAccess.getCatchClausesRule()) {
 					sequence_CatchClauses(context, (CatchClauses) semanticObject); 
+					return; 
+				}
+				else break;
+			case CSharpPackage.CHAR:
+				if(context == grammarAccess.getBuiltInTypeRule() ||
+				   context == grammarAccess.getIntegralTypeRule()) {
+					sequence_IntegralType(context, (Char) semanticObject); 
+					return; 
+				}
+				else break;
+			case CSharpPackage.CLASS_BASE:
+				if(context == grammarAccess.getClassBaseRule()) {
+					sequence_ClassBase(context, (ClassBase) semanticObject); 
 					return; 
 				}
 				else break;
@@ -245,17 +267,14 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				}
 				else break;
 			case CSharpPackage.CONSTRUCTOR_DECLARATION:
-				if(context == grammarAccess.getConstructorDeclarationRule() ||
-				   context == grammarAccess.getStructMemberDeclarationRule()) {
+				if(context == grammarAccess.getConstructorDeclarationRule()) {
 					sequence_ConstructorDeclaration(context, (ConstructorDeclaration) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getStructMemberDeclarations2Rule()) {
-					sequence_ConstructorDeclaration_StructMemberDeclarations2(context, (ConstructorDeclaration) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getStructMemberDeclarationsRule()) {
-					sequence_ConstructorDeclaration_StructMemberDeclarations(context, (ConstructorDeclaration) semanticObject); 
+				else break;
+			case CSharpPackage.CONSTRUCTOR_DECLARATOR:
+				if(context == grammarAccess.getConstructorDeclaratorRule()) {
+					sequence_ConstructorDeclarator(context, (ConstructorDeclarator) semanticObject); 
 					return; 
 				}
 				else break;
@@ -269,6 +288,12 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				if(context == grammarAccess.getConversionOperatorDeclaratorRule() ||
 				   context == grammarAccess.getOperatorDeclaratorRule()) {
 					sequence_ConversionOperatorDeclarator(context, (ConversionOperatorDeclarator) semanticObject); 
+					return; 
+				}
+				else break;
+			case CSharpPackage.DECIMAL:
+				if(context == grammarAccess.getBuiltInTypeRule()) {
+					sequence_BuiltInType(context, (Decimal) semanticObject); 
 					return; 
 				}
 				else break;
@@ -287,6 +312,12 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case CSharpPackage.DO_STATEMENT:
 				if(context == grammarAccess.getDoStatementRule()) {
 					sequence_DoStatement(context, (DoStatement) semanticObject); 
+					return; 
+				}
+				else break;
+			case CSharpPackage.DOUBLE:
+				if(context == grammarAccess.getBuiltInTypeRule()) {
+					sequence_BuiltInType(context, (org.xtext.example.myModel.cSharp.Double) semanticObject); 
 					return; 
 				}
 				else break;
@@ -369,6 +400,12 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 					return; 
 				}
 				else break;
+			case CSharpPackage.FLOAT:
+				if(context == grammarAccess.getBuiltInTypeRule()) {
+					sequence_BuiltInType(context, (org.xtext.example.myModel.cSharp.Float) semanticObject); 
+					return; 
+				}
+				else break;
 			case CSharpPackage.FOR_INITIALIZER:
 				if(context == grammarAccess.getForInitializerRule()) {
 					sequence_ForInitializer(context, (ForInitializer) semanticObject); 
@@ -387,9 +424,21 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 					return; 
 				}
 				else break;
+			case CSharpPackage.FORMAL_PARAMETER_LIST:
+				if(context == grammarAccess.getFormalParameterListRule()) {
+					sequence_FormalParameterList(context, (FormalParameterList) semanticObject); 
+					return; 
+				}
+				else break;
 			case CSharpPackage.GENERAL_CATCHCLAUSE:
 				if(context == grammarAccess.getGeneralCatchClauseRule()) {
 					sequence_GeneralCatchClause(context, (GeneralCatchclause) semanticObject); 
+					return; 
+				}
+				else break;
+			case CSharpPackage.GLOBAL_ATTRIBUTE_SECTION:
+				if(context == grammarAccess.getGlobalAttributeSectionRule()) {
+					sequence_GlobalAttributeSection(context, (GlobalAttributeSection) semanticObject); 
 					return; 
 				}
 				else break;
@@ -406,11 +455,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				}
 				else break;
 			case CSharpPackage.IDENTIFIER:
-				if(context == grammarAccess.getConstructorDeclaratorRule()) {
-					sequence_ConstructorDeclarator(context, (Identifier) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getIdentifierRule()) {
+				if(context == grammarAccess.getIdentifierRule()) {
 					sequence_Identifier(context, (Identifier) semanticObject); 
 					return; 
 				}
@@ -422,17 +467,8 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				}
 				else break;
 			case CSharpPackage.INDEXER_DECLARATION:
-				if(context == grammarAccess.getIndexerDeclarationRule() ||
-				   context == grammarAccess.getStructMemberDeclarationRule()) {
+				if(context == grammarAccess.getIndexerDeclarationRule()) {
 					sequence_IndexerDeclaration(context, (IndexerDeclaration) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getStructMemberDeclarations2Rule()) {
-					sequence_IndexerDeclaration_StructMemberDeclarations2(context, (IndexerDeclaration) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getStructMemberDeclarationsRule()) {
-					sequence_IndexerDeclaration_StructMemberDeclarations(context, (IndexerDeclaration) semanticObject); 
 					return; 
 				}
 				else break;
@@ -442,9 +478,10 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 					return; 
 				}
 				else break;
-			case CSharpPackage.INTEGRAL_TYPE:
-				if(context == grammarAccess.getIntegralTypeRule()) {
-					sequence_IntegralType(context, (IntegralType) semanticObject); 
+			case CSharpPackage.INT:
+				if(context == grammarAccess.getBuiltInTypeRule() ||
+				   context == grammarAccess.getIntegralTypeRule()) {
+					sequence_IntegralType(context, (Int) semanticObject); 
 					return; 
 				}
 				else break;
@@ -533,6 +570,13 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 					return; 
 				}
 				else break;
+			case CSharpPackage.LONG:
+				if(context == grammarAccess.getBuiltInTypeRule() ||
+				   context == grammarAccess.getIntegralTypeRule()) {
+					sequence_IntegralType(context, (org.xtext.example.myModel.cSharp.Long) semanticObject); 
+					return; 
+				}
+				else break;
 			case CSharpPackage.MAYBE_EMPTY_BLOCK:
 				if(context == grammarAccess.getGetAccessorDeclarationRule() ||
 				   context == grammarAccess.getMaybeEmptyBlockRule() ||
@@ -542,24 +586,14 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				}
 				else break;
 			case CSharpPackage.METHOD_DECLARATION:
-				if(context == grammarAccess.getClassMemberDeclarationRule() ||
-				   context == grammarAccess.getMethodDeclarationRule() ||
-				   context == grammarAccess.getStructMemberDeclarationRule()) {
+				if(context == grammarAccess.getMethodDeclarationRule()) {
 					sequence_MethodDeclaration(context, (MethodDeclaration) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getStructMemberDeclarations2Rule()) {
-					sequence_MethodDeclaration_StructMemberDeclarations2(context, (MethodDeclaration) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getStructMemberDeclarationsRule()) {
-					sequence_MethodDeclaration_StructMemberDeclarations(context, (MethodDeclaration) semanticObject); 
-					return; 
-				}
 				else break;
-			case CSharpPackage.MODEL:
-				if(context == grammarAccess.getModelRule()) {
-					sequence_Model(context, (Model) semanticObject); 
+			case CSharpPackage.METHOD_HEADER:
+				if(context == grammarAccess.getMethodHeaderRule()) {
+					sequence_MethodHeader(context, (MethodHeader) semanticObject); 
 					return; 
 				}
 				else break;
@@ -588,18 +622,20 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 					return; 
 				}
 				else break;
+			case CSharpPackage.OBJECT:
+				if(context == grammarAccess.getBuiltInClassTypeRule() ||
+				   context == grammarAccess.getBuiltInTypeRule()) {
+					sequence_BuiltInClassType(context, (org.xtext.example.myModel.cSharp.Object) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getClassBaseRule()) {
+					sequence_ClassBase(context, (org.xtext.example.myModel.cSharp.Object) semanticObject); 
+					return; 
+				}
+				else break;
 			case CSharpPackage.OPERATOR_DECLARATION:
-				if(context == grammarAccess.getOperatorDeclarationRule() ||
-				   context == grammarAccess.getStructMemberDeclarationRule()) {
+				if(context == grammarAccess.getOperatorDeclarationRule()) {
 					sequence_OperatorDeclaration(context, (OperatorDeclaration) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getStructMemberDeclarations2Rule()) {
-					sequence_OperatorDeclaration_StructMemberDeclarations2(context, (OperatorDeclaration) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getStructMemberDeclarationsRule()) {
-					sequence_OperatorDeclaration_StructMemberDeclarations(context, (OperatorDeclaration) semanticObject); 
 					return; 
 				}
 				else break;
@@ -628,8 +664,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				}
 				else break;
 			case CSharpPackage.QUALIFIED_IDENTIFIER_LIST:
-				if(context == grammarAccess.getClassBaseRule() ||
-				   context == grammarAccess.getQualifiedIdentifierListRule()) {
+				if(context == grammarAccess.getQualifiedIdentifierListRule()) {
 					sequence_QualifiedIdentifierList(context, (QualifiedIdentifierList) semanticObject); 
 					return; 
 				}
@@ -640,9 +675,23 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 					return; 
 				}
 				else break;
+			case CSharpPackage.SBYTE:
+				if(context == grammarAccess.getBuiltInTypeRule() ||
+				   context == grammarAccess.getIntegralTypeRule()) {
+					sequence_IntegralType(context, (SByte) semanticObject); 
+					return; 
+				}
+				else break;
 			case CSharpPackage.SELECTION_STATEMENT:
 				if(context == grammarAccess.getSelectionStatementRule()) {
 					sequence_SelectionStatement(context, (SelectionStatement) semanticObject); 
+					return; 
+				}
+				else break;
+			case CSharpPackage.SHORT:
+				if(context == grammarAccess.getBuiltInTypeRule() ||
+				   context == grammarAccess.getIntegralTypeRule()) {
+					sequence_IntegralType(context, (org.xtext.example.myModel.cSharp.Short) semanticObject); 
 					return; 
 				}
 				else break;
@@ -671,29 +720,19 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				}
 				else break;
 			case CSharpPackage.STATIC_CONSTRUCTOR_DECLARATION:
-				if(context == grammarAccess.getStaticConstructorDeclarationRule() ||
-				   context == grammarAccess.getStructMemberDeclarationRule()) {
+				if(context == grammarAccess.getStaticConstructorDeclarationRule()) {
 					sequence_StaticConstructorDeclaration(context, (StaticConstructorDeclaration) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getStructMemberDeclarations2Rule()) {
-					sequence_StaticConstructorDeclaration_StructMemberDeclarations2(context, (StaticConstructorDeclaration) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getStructMemberDeclarationsRule()) {
-					sequence_StaticConstructorDeclaration_StructMemberDeclarations(context, (StaticConstructorDeclaration) semanticObject); 
-					return; 
-				}
 				else break;
-			case CSharpPackage.STRUCT_BODY:
-				if(context == grammarAccess.getStructBodyRule()) {
-					sequence_StructBody(context, (StructBody) semanticObject); 
+			case CSharpPackage.STRING:
+				if(context == grammarAccess.getBuiltInClassTypeRule() ||
+				   context == grammarAccess.getBuiltInTypeRule()) {
+					sequence_BuiltInClassType(context, (org.xtext.example.myModel.cSharp.String) semanticObject); 
 					return; 
 				}
-				else break;
-			case CSharpPackage.STRUCT_DECLARATION:
-				if(context == grammarAccess.getStructDeclarationRule()) {
-					sequence_StructDeclaration(context, (StructDeclaration) semanticObject); 
+				else if(context == grammarAccess.getClassBaseRule()) {
+					sequence_ClassBase(context, (org.xtext.example.myModel.cSharp.String) semanticObject); 
 					return; 
 				}
 				else break;
@@ -728,16 +767,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				}
 				else break;
 			case CSharpPackage.TYPE:
-				if(context == grammarAccess.getStructMemberDeclarations2Rule()) {
-					sequence_ConstantDeclaration_StructMemberDeclarations2_Type(context, (Type) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getStructMemberDeclarationsRule()) {
-					sequence_ConstantDeclaration_StructMemberDeclarations_Type(context, (Type) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getConstantDeclarationRule() ||
-				   context == grammarAccess.getStructMemberDeclarationRule()) {
+				if(context == grammarAccess.getConstantDeclarationRule()) {
 					sequence_ConstantDeclaration_Type(context, (Type) semanticObject); 
 					return; 
 				}
@@ -759,16 +789,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				}
 				else break;
 			case CSharpPackage.TYPE_DECLARATION:
-				if(context == grammarAccess.getStructMemberDeclarations2Rule()) {
-					sequence_StructMemberDeclarations2_TypeDeclaration(context, (TypeDeclaration) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getStructMemberDeclarationsRule()) {
-					sequence_StructMemberDeclarations_TypeDeclaration(context, (TypeDeclaration) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getStructMemberDeclarationRule() ||
-				   context == grammarAccess.getTypeDeclarationRule()) {
+				if(context == grammarAccess.getTypeDeclarationRule()) {
 					sequence_TypeDeclaration(context, (TypeDeclaration) semanticObject); 
 					return; 
 				}
@@ -780,6 +801,27 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				}
 				else if(context == grammarAccess.getTypeOrVoidRule()) {
 					sequence_TypeOrVoid(context, (TypeOrVoid) semanticObject); 
+					return; 
+				}
+				else break;
+			case CSharpPackage.UINT:
+				if(context == grammarAccess.getBuiltInTypeRule() ||
+				   context == grammarAccess.getIntegralTypeRule()) {
+					sequence_IntegralType(context, (UInt) semanticObject); 
+					return; 
+				}
+				else break;
+			case CSharpPackage.ULONG:
+				if(context == grammarAccess.getBuiltInTypeRule() ||
+				   context == grammarAccess.getIntegralTypeRule()) {
+					sequence_IntegralType(context, (ULong) semanticObject); 
+					return; 
+				}
+				else break;
+			case CSharpPackage.USHORT:
+				if(context == grammarAccess.getBuiltInTypeRule() ||
+				   context == grammarAccess.getIntegralTypeRule()) {
+					sequence_IntegralType(context, (UShort) semanticObject); 
 					return; 
 				}
 				else break;
@@ -851,7 +893,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (arg+=Argument*)
+	 *     (arg=Argument args+=Argument*)
 	 */
 	protected void sequence_ArgumentList(EObject context, ArgumentList semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -869,16 +911,23 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (expresions+=ExpressionList?)
+	 *     expresionList=ExpressionList
 	 */
 	protected void sequence_AttributeArguments(EObject context, AttributeArguments semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, CSharpPackage.Literals.ATTRIBUTE_ARGUMENTS__EXPRESION_LIST) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CSharpPackage.Literals.ATTRIBUTE_ARGUMENTS__EXPRESION_LIST));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getAttributeArgumentsAccess().getExpresionListExpressionListParserRuleCall_2_0(), semanticObject.getExpresionList());
+		feeder.finish();
 	}
 	
 	
 	/**
 	 * Constraint:
-	 *     attributes+=Attribute+
+	 *     (attribute=Attribute attributes+=Attribute*)
 	 */
 	protected void sequence_AttributeList(EObject context, AttributeList semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -903,7 +952,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (attName=AttributeName attArguments=AttributeArguments?)
+	 *     (name=AttributeName attArguments=AttributeArguments?)
 	 */
 	protected void sequence_Attribute(EObject context, Attribute semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -915,24 +964,6 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (attributes+=AttributeSection*)
 	 */
 	protected void sequence_Attributes(EObject context, Attributes semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (attributes+=AttributeSection* type=IntegralType? enumBody=EnumBody)
-	 */
-	protected void sequence_Attributes_EnumType(EObject context, Attributes semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (attributes+=AttributeSection* typeOrVoid=TypeOrVoid qualifiedID=QualifiedIdentifier formalParameters=FormalParameterList?)
-	 */
-	protected void sequence_Attributes_MethodHeader(EObject context, Attributes semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -995,9 +1026,54 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     {BuiltInType}
+	 *     {Object}
 	 */
-	protected void sequence_BuiltInType(EObject context, BuiltInType semanticObject) {
+	protected void sequence_BuiltInClassType(EObject context, org.xtext.example.myModel.cSharp.Object semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     {String}
+	 */
+	protected void sequence_BuiltInClassType(EObject context, org.xtext.example.myModel.cSharp.String semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     {Bool}
+	 */
+	protected void sequence_BuiltInType(EObject context, Bool semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     {Decimal}
+	 */
+	protected void sequence_BuiltInType(EObject context, Decimal semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     {Double}
+	 */
+	protected void sequence_BuiltInType(EObject context, org.xtext.example.myModel.cSharp.Double semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     {Float}
+	 */
+	protected void sequence_BuiltInType(EObject context, org.xtext.example.myModel.cSharp.Float semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1006,7 +1082,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 * Constraint:
 	 *     (
 	 *         (speciCatchClause+=SpecificCatchClause+ genCatchClause=GeneralCatchClause?) | 
-	 *         (specCatchClause=SpecificCatchClause* genCatchClause=GeneralCatchClause)
+	 *         (specCatchClause+=SpecificCatchClause* genCatchClause=GeneralCatchClause)
 	 *     )
 	 */
 	protected void sequence_CatchClauses(EObject context, CatchClauses semanticObject) {
@@ -1016,7 +1092,41 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (classDeclaration+=ClassMemberDeclaration*)
+	 *     qIDs=QualifiedIdentifierList
+	 */
+	protected void sequence_ClassBase(EObject context, ClassBase semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, CSharpPackage.Literals.CLASS_BASE__QI_DS) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CSharpPackage.Literals.CLASS_BASE__QI_DS));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getClassBaseAccess().getQIDsQualifiedIdentifierListParserRuleCall_1_0_0(), semanticObject.getQIDs());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (qID2=QualifiedIdentifierList?)
+	 */
+	protected void sequence_ClassBase(EObject context, org.xtext.example.myModel.cSharp.Object semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (qID2=QualifiedIdentifierList?)
+	 */
+	protected void sequence_ClassBase(EObject context, org.xtext.example.myModel.cSharp.String semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     ((classAtt+=Attributes classDeclaration+=ClassMemberDeclaration)*)
 	 */
 	protected void sequence_ClassBody(EObject context, ClassBody semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1035,19 +1145,17 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	/**
 	 * Constraint:
 	 *     (
-	 *         classAtt=Attributes 
-	 *         (
-	 *             constDeclaration=ConstantDeclaration | 
-	 *             fieldDeclaration=FieldDeclaration | 
-	 *             propertyDeclaration=PropertyDeclaration | 
-	 *             eventDeclaration=EventDeclaration | 
-	 *             indexDeclaration=IndexerDeclaration | 
-	 *             opDeclaration=OperatorDeclaration | 
-	 *             constructorDeclaration=ConstructorDeclaration | 
-	 *             destructorDeclaration=DestructorDeclaration | 
-	 *             staticDeclaration=StaticConstructorDeclaration | 
-	 *             typeDeclaration=TypeDeclaration
-	 *         )
+	 *         fieldDeclaration=FieldDeclaration | 
+	 *         methodDeclaration=MethodDeclaration | 
+	 *         constDeclaration=ConstantDeclaration | 
+	 *         propertyDeclaration=PropertyDeclaration | 
+	 *         eventDeclaration=EventDeclaration | 
+	 *         indexDeclaration=IndexerDeclaration | 
+	 *         typeDeclaration=TypeDeclaration | 
+	 *         opDeclaration=OperatorDeclaration | 
+	 *         constructorDeclaration=ConstructorDeclaration | 
+	 *         destructorDeclaration=DestructorDeclaration | 
+	 *         staticDeclaration=StaticConstructorDeclaration
 	 *     )
 	 */
 	protected void sequence_ClassMemberDeclaration(EObject context, ClassMemberDeclaration semanticObject) {
@@ -1066,25 +1174,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (nonArray=NonArrayType constDeclarators+=ConstantDeclarator+ structMember2+=StructMemberDeclarations2)
-	 */
-	protected void sequence_ConstantDeclaration_StructMemberDeclarations2_Type(EObject context, Type semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (nonArray=NonArrayType constDeclarators+=ConstantDeclarator+ structMember2+=StructMemberDeclarations2*)
-	 */
-	protected void sequence_ConstantDeclaration_StructMemberDeclarations_Type(EObject context, Type semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (nonArray=NonArrayType constDeclarators+=ConstantDeclarator+)
+	 *     (nonArray=NonArrayType constDeclarator=ConstantDeclarator constDeclarators+=ConstantDeclarator*)
 	 */
 	protected void sequence_ConstantDeclaration_Type(EObject context, Type semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1121,27 +1211,9 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (constModifier+=ConstructorModifier* constrDeclarator=ConstructorDeclarator emptyBlock=MaybeEmptyBlock structMember2+=StructMemberDeclarations2)
+	 *     (className=Identifier formalList=FormalParameterList? constInitializer=ConstructorInitializer?)
 	 */
-	protected void sequence_ConstructorDeclaration_StructMemberDeclarations2(EObject context, ConstructorDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (constModifier+=ConstructorModifier* constrDeclarator=ConstructorDeclarator emptyBlock=MaybeEmptyBlock structMember2+=StructMemberDeclarations2*)
-	 */
-	protected void sequence_ConstructorDeclaration_StructMemberDeclarations(EObject context, ConstructorDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (formalList=FormalParameterList? constInitializer=ConstructorInitializer?)
-	 */
-	protected void sequence_ConstructorDeclarator(EObject context, Identifier semanticObject) {
+	protected void sequence_ConstructorDeclarator(EObject context, ConstructorDeclarator semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1218,7 +1290,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
 		feeder.accept(grammarAccess.getDestructorDeclarationAccess().getNameIdentifierParserRuleCall_2_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getDestructorDeclarationAccess().getEmptyBlockMaybeEmptyBlockParserRuleCall_5_0(), semanticObject.getEmptyBlock());
+		feeder.accept(grammarAccess.getDestructorDeclarationAccess().getEmptyBlockMaybeEmptyBlockParserRuleCall_6_0(), semanticObject.getEmptyBlock());
 		feeder.finish();
 	}
 	
@@ -1323,7 +1395,10 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 * Constraint:
 	 *     (
 	 *         nonArray=NonArrayType 
-	 *         (variableDeclarator+=VariableDeclarator+ | (qIdent=QualifiedIdentifier eventAccessorDeclarations=EventAccessorDeclarations))
+	 *         (
+	 *             (variableDeclarator=VariableDeclarator variableDeclarators+=VariableDeclarator*) | 
+	 *             (qIdent=QualifiedIdentifier eventAccessorDeclarations=EventAccessorDeclarations)
+	 *         )
 	 *     )
 	 */
 	protected void sequence_EventDeclaration_Type(EObject context, Type semanticObject) {
@@ -1334,22 +1409,20 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	/**
 	 * Constraint:
 	 *     (
-	 *         (
-	 *             (internalExp+=Expression exp+=Expression internalExp2+=Expression2) | 
-	 *             (exp+=Expression internalExp2+=Expression2) | 
-	 *             (exp+=Expression internalExp2+=Expression2) | 
-	 *             (exp+=Expression internalExp2+=Expression2) | 
-	 *             (exp+=Expression internalExp2+=Expression2) | 
-	 *             (exp+=Expression internalExp2+=Expression2) | 
-	 *             (exp+=Expression internalExp2+=Expression2) | 
-	 *             (exp+=Expression internalExp2+=Expression2) | 
-	 *             (buildInType+=BuiltInType internalExp2+=Expression2) | 
-	 *             (exp+=Expression internalExp2+=Expression2) | 
-	 *             (exp+=Expression internalExp2+=Expression2) | 
-	 *             (exp+=Expression internalExp2+=Expression2) | 
-	 *             (exp+=Expression internalExp2+=Expression2) | 
-	 *             (exp+=Expression internalExp2+=Expression2)
-	 *         )*
+	 *         (interExp=Expression interExp2=Expression2) | 
+	 *         (pipelineExp=Expression pipelineExp2=Expression2) | 
+	 *         (inExp=Expression inExp2=Expression2) | 
+	 *         (barExp=Expression barExp2=Expression2) | 
+	 *         (exp=Expression exp2=Expression2) | 
+	 *         (ampExp=Expression ampExp2=Expression2) | 
+	 *         (equalityExp=Expression equalityExp2=Expression2) | 
+	 *         (relopExp=Expression relopExp2=Expression2) | 
+	 *         buildInType=BuiltInType | 
+	 *         (shiftExp=Expression shiftExp2=Expression2) | 
+	 *         (operatorExp=Expression operatorExp2=Expression2) | 
+	 *         (multipExp=Expression multipExp2=Expression2) | 
+	 *         (divExp=Expression divExp2=Expression2) | 
+	 *         (modExp=Expression modExp2=Expression2)
 	 *     )
 	 */
 	protected void sequence_Expression2(EObject context, Expression2 semanticObject) {
@@ -1359,7 +1432,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     expresions+=Expression+
+	 *     (expression=Expression expressions+=Expression*)
 	 */
 	protected void sequence_ExpressionList(EObject context, ExpressionList semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1368,7 +1441,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (unary=UnaryExpression (exp2=Expression2 | (exp=Expression otherExp2=Expression2)))
+	 *     (unary=UnaryExpression exp=Expression? exp2=Expression2?)
 	 */
 	protected void sequence_Expression(EObject context, Expression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1377,7 +1450,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (nonArray=NonArrayType variables+=VariableDeclarator+)
+	 *     (nonArray=NonArrayType variable=VariableDeclarator variables+=VariableDeclarator*)
 	 */
 	protected void sequence_FieldDeclaration_Type(EObject context, Type semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1402,10 +1475,12 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (type=Type name=Identifier)
+	 *     (Att=Attributes type=Type name=Identifier)
 	 */
 	protected void sequence_FixedParameter(EObject context, FixedParameter semanticObject) {
 		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, CSharpPackage.Literals.FIXED_PARAMETER__ATT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CSharpPackage.Literals.FIXED_PARAMETER__ATT));
 			if(transientValues.isValueTransient(semanticObject, CSharpPackage.Literals.FIXED_PARAMETER__TYPE) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CSharpPackage.Literals.FIXED_PARAMETER__TYPE));
 			if(transientValues.isValueTransient(semanticObject, CSharpPackage.Literals.FIXED_PARAMETER__NAME) == ValueTransient.YES)
@@ -1413,15 +1488,16 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getFixedParameterAccess().getTypeTypeParserRuleCall_1_0(), semanticObject.getType());
-		feeder.accept(grammarAccess.getFixedParameterAccess().getNameIdentifierParserRuleCall_2_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getFixedParameterAccess().getAttAttributesParserRuleCall_0_0(), semanticObject.getAtt());
+		feeder.accept(grammarAccess.getFixedParameterAccess().getTypeTypeParserRuleCall_2_0(), semanticObject.getType());
+		feeder.accept(grammarAccess.getFixedParameterAccess().getNameIdentifierParserRuleCall_3_0(), semanticObject.getName());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Constraint:
-	 *     fixParameters+=FixedParameter+
+	 *     (fixParameter=FixedParameter fixParameters+=FixedParameter*)
 	 */
 	protected void sequence_FixedParameters(EObject context, FixedParameters semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1430,7 +1506,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (fixParameters+=FixedParameter+ (parameterArray=ParameterArray | parameterArray=ParameterArray))
+	 *     (fixParameter=FixedParameter fixParameters+=FixedParameter* parameterArray=ParameterArray?)
 	 */
 	protected void sequence_FixedParameters_FormalParameterList(EObject context, FixedParameters semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1482,6 +1558,22 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
+	 *     parameterArray=ParameterArray
+	 */
+	protected void sequence_FormalParameterList(EObject context, FormalParameterList semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, CSharpPackage.Literals.FORMAL_PARAMETER_LIST__PARAMETER_ARRAY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CSharpPackage.Literals.FORMAL_PARAMETER_LIST__PARAMETER_ARRAY));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getFormalParameterListAccess().getParameterArrayParameterArrayParserRuleCall_1_0(), semanticObject.getParameterArray());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     block=Block
 	 */
 	protected void sequence_GeneralCatchClause(EObject context, GeneralCatchclause semanticObject) {
@@ -1492,6 +1584,22 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
 		feeder.accept(grammarAccess.getGeneralCatchClauseAccess().getBlockBlockParserRuleCall_2_0(), semanticObject.getBlock());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     attributes=AttributeList
+	 */
+	protected void sequence_GlobalAttributeSection(EObject context, GlobalAttributeSection semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, CSharpPackage.Literals.GLOBAL_ATTRIBUTE_SECTION__ATTRIBUTES) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CSharpPackage.Literals.GLOBAL_ATTRIBUTE_SECTION__ATTRIBUTES));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getGlobalAttributeSectionAccess().getAttributesAttributeListParserRuleCall_4_0(), semanticObject.getAttributes());
 		feeder.finish();
 	}
 	
@@ -1553,24 +1661,6 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (idModifier+=IndexerModifier* indexerDeclarator=IndexerDeclarator accDeclaration=AccessorDeclarations structMember2+=StructMemberDeclarations2)
-	 */
-	protected void sequence_IndexerDeclaration_StructMemberDeclarations2(EObject context, IndexerDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (idModifier+=IndexerModifier* indexerDeclarator=IndexerDeclarator accDeclaration=AccessorDeclarations structMember2+=StructMemberDeclarations2*)
-	 */
-	protected void sequence_IndexerDeclaration_StructMemberDeclarations(EObject context, IndexerDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
 	 *     (type=Type (formalList=FormalParameterList | (qualifiedId=QualifiedIdentifier formalList=FormalParameterList)))
 	 */
 	protected void sequence_IndexerDeclarator(EObject context, IndexerDeclarator semanticObject) {
@@ -1580,9 +1670,81 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     {IntegralType}
+	 *     {Byte}
 	 */
-	protected void sequence_IntegralType(EObject context, IntegralType semanticObject) {
+	protected void sequence_IntegralType(EObject context, org.xtext.example.myModel.cSharp.Byte semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     {Char}
+	 */
+	protected void sequence_IntegralType(EObject context, Char semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     {Int}
+	 */
+	protected void sequence_IntegralType(EObject context, Int semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     {Long}
+	 */
+	protected void sequence_IntegralType(EObject context, org.xtext.example.myModel.cSharp.Long semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     {SByte}
+	 */
+	protected void sequence_IntegralType(EObject context, SByte semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     {Short}
+	 */
+	protected void sequence_IntegralType(EObject context, org.xtext.example.myModel.cSharp.Short semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     {UInt}
+	 */
+	protected void sequence_IntegralType(EObject context, UInt semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     {ULong}
+	 */
+	protected void sequence_IntegralType(EObject context, ULong semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     {UShort}
+	 */
+	protected void sequence_IntegralType(EObject context, UShort semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1732,7 +1894,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (tipo=Type constDeclarator+=ConstantDeclarator+)
+	 *     (tipo=Type constDeclarator=ConstantDeclarator constDeclarators+=ConstantDeclarator*)
 	 */
 	protected void sequence_LocalConstantDeclaration(EObject context, LocalconstantDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1741,7 +1903,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (tipo=Type variable+=VariableDeclarator+)
+	 *     (tipo=Type variable=VariableDeclarator variables+=VariableDeclarator*)
 	 */
 	protected void sequence_LocalVariableDeclaration(EObject context, LocalVariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1769,7 +1931,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (statement+=Statement*)
+	 *     {MaybeEmptyBlock}
 	 */
 	protected void sequence_MaybeEmptyBlock(EObject context, MaybeEmptyBlock semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1781,33 +1943,25 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (methodHeader=MethodHeader maybeEmpty=MaybeEmptyBlock)
 	 */
 	protected void sequence_MethodDeclaration(EObject context, MethodDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, CSharpPackage.Literals.METHOD_DECLARATION__METHOD_HEADER) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CSharpPackage.Literals.METHOD_DECLARATION__METHOD_HEADER));
+			if(transientValues.isValueTransient(semanticObject, CSharpPackage.Literals.METHOD_DECLARATION__MAYBE_EMPTY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CSharpPackage.Literals.METHOD_DECLARATION__MAYBE_EMPTY));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getMethodDeclarationAccess().getMethodHeaderMethodHeaderParserRuleCall_0_0(), semanticObject.getMethodHeader());
+		feeder.accept(grammarAccess.getMethodDeclarationAccess().getMaybeEmptyMaybeEmptyBlockParserRuleCall_1_0(), semanticObject.getMaybeEmpty());
+		feeder.finish();
 	}
 	
 	
 	/**
 	 * Constraint:
-	 *     (methodHeader=MethodHeader maybeEmpty=MaybeEmptyBlock structMember2+=StructMemberDeclarations2)
+	 *     (modifier+=MethodModifier* typeOrVoid=TypeOrVoid qualifiedIdentifier=QualifiedIdentifier formalParameters=FormalParameterList?)
 	 */
-	protected void sequence_MethodDeclaration_StructMemberDeclarations2(EObject context, MethodDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (methodHeader=MethodHeader maybeEmpty=MaybeEmptyBlock structMember2+=StructMemberDeclarations2*)
-	 */
-	protected void sequence_MethodDeclaration_StructMemberDeclarations(EObject context, MethodDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     inputs+=CompilationUnit
-	 */
-	protected void sequence_Model(EObject context, Model semanticObject) {
+	protected void sequence_MethodHeader(EObject context, MethodHeader semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1851,7 +2005,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (qualified=QualifiedIdentifier | builtType=BuiltInType)
+	 *     (builtType=BuiltInType | qualified=QualifiedIdentifier)
 	 */
 	protected void sequence_NonArrayType(EObject context, NonArrayType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1863,24 +2017,6 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (opModifier+=OperatorModifier+ opDeclarator=OperatorDeclarator emptyBlock=MaybeEmptyBlock)
 	 */
 	protected void sequence_OperatorDeclaration(EObject context, OperatorDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (opModifier+=OperatorModifier+ opDeclarator=OperatorDeclarator emptyBlock=MaybeEmptyBlock structMember2+=StructMemberDeclarations2)
-	 */
-	protected void sequence_OperatorDeclaration_StructMemberDeclarations2(EObject context, OperatorDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (opModifier+=OperatorModifier+ opDeclarator=OperatorDeclarator emptyBlock=MaybeEmptyBlock structMember2+=StructMemberDeclarations2*)
-	 */
-	protected void sequence_OperatorDeclaration_StructMemberDeclarations(EObject context, OperatorDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1935,7 +2071,6 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *             expressionList=ExpressionList | 
 	 *             (predefinedType=PredefinedType id=Identifier) | 
 	 *             typeOrVoid=TypeOrVoid | 
-	 *             expression=Expression | 
 	 *             expression=Expression
 	 *         )? 
 	 *         primaryExoression2=PrimaryExpression2
@@ -1957,7 +2092,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     ids+=QualifiedIdentifier+
+	 *     (id=QualifiedIdentifier ids+=QualifiedIdentifier*)
 	 */
 	protected void sequence_QualifiedIdentifierList(EObject context, QualifiedIdentifierList semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1966,7 +2101,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     ids+=Identifier+
+	 *     (id=Identifier ids+=Identifier*)
 	 */
 	protected void sequence_QualifiedIdentifier(EObject context, QualifiedIdentifier semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1993,7 +2128,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (qualiId=QualifiedIdentifier? id=Identifier? block=Block)
+	 *     ((classType=BuiltInClassType | qualiId=QualifiedIdentifier) id=Identifier? block=Block)
 	 */
 	protected void sequence_SpecificCatchClause(EObject context, SpecificCatchClause semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2002,7 +2137,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     list+=StatementExpression+
+	 *     (list=StatementExpression lists+=StatementExpression*)
 	 */
 	protected void sequence_StatementExpressionList(EObject context, StatementExpressionList semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2011,7 +2146,12 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (primaryExpression=PrimaryExpression (argumentList=ArgumentList | incrimentDecrement=INCREMENT_DECREMENT))
+	 *     (
+	 *         (tipo=Type argumentList=ArgumentList) | 
+	 *         (primaryExpression=PrimaryExpression (argumentList=ArgumentList | incrimentDecrement=INCREMENT_DECREMENT)) | 
+	 *         (unaryExpression=UnaryExpression assignementOperator=ASSIGNEMENT_OPERATOR expression=Expression) | 
+	 *         (incrimentDecrement=INCREMENT_DECREMENT primaryExpression=PrimaryExpression)
+	 *     )
 	 */
 	protected void sequence_StatementExpression(EObject context, StatementExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2020,7 +2160,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     labelStat=LabeledStatement
+	 *     (labelStat=LabeledStatement | declareStat=DeclarationStatement | embeddedStat=EmbeddedStatement)
 	 */
 	protected void sequence_Statement(EObject context, Statement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2032,89 +2172,20 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (staticCosntModifier=StaticConstructorModifiers name=Identifier emptyBlock=MaybeEmptyBlock)
 	 */
 	protected void sequence_StaticConstructorDeclaration(EObject context, StaticConstructorDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (staticCosntModifier=StaticConstructorModifiers name=Identifier emptyBlock=MaybeEmptyBlock structMember2+=StructMemberDeclarations2)
-	 */
-	protected void sequence_StaticConstructorDeclaration_StructMemberDeclarations2(EObject context, StaticConstructorDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (staticCosntModifier=StaticConstructorModifiers name=Identifier emptyBlock=MaybeEmptyBlock structMember2+=StructMemberDeclarations2*)
-	 */
-	protected void sequence_StaticConstructorDeclaration_StructMemberDeclarations(EObject context, StaticConstructorDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     structMember+=StructMemberDeclaration*
-	 */
-	protected void sequence_StructBody(EObject context, StructBody semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (name=Identifier qualId=QualifiedIdentifierList? structbody=StructBody)
-	 */
-	protected void sequence_StructDeclaration(EObject context, StructDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             classDeclaration=ClassDeclaration | 
-	 *             (
-	 *                 mod+=Modifier* 
-	 *                 (
-	 *                     structDeclaration=StructDeclaration | 
-	 *                     interfaceDeclaration=InterfaceDeclaration | 
-	 *                     enumDeclaration=EnumDeclaration | 
-	 *                     delegateDeclaration=DelegateDeclaration
-	 *                 )
-	 *             )
-	 *         ) 
-	 *         structMember2+=StructMemberDeclarations2
-	 *     )
-	 */
-	protected void sequence_StructMemberDeclarations2_TypeDeclaration(EObject context, TypeDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             classDeclaration=ClassDeclaration | 
-	 *             (
-	 *                 mod+=Modifier* 
-	 *                 (
-	 *                     structDeclaration=StructDeclaration | 
-	 *                     interfaceDeclaration=InterfaceDeclaration | 
-	 *                     enumDeclaration=EnumDeclaration | 
-	 *                     delegateDeclaration=DelegateDeclaration
-	 *                 )
-	 *             )
-	 *         ) 
-	 *         structMember2+=StructMemberDeclarations2*
-	 *     )
-	 */
-	protected void sequence_StructMemberDeclarations_TypeDeclaration(EObject context, TypeDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, CSharpPackage.Literals.STATIC_CONSTRUCTOR_DECLARATION__STATIC_COSNT_MODIFIER) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CSharpPackage.Literals.STATIC_CONSTRUCTOR_DECLARATION__STATIC_COSNT_MODIFIER));
+			if(transientValues.isValueTransient(semanticObject, CSharpPackage.Literals.STATIC_CONSTRUCTOR_DECLARATION__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CSharpPackage.Literals.STATIC_CONSTRUCTOR_DECLARATION__NAME));
+			if(transientValues.isValueTransient(semanticObject, CSharpPackage.Literals.STATIC_CONSTRUCTOR_DECLARATION__EMPTY_BLOCK) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CSharpPackage.Literals.STATIC_CONSTRUCTOR_DECLARATION__EMPTY_BLOCK));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getStaticConstructorDeclarationAccess().getStaticCosntModifierStaticConstructorModifiersParserRuleCall_0_0(), semanticObject.getStaticCosntModifier());
+		feeder.accept(grammarAccess.getStaticConstructorDeclarationAccess().getNameIdentifierParserRuleCall_1_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getStaticConstructorDeclarationAccess().getEmptyBlockMaybeEmptyBlockParserRuleCall_4_0(), semanticObject.getEmptyBlock());
+		feeder.finish();
 	}
 	
 	
@@ -2167,15 +2238,9 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 * Constraint:
 	 *     (
 	 *         classDeclaration=ClassDeclaration | 
-	 *         (
-	 *             mod+=Modifier* 
-	 *             (
-	 *                 structDeclaration=StructDeclaration | 
-	 *                 interfaceDeclaration=InterfaceDeclaration | 
-	 *                 enumDeclaration=EnumDeclaration | 
-	 *                 delegateDeclaration=DelegateDeclaration
-	 *             )
-	 *         )
+	 *         interfaceDeclaration=InterfaceDeclaration | 
+	 *         enumDeclaration=EnumDeclaration | 
+	 *         delegateDeclaration=DelegateDeclaration
 	 *     )
 	 */
 	protected void sequence_TypeDeclaration(EObject context, TypeDeclaration semanticObject) {
@@ -2212,7 +2277,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     ((expUnaryOperator=ExpressionUnaryOperator | type=Type) unaryExp=UnaryExpression)
+	 *     (((expUnaryOperator=ExpressionUnaryOperator | type=Type) unaryExp=UnaryExpression) | primaryExp=PrimaryExpression)
 	 */
 	protected void sequence_UnaryExpression(EObject context, UnaryExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2271,7 +2336,7 @@ public class CSharpSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (name=Identifier variable=VariableInitializer?)
+	 *     (variableName=Identifier variable=VariableInitializer?)
 	 */
 	protected void sequence_VariableDeclarator(EObject context, VariableDeclarator semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

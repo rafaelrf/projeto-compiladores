@@ -23,11 +23,14 @@ import org.xtext.example.myModel.cSharp.AttributeSection;
 import org.xtext.example.myModel.cSharp.Attributes;
 import org.xtext.example.myModel.cSharp.BinaryOperatorDeclarator;
 import org.xtext.example.myModel.cSharp.Block;
+import org.xtext.example.myModel.cSharp.Bool;
 import org.xtext.example.myModel.cSharp.BreakStatement;
+import org.xtext.example.myModel.cSharp.BuiltInClassType;
 import org.xtext.example.myModel.cSharp.BuiltInType;
 import org.xtext.example.myModel.cSharp.CSharpFactory;
 import org.xtext.example.myModel.cSharp.CSharpPackage;
 import org.xtext.example.myModel.cSharp.CatchClauses;
+import org.xtext.example.myModel.cSharp.Char;
 import org.xtext.example.myModel.cSharp.ClassBase;
 import org.xtext.example.myModel.cSharp.ClassBody;
 import org.xtext.example.myModel.cSharp.ClassDeclaration;
@@ -40,6 +43,7 @@ import org.xtext.example.myModel.cSharp.ConstructorDeclarator;
 import org.xtext.example.myModel.cSharp.ConstructorInitializer;
 import org.xtext.example.myModel.cSharp.ContinueStatement;
 import org.xtext.example.myModel.cSharp.ConversionOperatorDeclarator;
+import org.xtext.example.myModel.cSharp.Decimal;
 import org.xtext.example.myModel.cSharp.DeclarationStatment;
 import org.xtext.example.myModel.cSharp.DelegateDeclaration;
 import org.xtext.example.myModel.cSharp.DestructorDeclaration;
@@ -49,7 +53,6 @@ import org.xtext.example.myModel.cSharp.EmbeddedStatement;
 import org.xtext.example.myModel.cSharp.EnumBody;
 import org.xtext.example.myModel.cSharp.EnumDeclaration;
 import org.xtext.example.myModel.cSharp.EnumMemberDeclaration;
-import org.xtext.example.myModel.cSharp.EnumType;
 import org.xtext.example.myModel.cSharp.EventAccessorDeclarations;
 import org.xtext.example.myModel.cSharp.EventDeclaration;
 import org.xtext.example.myModel.cSharp.Expression;
@@ -72,6 +75,7 @@ import org.xtext.example.myModel.cSharp.Identifier;
 import org.xtext.example.myModel.cSharp.IfStatement;
 import org.xtext.example.myModel.cSharp.IndexerDeclaration;
 import org.xtext.example.myModel.cSharp.IndexerDeclarator;
+import org.xtext.example.myModel.cSharp.Int;
 import org.xtext.example.myModel.cSharp.IntegralType;
 import org.xtext.example.myModel.cSharp.InterfaceAccessors;
 import org.xtext.example.myModel.cSharp.InterfaceBody;
@@ -90,7 +94,6 @@ import org.xtext.example.myModel.cSharp.LockStatement;
 import org.xtext.example.myModel.cSharp.MaybeEmptyBlock;
 import org.xtext.example.myModel.cSharp.MethodDeclaration;
 import org.xtext.example.myModel.cSharp.MethodHeader;
-import org.xtext.example.myModel.cSharp.Model;
 import org.xtext.example.myModel.cSharp.NamespaceBody;
 import org.xtext.example.myModel.cSharp.NamespaceDeclaration;
 import org.xtext.example.myModel.cSharp.NamespaceMemberDeclaration;
@@ -106,6 +109,7 @@ import org.xtext.example.myModel.cSharp.QualifiedIdentifierList;
 import org.xtext.example.myModel.cSharp.RemoveAccessorDeclaration;
 import org.xtext.example.myModel.cSharp.ResourceAquisition;
 import org.xtext.example.myModel.cSharp.ReturnStatement;
+import org.xtext.example.myModel.cSharp.SByte;
 import org.xtext.example.myModel.cSharp.SelectionStatement;
 import org.xtext.example.myModel.cSharp.SetAccessorDeclaration;
 import org.xtext.example.myModel.cSharp.SpecificCatchClause;
@@ -113,11 +117,6 @@ import org.xtext.example.myModel.cSharp.Statement;
 import org.xtext.example.myModel.cSharp.StatementExpression;
 import org.xtext.example.myModel.cSharp.StatementExpressionList;
 import org.xtext.example.myModel.cSharp.StaticConstructorDeclaration;
-import org.xtext.example.myModel.cSharp.StructBody;
-import org.xtext.example.myModel.cSharp.StructDeclaration;
-import org.xtext.example.myModel.cSharp.StructMemberDeclaration;
-import org.xtext.example.myModel.cSharp.StructMemberDeclarations;
-import org.xtext.example.myModel.cSharp.StructMemberDeclarations2;
 import org.xtext.example.myModel.cSharp.SwitchLabel;
 import org.xtext.example.myModel.cSharp.SwitchSection;
 import org.xtext.example.myModel.cSharp.SwitchStatement;
@@ -126,6 +125,9 @@ import org.xtext.example.myModel.cSharp.TryStatement;
 import org.xtext.example.myModel.cSharp.Type;
 import org.xtext.example.myModel.cSharp.TypeDeclaration;
 import org.xtext.example.myModel.cSharp.TypeOrVoid;
+import org.xtext.example.myModel.cSharp.UInt;
+import org.xtext.example.myModel.cSharp.ULong;
+import org.xtext.example.myModel.cSharp.UShort;
 import org.xtext.example.myModel.cSharp.UnaryExpression;
 import org.xtext.example.myModel.cSharp.UnaryOperatorDeclarator;
 import org.xtext.example.myModel.cSharp.UsingDirective;
@@ -147,7 +149,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass modelEClass = null;
+  private EClass compilationUnitEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -161,7 +163,168 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass compilationUnitEClass = null;
+  private EClass usingDirectiveEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass arrayTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass globalAttributesEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass globalAttributeSectionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass attributesEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass attributeSectionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass attributeListEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass attributeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass attributeArgumentsEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass expressionListEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass expressionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass expression2EClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass unaryExpressionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass primaryExpressionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass primaryExpression2EClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass arrayInitializerEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass variableInitializerEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass attributeNameEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass typeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass integralTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass nonArrayTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass builtInTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass builtInClassTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass qualifiedIdentifierEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -204,6 +367,20 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * @generated
    */
   private EClass enumDeclarationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass enumBodyEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass enumMemberDeclarationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -260,41 +437,6 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * @generated
    */
   private EClass interfaceMethodDeclarationEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass structDeclarationEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass structBodyEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass structMemberDeclarationsEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass structMemberDeclarations2EClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass structMemberDeclarationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -539,20 +681,6 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass variableInitializerEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass arrayInitializerEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass constantDeclarationEClass = null;
 
   /**
@@ -575,160 +703,6 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * @generated
    */
   private EClass qualifiedIdentifierListEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass globalAttributesEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass globalAttributeSectionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass attributesEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass attributeSectionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass attributeListEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass attributeEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass attributeArgumentsEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass expressionListEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass expressionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass expression2EClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass unaryExpressionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass attributeNameEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass usingDirectiveEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass typeEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass integralTypeEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass arrayTypeEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass enumTypeEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass nonArrayTypeEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass qualifiedIdentifierEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass builtInTypeEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass enumBodyEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass enumMemberDeclarationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -917,20 +891,6 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass primaryExpressionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass primaryExpression2EClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass doStatementEClass = null;
 
   /**
@@ -995,6 +955,111 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * @generated
    */
   private EClass maybeEmptyBlockEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass sByteEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass byteEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass shortEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass uShortEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass intEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass uIntEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass longEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass uLongEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass charEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass boolEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass decimalEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass floatEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass doubleEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass objectEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass stringEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1071,56 +1136,6 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getModel()
-  {
-    return modelEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getModel_Inputs()
-  {
-    return (EReference)modelEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getIdentifier()
-  {
-    return identifierEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getIdentifier_FormalList()
-  {
-    return (EReference)identifierEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getIdentifier_ConstInitializer()
-  {
-    return (EReference)identifierEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getCompilationUnit()
   {
     return compilationUnitEClass;
@@ -1154,6 +1169,1096 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
   public EReference getCompilationUnit_NameSpaces()
   {
     return (EReference)compilationUnitEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getIdentifier()
+  {
+    return identifierEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getUsingDirective()
+  {
+    return usingDirectiveEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getUsingDirective_Name()
+  {
+    return (EReference)usingDirectiveEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getUsingDirective_Usings()
+  {
+    return (EReference)usingDirectiveEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getArrayType()
+  {
+    return arrayTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getGlobalAttributes()
+  {
+    return globalAttributesEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getGlobalAttributes_GlobalAttSections()
+  {
+    return (EReference)globalAttributesEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getGlobalAttributeSection()
+  {
+    return globalAttributeSectionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getGlobalAttributeSection_Attributes()
+  {
+    return (EReference)globalAttributeSectionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAttributes()
+  {
+    return attributesEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAttributes_Attributes()
+  {
+    return (EReference)attributesEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAttributeSection()
+  {
+    return attributeSectionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAttributeList()
+  {
+    return attributeListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAttributeList_Attribute()
+  {
+    return (EReference)attributeListEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAttributeList_Attributes()
+  {
+    return (EReference)attributeListEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAttribute()
+  {
+    return attributeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAttribute_Name()
+  {
+    return (EReference)attributeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAttribute_AttArguments()
+  {
+    return (EReference)attributeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAttributeArguments()
+  {
+    return attributeArgumentsEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAttributeArguments_ExpresionList()
+  {
+    return (EReference)attributeArgumentsEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getExpressionList()
+  {
+    return expressionListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpressionList_Expression()
+  {
+    return (EReference)expressionListEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpressionList_Expressions()
+  {
+    return (EReference)expressionListEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getExpression()
+  {
+    return expressionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression_Unary()
+  {
+    return (EReference)expressionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression_Exp()
+  {
+    return (EReference)expressionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression_Exp2()
+  {
+    return (EReference)expressionEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getExpression2()
+  {
+    return expression2EClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_InterExp()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_InterExp2()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_PipelineExp()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_PipelineExp2()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_InExp()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_InExp2()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_BarExp()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_BarExp2()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_Exp()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(8);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_Exp2()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(9);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_AmpExp()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(10);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_AmpExp2()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(11);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_EqualityExp()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(12);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_EqualityExp2()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(13);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_RelopExp()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(14);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_RelopExp2()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(15);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_BuildInType()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(16);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_ShiftExp()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(17);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_ShiftExp2()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(18);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_OperatorExp()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(19);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_OperatorExp2()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(20);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_MultipExp()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(21);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_MultipExp2()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(22);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_DivExp()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(23);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_DivExp2()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(24);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_ModExp()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(25);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression2_ModExp2()
+  {
+    return (EReference)expression2EClass.getEStructuralFeatures().get(26);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getUnaryExpression()
+  {
+    return unaryExpressionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnaryExpression_ExpUnaryOperator()
+  {
+    return (EAttribute)unaryExpressionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getUnaryExpression_Type()
+  {
+    return (EReference)unaryExpressionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getUnaryExpression_UnaryExp()
+  {
+    return (EReference)unaryExpressionEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getUnaryExpression_PrimaryExp()
+  {
+    return (EReference)unaryExpressionEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getPrimaryExpression()
+  {
+    return primaryExpressionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpression_NonArrayType()
+  {
+    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpression_ExpressionList()
+  {
+    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPrimaryExpression_RankSpecifier()
+  {
+    return (EAttribute)primaryExpressionEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpression_ArrayInitializer()
+  {
+    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpression_ArrayType()
+  {
+    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpression_ArrayInitializer2()
+  {
+    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpression_Tipo()
+  {
+    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpression_ArgumentList()
+  {
+    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpression_Id()
+  {
+    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(8);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPrimaryExpression_Literal()
+  {
+    return (EAttribute)primaryExpressionEClass.getEStructuralFeatures().get(9);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpression_Expression()
+  {
+    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(10);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPrimaryExpression_PredefinedType()
+  {
+    return (EAttribute)primaryExpressionEClass.getEStructuralFeatures().get(11);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpression_TypeOrVoid()
+  {
+    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(12);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpression_PrimaryExoression2()
+  {
+    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(13);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getPrimaryExpression2()
+  {
+    return primaryExpression2EClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpression2_Id()
+  {
+    return (EReference)primaryExpression2EClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpression2_ArgumentList()
+  {
+    return (EReference)primaryExpression2EClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpression2_ExpressionList()
+  {
+    return (EReference)primaryExpression2EClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPrimaryExpression2_IncrementeDecrement()
+  {
+    return (EAttribute)primaryExpression2EClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpression2_PrimaryExpression2()
+  {
+    return (EReference)primaryExpression2EClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getArrayInitializer()
+  {
+    return arrayInitializerEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getArrayInitializer_VariableInitalizer()
+  {
+    return (EReference)arrayInitializerEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getArrayInitializer_VariableInitalizers()
+  {
+    return (EReference)arrayInitializerEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getVariableInitializer()
+  {
+    return variableInitializerEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAttributeName()
+  {
+    return attributeNameEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAttributeName_QualifiedId()
+  {
+    return (EReference)attributeNameEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getType()
+  {
+    return typeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getType_NonArray()
+  {
+    return (EReference)typeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getType_VariableDeclarator()
+  {
+    return (EReference)typeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getType_VariableDeclarators()
+  {
+    return (EReference)typeEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getType_QIdent()
+  {
+    return (EReference)typeEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getType_EventAccessorDeclarations()
+  {
+    return (EReference)typeEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getType_QualifiedId()
+  {
+    return (EReference)typeEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getType_AccDeclarate()
+  {
+    return (EReference)typeEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getType_Variable()
+  {
+    return (EReference)typeEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getType_Variables()
+  {
+    return (EReference)typeEClass.getEStructuralFeatures().get(8);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getType_ConstDeclarator()
+  {
+    return (EReference)typeEClass.getEStructuralFeatures().get(9);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getType_ConstDeclarators()
+  {
+    return (EReference)typeEClass.getEStructuralFeatures().get(10);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getIntegralType()
+  {
+    return integralTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getNonArrayType()
+  {
+    return nonArrayTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getNonArrayType_BuiltType()
+  {
+    return (EReference)nonArrayTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getNonArrayType_Qualified()
+  {
+    return (EReference)nonArrayTypeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getBuiltInType()
+  {
+    return builtInTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getBuiltInClassType()
+  {
+    return builtInClassTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getBuiltInClassType_QID2()
+  {
+    return (EReference)builtInClassTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getQualifiedIdentifier()
+  {
+    return qualifiedIdentifierEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getQualifiedIdentifier_Id()
+  {
+    return (EReference)qualifiedIdentifierEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getQualifiedIdentifier_Ids()
+  {
+    return (EReference)qualifiedIdentifierEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1271,29 +2376,9 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getTypeDeclaration_Mod()
-  {
-    return (EAttribute)typeDeclarationEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getTypeDeclaration_StructDeclaration()
-  {
-    return (EReference)typeDeclarationEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getTypeDeclaration_InterfaceDeclaration()
   {
-    return (EReference)typeDeclarationEClass.getEStructuralFeatures().get(3);
+    return (EReference)typeDeclarationEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1303,7 +2388,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    */
   public EReference getTypeDeclaration_EnumDeclaration()
   {
-    return (EReference)typeDeclarationEClass.getEStructuralFeatures().get(4);
+    return (EReference)typeDeclarationEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1313,7 +2398,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    */
   public EReference getTypeDeclaration_DelegateDeclaration()
   {
-    return (EReference)typeDeclarationEClass.getEStructuralFeatures().get(5);
+    return (EReference)typeDeclarationEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -1364,6 +2449,76 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
   public EReference getEnumDeclaration_EnumBody()
   {
     return (EReference)enumDeclarationEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEnumBody()
+  {
+    return enumBodyEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEnumBody_EnumDeclaration()
+  {
+    return (EReference)enumBodyEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEnumBody_EnumDeclarations()
+  {
+    return (EReference)enumBodyEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEnumMemberDeclaration()
+  {
+    return enumMemberDeclarationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEnumMemberDeclaration_Att()
+  {
+    return (EReference)enumMemberDeclarationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEnumMemberDeclaration_Name()
+  {
+    return (EReference)enumMemberDeclarationEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEnumMemberDeclaration_Exp()
+  {
+    return (EReference)enumMemberDeclarationEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1661,106 +2816,6 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getStructDeclaration()
-  {
-    return structDeclarationEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getStructDeclaration_Name()
-  {
-    return (EReference)structDeclarationEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getStructDeclaration_QualId()
-  {
-    return (EReference)structDeclarationEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getStructDeclaration_Structbody()
-  {
-    return (EReference)structDeclarationEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getStructBody()
-  {
-    return structBodyEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getStructBody_StructMember()
-  {
-    return (EReference)structBodyEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getStructMemberDeclarations()
-  {
-    return structMemberDeclarationsEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getStructMemberDeclarations2()
-  {
-    return structMemberDeclarations2EClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getStructMemberDeclaration()
-  {
-    return structMemberDeclarationEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getStructMemberDeclaration_StructMember2()
-  {
-    return (EReference)structMemberDeclarationEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getClassDeclaration()
   {
     return classDeclarationEClass;
@@ -1821,9 +2876,19 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getClassBody_ClassDeclaration()
+  public EReference getClassBody_ClassAtt()
   {
     return (EReference)classBodyEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getClassBody_ClassDeclaration()
+  {
+    return (EReference)classBodyEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1841,7 +2906,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getClassMemberDeclaration_ClassAtt()
+  public EReference getClassMemberDeclaration_FieldDeclaration()
   {
     return (EReference)classMemberDeclarationEClass.getEStructuralFeatures().get(0);
   }
@@ -1851,7 +2916,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getClassMemberDeclaration_ConstDeclaration()
+  public EReference getClassMemberDeclaration_MethodDeclaration()
   {
     return (EReference)classMemberDeclarationEClass.getEStructuralFeatures().get(1);
   }
@@ -1861,7 +2926,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getClassMemberDeclaration_FieldDeclaration()
+  public EReference getClassMemberDeclaration_ConstDeclaration()
   {
     return (EReference)classMemberDeclarationEClass.getEStructuralFeatures().get(2);
   }
@@ -1901,7 +2966,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getClassMemberDeclaration_OpDeclaration()
+  public EReference getClassMemberDeclaration_TypeDeclaration()
   {
     return (EReference)classMemberDeclarationEClass.getEStructuralFeatures().get(6);
   }
@@ -1911,7 +2976,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getClassMemberDeclaration_ConstructorDeclaration()
+  public EReference getClassMemberDeclaration_OpDeclaration()
   {
     return (EReference)classMemberDeclarationEClass.getEStructuralFeatures().get(7);
   }
@@ -1921,7 +2986,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getClassMemberDeclaration_DestructorDeclaration()
+  public EReference getClassMemberDeclaration_ConstructorDeclaration()
   {
     return (EReference)classMemberDeclarationEClass.getEStructuralFeatures().get(8);
   }
@@ -1931,7 +2996,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getClassMemberDeclaration_StaticDeclaration()
+  public EReference getClassMemberDeclaration_DestructorDeclaration()
   {
     return (EReference)classMemberDeclarationEClass.getEStructuralFeatures().get(9);
   }
@@ -1941,7 +3006,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getClassMemberDeclaration_TypeDeclaration()
+  public EReference getClassMemberDeclaration_StaticDeclaration()
   {
     return (EReference)classMemberDeclarationEClass.getEStructuralFeatures().get(10);
   }
@@ -2071,6 +3136,36 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getConstructorDeclarator_ClassName()
+  {
+    return (EReference)constructorDeclaratorEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getConstructorDeclarator_FormalList()
+  {
+    return (EReference)constructorDeclaratorEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getConstructorDeclarator_ConstInitializer()
+  {
+    return (EReference)constructorDeclaratorEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getConstructorInitializer()
   {
     return constructorInitializerEClass;
@@ -2094,6 +3189,16 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
   public EReference getArgumentList_Arg()
   {
     return (EReference)argumentListEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getArgumentList_Args()
+  {
+    return (EReference)argumentListEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -2571,9 +3676,59 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getMethodHeader_Modifier()
+  {
+    return (EAttribute)methodHeaderEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMethodHeader_TypeOrVoid()
+  {
+    return (EReference)methodHeaderEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMethodHeader_QualifiedIdentifier()
+  {
+    return (EReference)methodHeaderEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMethodHeader_FormalParameters()
+  {
+    return (EReference)methodHeaderEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getFormalParameterList()
   {
     return formalParameterListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFormalParameterList_ParameterArray()
+  {
+    return (EReference)formalParameterListEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -2631,7 +3786,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getFixedParameters_ParameterArray()
+  public EReference getFixedParameters_FixParameter()
   {
     return (EReference)fixedParametersEClass.getEStructuralFeatures().get(0);
   }
@@ -2661,7 +3816,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getFixedParameter_Type()
+  public EReference getFixedParameter_Att()
   {
     return (EReference)fixedParameterEClass.getEStructuralFeatures().get(0);
   }
@@ -2671,9 +3826,19 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getFixedParameter_Name()
+  public EReference getFixedParameter_Type()
   {
     return (EReference)fixedParameterEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFixedParameter_Name()
+  {
+    return (EReference)fixedParameterEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -2741,7 +3906,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getVariableDeclarator_Name()
+  public EReference getVariableDeclarator_VariableName()
   {
     return (EReference)variableDeclaratorEClass.getEStructuralFeatures().get(0);
   }
@@ -2754,36 +3919,6 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
   public EReference getVariableDeclarator_Variable()
   {
     return (EReference)variableDeclaratorEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getVariableInitializer()
-  {
-    return variableInitializerEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getArrayInitializer()
-  {
-    return arrayInitializerEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getArrayInitializer_VariableInitalizers()
-  {
-    return (EReference)arrayInitializerEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -2841,6 +3976,16 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getClassBase_QIDs()
+  {
+    return (EReference)classBaseEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getQualifiedIdentifierList()
   {
     return qualifiedIdentifierListEClass;
@@ -2851,7 +3996,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getQualifiedIdentifierList_Ids()
+  public EReference getQualifiedIdentifierList_Id()
   {
     return (EReference)qualifiedIdentifierListEClass.getEStructuralFeatures().get(0);
   }
@@ -2861,639 +4006,9 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getGlobalAttributes()
+  public EReference getQualifiedIdentifierList_Ids()
   {
-    return globalAttributesEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getGlobalAttributes_GlobalAttSections()
-  {
-    return (EReference)globalAttributesEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getGlobalAttributeSection()
-  {
-    return globalAttributeSectionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getAttributes()
-  {
-    return attributesEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAttributes_TypeOrVoid()
-  {
-    return (EReference)attributesEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAttributes_QualifiedID()
-  {
-    return (EReference)attributesEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAttributes_FormalParameters()
-  {
-    return (EReference)attributesEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAttributes_Attributes()
-  {
-    return (EReference)attributesEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAttributes_Type()
-  {
-    return (EReference)attributesEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAttributes_EnumBody()
-  {
-    return (EReference)attributesEClass.getEStructuralFeatures().get(5);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getAttributeSection()
-  {
-    return attributeSectionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getAttributeList()
-  {
-    return attributeListEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAttributeList_Attributes()
-  {
-    return (EReference)attributeListEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getAttribute()
-  {
-    return attributeEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAttribute_AttName()
-  {
-    return (EReference)attributeEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAttribute_AttArguments()
-  {
-    return (EReference)attributeEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getAttributeArguments()
-  {
-    return attributeArgumentsEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAttributeArguments_Expresions()
-  {
-    return (EReference)attributeArgumentsEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getExpressionList()
-  {
-    return expressionListEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getExpressionList_Expresions()
-  {
-    return (EReference)expressionListEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getExpression()
-  {
-    return expressionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getExpression_Unary()
-  {
-    return (EReference)expressionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getExpression_Exp2()
-  {
-    return (EReference)expressionEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getExpression_Exp()
-  {
-    return (EReference)expressionEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getExpression_OtherExp2()
-  {
-    return (EReference)expressionEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getExpression2()
-  {
-    return expression2EClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getExpression2_InternalExp()
-  {
-    return (EReference)expression2EClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getExpression2_Exp()
-  {
-    return (EReference)expression2EClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getExpression2_InternalExp2()
-  {
-    return (EReference)expression2EClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getExpression2_BuildInType()
-  {
-    return (EReference)expression2EClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getUnaryExpression()
-  {
-    return unaryExpressionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getUnaryExpression_ExpUnaryOperator()
-  {
-    return (EAttribute)unaryExpressionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getUnaryExpression_Type()
-  {
-    return (EReference)unaryExpressionEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getUnaryExpression_UnaryExp()
-  {
-    return (EReference)unaryExpressionEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getUnaryExpression_PrimaryExp()
-  {
-    return (EReference)unaryExpressionEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getAttributeName()
-  {
-    return attributeNameEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAttributeName_QualifiedId()
-  {
-    return (EReference)attributeNameEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getUsingDirective()
-  {
-    return usingDirectiveEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getUsingDirective_Name()
-  {
-    return (EReference)usingDirectiveEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getUsingDirective_Usings()
-  {
-    return (EReference)usingDirectiveEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getType()
-  {
-    return typeEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getType_VariableDeclarator()
-  {
-    return (EReference)typeEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getType_QIdent()
-  {
-    return (EReference)typeEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getType_EventAccessorDeclarations()
-  {
-    return (EReference)typeEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getType_QualifiedId()
-  {
-    return (EReference)typeEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getType_AccDeclarate()
-  {
-    return (EReference)typeEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getType_Variables()
-  {
-    return (EReference)typeEClass.getEStructuralFeatures().get(5);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getType_ConstDeclarators()
-  {
-    return (EReference)typeEClass.getEStructuralFeatures().get(6);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getType_NonArray()
-  {
-    return (EReference)typeEClass.getEStructuralFeatures().get(7);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getIntegralType()
-  {
-    return integralTypeEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getArrayType()
-  {
-    return arrayTypeEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getEnumType()
-  {
-    return enumTypeEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getNonArrayType()
-  {
-    return nonArrayTypeEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getNonArrayType_Qualified()
-  {
-    return (EReference)nonArrayTypeEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getNonArrayType_BuiltType()
-  {
-    return (EReference)nonArrayTypeEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getQualifiedIdentifier()
-  {
-    return qualifiedIdentifierEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getQualifiedIdentifier_Ids()
-  {
-    return (EReference)qualifiedIdentifierEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getBuiltInType()
-  {
-    return builtInTypeEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getEnumBody()
-  {
-    return enumBodyEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getEnumBody_EnumDeclarations()
-  {
-    return (EReference)enumBodyEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getEnumMemberDeclaration()
-  {
-    return enumMemberDeclarationEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getEnumMemberDeclaration_Att()
-  {
-    return (EReference)enumMemberDeclarationEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getEnumMemberDeclaration_Name()
-  {
-    return (EReference)enumMemberDeclarationEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getEnumMemberDeclaration_Exp()
-  {
-    return (EReference)enumMemberDeclarationEClass.getEStructuralFeatures().get(2);
+    return (EReference)qualifiedIdentifierListEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -3594,6 +4109,16 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
   public EReference getLocalconstantDeclaration_ConstDeclarator()
   {
     return (EReference)localconstantDeclarationEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLocalconstantDeclaration_ConstDeclarators()
+  {
+    return (EReference)localconstantDeclarationEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -3801,6 +4326,16 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getLocalVariableDeclaration_Variables()
+  {
+    return (EReference)localVariableDeclarationEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getLockStatement()
   {
     return lockStatementEClass;
@@ -3971,7 +4506,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSpecificCatchClause_QualiId()
+  public EReference getSpecificCatchClause_ClassType()
   {
     return (EReference)specificCatchClauseEClass.getEStructuralFeatures().get(0);
   }
@@ -3981,7 +4516,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSpecificCatchClause_Id()
+  public EReference getSpecificCatchClause_QualiId()
   {
     return (EReference)specificCatchClauseEClass.getEStructuralFeatures().get(1);
   }
@@ -3991,9 +4526,19 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSpecificCatchClause_Block()
+  public EReference getSpecificCatchClause_Id()
   {
     return (EReference)specificCatchClauseEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSpecificCatchClause_Block()
+  {
+    return (EReference)specificCatchClauseEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -4351,6 +4896,16 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getStatementExpressionList_Lists()
+  {
+    return (EReference)statementExpressionListEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getStatementExpression()
   {
     return statementExpressionEClass;
@@ -4361,7 +4916,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getStatementExpression_PrimaryExpression()
+  public EReference getStatementExpression_Tipo()
   {
     return (EReference)statementExpressionEClass.getEStructuralFeatures().get(0);
   }
@@ -4381,9 +4936,9 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getStatementExpression_IncrimentDecrement()
+  public EReference getStatementExpression_PrimaryExpression()
   {
-    return (EAttribute)statementExpressionEClass.getEStructuralFeatures().get(2);
+    return (EReference)statementExpressionEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -4391,9 +4946,9 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getStatementExpression_Tipo()
+  public EAttribute getStatementExpression_IncrimentDecrement()
   {
-    return (EReference)statementExpressionEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)statementExpressionEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -4424,216 +4979,6 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
   public EReference getStatementExpression_Expression()
   {
     return (EReference)statementExpressionEClass.getEStructuralFeatures().get(6);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getPrimaryExpression()
-  {
-    return primaryExpressionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPrimaryExpression_NonArrayType()
-  {
-    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPrimaryExpression_ExpressionList()
-  {
-    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getPrimaryExpression_RankSpecifier()
-  {
-    return (EAttribute)primaryExpressionEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPrimaryExpression_ArrayInitializer()
-  {
-    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPrimaryExpression_ArrayType()
-  {
-    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPrimaryExpression_ArrayInitializer2()
-  {
-    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(5);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPrimaryExpression_Tipo()
-  {
-    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(6);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPrimaryExpression_ArgumentList()
-  {
-    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(7);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPrimaryExpression_Id()
-  {
-    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(8);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getPrimaryExpression_Literal()
-  {
-    return (EAttribute)primaryExpressionEClass.getEStructuralFeatures().get(9);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPrimaryExpression_Expression()
-  {
-    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(10);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getPrimaryExpression_PredefinedType()
-  {
-    return (EAttribute)primaryExpressionEClass.getEStructuralFeatures().get(11);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPrimaryExpression_TypeOrVoid()
-  {
-    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(12);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPrimaryExpression_PrimaryExoression2()
-  {
-    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(13);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getPrimaryExpression2()
-  {
-    return primaryExpression2EClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPrimaryExpression2_Id()
-  {
-    return (EReference)primaryExpression2EClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPrimaryExpression2_ArgumentList()
-  {
-    return (EReference)primaryExpression2EClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPrimaryExpression2_ExpressionList()
-  {
-    return (EReference)primaryExpression2EClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getPrimaryExpression2_IncrementeDecrement()
-  {
-    return (EAttribute)primaryExpression2EClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPrimaryExpression2_PrimaryExpression2()
-  {
-    return (EReference)primaryExpression2EClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -4901,9 +5246,149 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getMaybeEmptyBlock_Statement()
+  public EClass getSByte()
   {
-    return (EReference)maybeEmptyBlockEClass.getEStructuralFeatures().get(0);
+    return sByteEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getByte()
+  {
+    return byteEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getShort()
+  {
+    return shortEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getUShort()
+  {
+    return uShortEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getInt()
+  {
+    return intEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getUInt()
+  {
+    return uIntEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getLong()
+  {
+    return longEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getULong()
+  {
+    return uLongEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getChar()
+  {
+    return charEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getBool()
+  {
+    return boolEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getDecimal()
+  {
+    return decimalEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getFloat()
+  {
+    return floatEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getDouble()
+  {
+    return doubleEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getObject()
+  {
+    return objectEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getString()
+  {
+    return stringEClass;
   }
 
   /**
@@ -4946,17 +5431,144 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     isCreated = true;
 
     // Create classes and their features
-    modelEClass = createEClass(MODEL);
-    createEReference(modelEClass, MODEL__INPUTS);
-
-    identifierEClass = createEClass(IDENTIFIER);
-    createEReference(identifierEClass, IDENTIFIER__FORMAL_LIST);
-    createEReference(identifierEClass, IDENTIFIER__CONST_INITIALIZER);
-
     compilationUnitEClass = createEClass(COMPILATION_UNIT);
     createEReference(compilationUnitEClass, COMPILATION_UNIT__USING_DIRECTIVES);
     createEReference(compilationUnitEClass, COMPILATION_UNIT__GLOBAL_ATT);
     createEReference(compilationUnitEClass, COMPILATION_UNIT__NAME_SPACES);
+
+    identifierEClass = createEClass(IDENTIFIER);
+
+    usingDirectiveEClass = createEClass(USING_DIRECTIVE);
+    createEReference(usingDirectiveEClass, USING_DIRECTIVE__NAME);
+    createEReference(usingDirectiveEClass, USING_DIRECTIVE__USINGS);
+
+    arrayTypeEClass = createEClass(ARRAY_TYPE);
+
+    globalAttributesEClass = createEClass(GLOBAL_ATTRIBUTES);
+    createEReference(globalAttributesEClass, GLOBAL_ATTRIBUTES__GLOBAL_ATT_SECTIONS);
+
+    globalAttributeSectionEClass = createEClass(GLOBAL_ATTRIBUTE_SECTION);
+    createEReference(globalAttributeSectionEClass, GLOBAL_ATTRIBUTE_SECTION__ATTRIBUTES);
+
+    attributesEClass = createEClass(ATTRIBUTES);
+    createEReference(attributesEClass, ATTRIBUTES__ATTRIBUTES);
+
+    attributeSectionEClass = createEClass(ATTRIBUTE_SECTION);
+
+    attributeListEClass = createEClass(ATTRIBUTE_LIST);
+    createEReference(attributeListEClass, ATTRIBUTE_LIST__ATTRIBUTE);
+    createEReference(attributeListEClass, ATTRIBUTE_LIST__ATTRIBUTES);
+
+    attributeEClass = createEClass(ATTRIBUTE);
+    createEReference(attributeEClass, ATTRIBUTE__NAME);
+    createEReference(attributeEClass, ATTRIBUTE__ATT_ARGUMENTS);
+
+    attributeArgumentsEClass = createEClass(ATTRIBUTE_ARGUMENTS);
+    createEReference(attributeArgumentsEClass, ATTRIBUTE_ARGUMENTS__EXPRESION_LIST);
+
+    expressionListEClass = createEClass(EXPRESSION_LIST);
+    createEReference(expressionListEClass, EXPRESSION_LIST__EXPRESSION);
+    createEReference(expressionListEClass, EXPRESSION_LIST__EXPRESSIONS);
+
+    expressionEClass = createEClass(EXPRESSION);
+    createEReference(expressionEClass, EXPRESSION__UNARY);
+    createEReference(expressionEClass, EXPRESSION__EXP);
+    createEReference(expressionEClass, EXPRESSION__EXP2);
+
+    expression2EClass = createEClass(EXPRESSION2);
+    createEReference(expression2EClass, EXPRESSION2__INTER_EXP);
+    createEReference(expression2EClass, EXPRESSION2__INTER_EXP2);
+    createEReference(expression2EClass, EXPRESSION2__PIPELINE_EXP);
+    createEReference(expression2EClass, EXPRESSION2__PIPELINE_EXP2);
+    createEReference(expression2EClass, EXPRESSION2__IN_EXP);
+    createEReference(expression2EClass, EXPRESSION2__IN_EXP2);
+    createEReference(expression2EClass, EXPRESSION2__BAR_EXP);
+    createEReference(expression2EClass, EXPRESSION2__BAR_EXP2);
+    createEReference(expression2EClass, EXPRESSION2__EXP);
+    createEReference(expression2EClass, EXPRESSION2__EXP2);
+    createEReference(expression2EClass, EXPRESSION2__AMP_EXP);
+    createEReference(expression2EClass, EXPRESSION2__AMP_EXP2);
+    createEReference(expression2EClass, EXPRESSION2__EQUALITY_EXP);
+    createEReference(expression2EClass, EXPRESSION2__EQUALITY_EXP2);
+    createEReference(expression2EClass, EXPRESSION2__RELOP_EXP);
+    createEReference(expression2EClass, EXPRESSION2__RELOP_EXP2);
+    createEReference(expression2EClass, EXPRESSION2__BUILD_IN_TYPE);
+    createEReference(expression2EClass, EXPRESSION2__SHIFT_EXP);
+    createEReference(expression2EClass, EXPRESSION2__SHIFT_EXP2);
+    createEReference(expression2EClass, EXPRESSION2__OPERATOR_EXP);
+    createEReference(expression2EClass, EXPRESSION2__OPERATOR_EXP2);
+    createEReference(expression2EClass, EXPRESSION2__MULTIP_EXP);
+    createEReference(expression2EClass, EXPRESSION2__MULTIP_EXP2);
+    createEReference(expression2EClass, EXPRESSION2__DIV_EXP);
+    createEReference(expression2EClass, EXPRESSION2__DIV_EXP2);
+    createEReference(expression2EClass, EXPRESSION2__MOD_EXP);
+    createEReference(expression2EClass, EXPRESSION2__MOD_EXP2);
+
+    unaryExpressionEClass = createEClass(UNARY_EXPRESSION);
+    createEAttribute(unaryExpressionEClass, UNARY_EXPRESSION__EXP_UNARY_OPERATOR);
+    createEReference(unaryExpressionEClass, UNARY_EXPRESSION__TYPE);
+    createEReference(unaryExpressionEClass, UNARY_EXPRESSION__UNARY_EXP);
+    createEReference(unaryExpressionEClass, UNARY_EXPRESSION__PRIMARY_EXP);
+
+    primaryExpressionEClass = createEClass(PRIMARY_EXPRESSION);
+    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__NON_ARRAY_TYPE);
+    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__EXPRESSION_LIST);
+    createEAttribute(primaryExpressionEClass, PRIMARY_EXPRESSION__RANK_SPECIFIER);
+    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__ARRAY_INITIALIZER);
+    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__ARRAY_TYPE);
+    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__ARRAY_INITIALIZER2);
+    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__TIPO);
+    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__ARGUMENT_LIST);
+    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__ID);
+    createEAttribute(primaryExpressionEClass, PRIMARY_EXPRESSION__LITERAL);
+    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__EXPRESSION);
+    createEAttribute(primaryExpressionEClass, PRIMARY_EXPRESSION__PREDEFINED_TYPE);
+    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__TYPE_OR_VOID);
+    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__PRIMARY_EXORESSION2);
+
+    primaryExpression2EClass = createEClass(PRIMARY_EXPRESSION2);
+    createEReference(primaryExpression2EClass, PRIMARY_EXPRESSION2__ID);
+    createEReference(primaryExpression2EClass, PRIMARY_EXPRESSION2__ARGUMENT_LIST);
+    createEReference(primaryExpression2EClass, PRIMARY_EXPRESSION2__EXPRESSION_LIST);
+    createEAttribute(primaryExpression2EClass, PRIMARY_EXPRESSION2__INCREMENTE_DECREMENT);
+    createEReference(primaryExpression2EClass, PRIMARY_EXPRESSION2__PRIMARY_EXPRESSION2);
+
+    arrayInitializerEClass = createEClass(ARRAY_INITIALIZER);
+    createEReference(arrayInitializerEClass, ARRAY_INITIALIZER__VARIABLE_INITALIZER);
+    createEReference(arrayInitializerEClass, ARRAY_INITIALIZER__VARIABLE_INITALIZERS);
+
+    variableInitializerEClass = createEClass(VARIABLE_INITIALIZER);
+
+    attributeNameEClass = createEClass(ATTRIBUTE_NAME);
+    createEReference(attributeNameEClass, ATTRIBUTE_NAME__QUALIFIED_ID);
+
+    typeEClass = createEClass(TYPE);
+    createEReference(typeEClass, TYPE__NON_ARRAY);
+    createEReference(typeEClass, TYPE__VARIABLE_DECLARATOR);
+    createEReference(typeEClass, TYPE__VARIABLE_DECLARATORS);
+    createEReference(typeEClass, TYPE__QIDENT);
+    createEReference(typeEClass, TYPE__EVENT_ACCESSOR_DECLARATIONS);
+    createEReference(typeEClass, TYPE__QUALIFIED_ID);
+    createEReference(typeEClass, TYPE__ACC_DECLARATE);
+    createEReference(typeEClass, TYPE__VARIABLE);
+    createEReference(typeEClass, TYPE__VARIABLES);
+    createEReference(typeEClass, TYPE__CONST_DECLARATOR);
+    createEReference(typeEClass, TYPE__CONST_DECLARATORS);
+
+    integralTypeEClass = createEClass(INTEGRAL_TYPE);
+
+    nonArrayTypeEClass = createEClass(NON_ARRAY_TYPE);
+    createEReference(nonArrayTypeEClass, NON_ARRAY_TYPE__BUILT_TYPE);
+    createEReference(nonArrayTypeEClass, NON_ARRAY_TYPE__QUALIFIED);
+
+    builtInTypeEClass = createEClass(BUILT_IN_TYPE);
+
+    builtInClassTypeEClass = createEClass(BUILT_IN_CLASS_TYPE);
+    createEReference(builtInClassTypeEClass, BUILT_IN_CLASS_TYPE__QID2);
+
+    qualifiedIdentifierEClass = createEClass(QUALIFIED_IDENTIFIER);
+    createEReference(qualifiedIdentifierEClass, QUALIFIED_IDENTIFIER__ID);
+    createEReference(qualifiedIdentifierEClass, QUALIFIED_IDENTIFIER__IDS);
 
     namespaceMemberDeclarationEClass = createEClass(NAMESPACE_MEMBER_DECLARATION);
     createEReference(namespaceMemberDeclarationEClass, NAMESPACE_MEMBER_DECLARATION__NAME_DECLARETION);
@@ -4972,8 +5584,6 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
 
     typeDeclarationEClass = createEClass(TYPE_DECLARATION);
     createEReference(typeDeclarationEClass, TYPE_DECLARATION__CLASS_DECLARATION);
-    createEAttribute(typeDeclarationEClass, TYPE_DECLARATION__MOD);
-    createEReference(typeDeclarationEClass, TYPE_DECLARATION__STRUCT_DECLARATION);
     createEReference(typeDeclarationEClass, TYPE_DECLARATION__INTERFACE_DECLARATION);
     createEReference(typeDeclarationEClass, TYPE_DECLARATION__ENUM_DECLARATION);
     createEReference(typeDeclarationEClass, TYPE_DECLARATION__DELEGATE_DECLARATION);
@@ -4984,6 +5594,15 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     createEReference(enumDeclarationEClass, ENUM_DECLARATION__NAME);
     createEReference(enumDeclarationEClass, ENUM_DECLARATION__INT_TYPE);
     createEReference(enumDeclarationEClass, ENUM_DECLARATION__ENUM_BODY);
+
+    enumBodyEClass = createEClass(ENUM_BODY);
+    createEReference(enumBodyEClass, ENUM_BODY__ENUM_DECLARATION);
+    createEReference(enumBodyEClass, ENUM_BODY__ENUM_DECLARATIONS);
+
+    enumMemberDeclarationEClass = createEClass(ENUM_MEMBER_DECLARATION);
+    createEReference(enumMemberDeclarationEClass, ENUM_MEMBER_DECLARATION__ATT);
+    createEReference(enumMemberDeclarationEClass, ENUM_MEMBER_DECLARATION__NAME);
+    createEReference(enumMemberDeclarationEClass, ENUM_MEMBER_DECLARATION__EXP);
 
     interfaceDeclarationEClass = createEClass(INTERFACE_DECLARATION);
     createEReference(interfaceDeclarationEClass, INTERFACE_DECLARATION__NAME);
@@ -5022,21 +5641,6 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     createEReference(interfaceMethodDeclarationEClass, INTERFACE_METHOD_DECLARATION__NAME);
     createEReference(interfaceMethodDeclarationEClass, INTERFACE_METHOD_DECLARATION__PARAMETER_LIST);
 
-    structDeclarationEClass = createEClass(STRUCT_DECLARATION);
-    createEReference(structDeclarationEClass, STRUCT_DECLARATION__NAME);
-    createEReference(structDeclarationEClass, STRUCT_DECLARATION__QUAL_ID);
-    createEReference(structDeclarationEClass, STRUCT_DECLARATION__STRUCTBODY);
-
-    structBodyEClass = createEClass(STRUCT_BODY);
-    createEReference(structBodyEClass, STRUCT_BODY__STRUCT_MEMBER);
-
-    structMemberDeclarationsEClass = createEClass(STRUCT_MEMBER_DECLARATIONS);
-
-    structMemberDeclarations2EClass = createEClass(STRUCT_MEMBER_DECLARATIONS2);
-
-    structMemberDeclarationEClass = createEClass(STRUCT_MEMBER_DECLARATION);
-    createEReference(structMemberDeclarationEClass, STRUCT_MEMBER_DECLARATION__STRUCT_MEMBER2);
-
     classDeclarationEClass = createEClass(CLASS_DECLARATION);
     createEAttribute(classDeclarationEClass, CLASS_DECLARATION__CLASS_MODIFIER);
     createEReference(classDeclarationEClass, CLASS_DECLARATION__CLASS_NAME);
@@ -5044,20 +5648,21 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     createEReference(classDeclarationEClass, CLASS_DECLARATION__CLASS_BODY);
 
     classBodyEClass = createEClass(CLASS_BODY);
+    createEReference(classBodyEClass, CLASS_BODY__CLASS_ATT);
     createEReference(classBodyEClass, CLASS_BODY__CLASS_DECLARATION);
 
     classMemberDeclarationEClass = createEClass(CLASS_MEMBER_DECLARATION);
-    createEReference(classMemberDeclarationEClass, CLASS_MEMBER_DECLARATION__CLASS_ATT);
-    createEReference(classMemberDeclarationEClass, CLASS_MEMBER_DECLARATION__CONST_DECLARATION);
     createEReference(classMemberDeclarationEClass, CLASS_MEMBER_DECLARATION__FIELD_DECLARATION);
+    createEReference(classMemberDeclarationEClass, CLASS_MEMBER_DECLARATION__METHOD_DECLARATION);
+    createEReference(classMemberDeclarationEClass, CLASS_MEMBER_DECLARATION__CONST_DECLARATION);
     createEReference(classMemberDeclarationEClass, CLASS_MEMBER_DECLARATION__PROPERTY_DECLARATION);
     createEReference(classMemberDeclarationEClass, CLASS_MEMBER_DECLARATION__EVENT_DECLARATION);
     createEReference(classMemberDeclarationEClass, CLASS_MEMBER_DECLARATION__INDEX_DECLARATION);
+    createEReference(classMemberDeclarationEClass, CLASS_MEMBER_DECLARATION__TYPE_DECLARATION);
     createEReference(classMemberDeclarationEClass, CLASS_MEMBER_DECLARATION__OP_DECLARATION);
     createEReference(classMemberDeclarationEClass, CLASS_MEMBER_DECLARATION__CONSTRUCTOR_DECLARATION);
     createEReference(classMemberDeclarationEClass, CLASS_MEMBER_DECLARATION__DESTRUCTOR_DECLARATION);
     createEReference(classMemberDeclarationEClass, CLASS_MEMBER_DECLARATION__STATIC_DECLARATION);
-    createEReference(classMemberDeclarationEClass, CLASS_MEMBER_DECLARATION__TYPE_DECLARATION);
 
     staticConstructorDeclarationEClass = createEClass(STATIC_CONSTRUCTOR_DECLARATION);
     createEAttribute(staticConstructorDeclarationEClass, STATIC_CONSTRUCTOR_DECLARATION__STATIC_COSNT_MODIFIER);
@@ -5074,11 +5679,15 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     createEReference(constructorDeclarationEClass, CONSTRUCTOR_DECLARATION__EMPTY_BLOCK);
 
     constructorDeclaratorEClass = createEClass(CONSTRUCTOR_DECLARATOR);
+    createEReference(constructorDeclaratorEClass, CONSTRUCTOR_DECLARATOR__CLASS_NAME);
+    createEReference(constructorDeclaratorEClass, CONSTRUCTOR_DECLARATOR__FORMAL_LIST);
+    createEReference(constructorDeclaratorEClass, CONSTRUCTOR_DECLARATOR__CONST_INITIALIZER);
 
     constructorInitializerEClass = createEClass(CONSTRUCTOR_INITIALIZER);
 
     argumentListEClass = createEClass(ARGUMENT_LIST);
     createEReference(argumentListEClass, ARGUMENT_LIST__ARG);
+    createEReference(argumentListEClass, ARGUMENT_LIST__ARGS);
 
     argumentEClass = createEClass(ARGUMENT);
 
@@ -5144,8 +5753,13 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     createEReference(methodDeclarationEClass, METHOD_DECLARATION__MAYBE_EMPTY);
 
     methodHeaderEClass = createEClass(METHOD_HEADER);
+    createEAttribute(methodHeaderEClass, METHOD_HEADER__MODIFIER);
+    createEReference(methodHeaderEClass, METHOD_HEADER__TYPE_OR_VOID);
+    createEReference(methodHeaderEClass, METHOD_HEADER__QUALIFIED_IDENTIFIER);
+    createEReference(methodHeaderEClass, METHOD_HEADER__FORMAL_PARAMETERS);
 
     formalParameterListEClass = createEClass(FORMAL_PARAMETER_LIST);
+    createEReference(formalParameterListEClass, FORMAL_PARAMETER_LIST__PARAMETER_ARRAY);
 
     parameterArrayEClass = createEClass(PARAMETER_ARRAY);
     createEReference(parameterArrayEClass, PARAMETER_ARRAY__ATT);
@@ -5153,10 +5767,11 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     createEReference(parameterArrayEClass, PARAMETER_ARRAY__NAME);
 
     fixedParametersEClass = createEClass(FIXED_PARAMETERS);
-    createEReference(fixedParametersEClass, FIXED_PARAMETERS__PARAMETER_ARRAY);
+    createEReference(fixedParametersEClass, FIXED_PARAMETERS__FIX_PARAMETER);
     createEReference(fixedParametersEClass, FIXED_PARAMETERS__FIX_PARAMETERS);
 
     fixedParameterEClass = createEClass(FIXED_PARAMETER);
+    createEReference(fixedParameterEClass, FIXED_PARAMETER__ATT);
     createEReference(fixedParameterEClass, FIXED_PARAMETER__TYPE);
     createEReference(fixedParameterEClass, FIXED_PARAMETER__NAME);
 
@@ -5168,13 +5783,8 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     fieldDeclarationEClass = createEClass(FIELD_DECLARATION);
 
     variableDeclaratorEClass = createEClass(VARIABLE_DECLARATOR);
-    createEReference(variableDeclaratorEClass, VARIABLE_DECLARATOR__NAME);
+    createEReference(variableDeclaratorEClass, VARIABLE_DECLARATOR__VARIABLE_NAME);
     createEReference(variableDeclaratorEClass, VARIABLE_DECLARATOR__VARIABLE);
-
-    variableInitializerEClass = createEClass(VARIABLE_INITIALIZER);
-
-    arrayInitializerEClass = createEClass(ARRAY_INITIALIZER);
-    createEReference(arrayInitializerEClass, ARRAY_INITIALIZER__VARIABLE_INITALIZERS);
 
     constantDeclarationEClass = createEClass(CONSTANT_DECLARATION);
 
@@ -5183,95 +5793,11 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     createEReference(constantDeclaratorEClass, CONSTANT_DECLARATOR__EXP);
 
     classBaseEClass = createEClass(CLASS_BASE);
+    createEReference(classBaseEClass, CLASS_BASE__QI_DS);
 
     qualifiedIdentifierListEClass = createEClass(QUALIFIED_IDENTIFIER_LIST);
+    createEReference(qualifiedIdentifierListEClass, QUALIFIED_IDENTIFIER_LIST__ID);
     createEReference(qualifiedIdentifierListEClass, QUALIFIED_IDENTIFIER_LIST__IDS);
-
-    globalAttributesEClass = createEClass(GLOBAL_ATTRIBUTES);
-    createEReference(globalAttributesEClass, GLOBAL_ATTRIBUTES__GLOBAL_ATT_SECTIONS);
-
-    globalAttributeSectionEClass = createEClass(GLOBAL_ATTRIBUTE_SECTION);
-
-    attributesEClass = createEClass(ATTRIBUTES);
-    createEReference(attributesEClass, ATTRIBUTES__TYPE_OR_VOID);
-    createEReference(attributesEClass, ATTRIBUTES__QUALIFIED_ID);
-    createEReference(attributesEClass, ATTRIBUTES__FORMAL_PARAMETERS);
-    createEReference(attributesEClass, ATTRIBUTES__ATTRIBUTES);
-    createEReference(attributesEClass, ATTRIBUTES__TYPE);
-    createEReference(attributesEClass, ATTRIBUTES__ENUM_BODY);
-
-    attributeSectionEClass = createEClass(ATTRIBUTE_SECTION);
-
-    attributeListEClass = createEClass(ATTRIBUTE_LIST);
-    createEReference(attributeListEClass, ATTRIBUTE_LIST__ATTRIBUTES);
-
-    attributeEClass = createEClass(ATTRIBUTE);
-    createEReference(attributeEClass, ATTRIBUTE__ATT_NAME);
-    createEReference(attributeEClass, ATTRIBUTE__ATT_ARGUMENTS);
-
-    attributeArgumentsEClass = createEClass(ATTRIBUTE_ARGUMENTS);
-    createEReference(attributeArgumentsEClass, ATTRIBUTE_ARGUMENTS__EXPRESIONS);
-
-    expressionListEClass = createEClass(EXPRESSION_LIST);
-    createEReference(expressionListEClass, EXPRESSION_LIST__EXPRESIONS);
-
-    expressionEClass = createEClass(EXPRESSION);
-    createEReference(expressionEClass, EXPRESSION__UNARY);
-    createEReference(expressionEClass, EXPRESSION__EXP2);
-    createEReference(expressionEClass, EXPRESSION__EXP);
-    createEReference(expressionEClass, EXPRESSION__OTHER_EXP2);
-
-    expression2EClass = createEClass(EXPRESSION2);
-    createEReference(expression2EClass, EXPRESSION2__INTERNAL_EXP);
-    createEReference(expression2EClass, EXPRESSION2__EXP);
-    createEReference(expression2EClass, EXPRESSION2__INTERNAL_EXP2);
-    createEReference(expression2EClass, EXPRESSION2__BUILD_IN_TYPE);
-
-    unaryExpressionEClass = createEClass(UNARY_EXPRESSION);
-    createEAttribute(unaryExpressionEClass, UNARY_EXPRESSION__EXP_UNARY_OPERATOR);
-    createEReference(unaryExpressionEClass, UNARY_EXPRESSION__TYPE);
-    createEReference(unaryExpressionEClass, UNARY_EXPRESSION__UNARY_EXP);
-    createEReference(unaryExpressionEClass, UNARY_EXPRESSION__PRIMARY_EXP);
-
-    attributeNameEClass = createEClass(ATTRIBUTE_NAME);
-    createEReference(attributeNameEClass, ATTRIBUTE_NAME__QUALIFIED_ID);
-
-    usingDirectiveEClass = createEClass(USING_DIRECTIVE);
-    createEReference(usingDirectiveEClass, USING_DIRECTIVE__NAME);
-    createEReference(usingDirectiveEClass, USING_DIRECTIVE__USINGS);
-
-    typeEClass = createEClass(TYPE);
-    createEReference(typeEClass, TYPE__VARIABLE_DECLARATOR);
-    createEReference(typeEClass, TYPE__QIDENT);
-    createEReference(typeEClass, TYPE__EVENT_ACCESSOR_DECLARATIONS);
-    createEReference(typeEClass, TYPE__QUALIFIED_ID);
-    createEReference(typeEClass, TYPE__ACC_DECLARATE);
-    createEReference(typeEClass, TYPE__VARIABLES);
-    createEReference(typeEClass, TYPE__CONST_DECLARATORS);
-    createEReference(typeEClass, TYPE__NON_ARRAY);
-
-    integralTypeEClass = createEClass(INTEGRAL_TYPE);
-
-    arrayTypeEClass = createEClass(ARRAY_TYPE);
-
-    enumTypeEClass = createEClass(ENUM_TYPE);
-
-    nonArrayTypeEClass = createEClass(NON_ARRAY_TYPE);
-    createEReference(nonArrayTypeEClass, NON_ARRAY_TYPE__QUALIFIED);
-    createEReference(nonArrayTypeEClass, NON_ARRAY_TYPE__BUILT_TYPE);
-
-    qualifiedIdentifierEClass = createEClass(QUALIFIED_IDENTIFIER);
-    createEReference(qualifiedIdentifierEClass, QUALIFIED_IDENTIFIER__IDS);
-
-    builtInTypeEClass = createEClass(BUILT_IN_TYPE);
-
-    enumBodyEClass = createEClass(ENUM_BODY);
-    createEReference(enumBodyEClass, ENUM_BODY__ENUM_DECLARATIONS);
-
-    enumMemberDeclarationEClass = createEClass(ENUM_MEMBER_DECLARATION);
-    createEReference(enumMemberDeclarationEClass, ENUM_MEMBER_DECLARATION__ATT);
-    createEReference(enumMemberDeclarationEClass, ENUM_MEMBER_DECLARATION__NAME);
-    createEReference(enumMemberDeclarationEClass, ENUM_MEMBER_DECLARATION__EXP);
 
     statementEClass = createEClass(STATEMENT);
     createEReference(statementEClass, STATEMENT__LABEL_STAT);
@@ -5285,6 +5811,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     localconstantDeclarationEClass = createEClass(LOCALCONSTANT_DECLARATION);
     createEReference(localconstantDeclarationEClass, LOCALCONSTANT_DECLARATION__TIPO);
     createEReference(localconstantDeclarationEClass, LOCALCONSTANT_DECLARATION__CONST_DECLARATOR);
+    createEReference(localconstantDeclarationEClass, LOCALCONSTANT_DECLARATION__CONST_DECLARATORS);
 
     labeledStatementEClass = createEClass(LABELED_STATEMENT);
     createEReference(labeledStatementEClass, LABELED_STATEMENT__ID);
@@ -5310,6 +5837,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     localVariableDeclarationEClass = createEClass(LOCAL_VARIABLE_DECLARATION);
     createEReference(localVariableDeclarationEClass, LOCAL_VARIABLE_DECLARATION__TIPO);
     createEReference(localVariableDeclarationEClass, LOCAL_VARIABLE_DECLARATION__VARIABLE);
+    createEReference(localVariableDeclarationEClass, LOCAL_VARIABLE_DECLARATION__VARIABLES);
 
     lockStatementEClass = createEClass(LOCK_STATEMENT);
     createEReference(lockStatementEClass, LOCK_STATEMENT__EXP);
@@ -5333,6 +5861,7 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     createEReference(generalCatchclauseEClass, GENERAL_CATCHCLAUSE__BLOCK);
 
     specificCatchClauseEClass = createEClass(SPECIFIC_CATCH_CLAUSE);
+    createEReference(specificCatchClauseEClass, SPECIFIC_CATCH_CLAUSE__CLASS_TYPE);
     createEReference(specificCatchClauseEClass, SPECIFIC_CATCH_CLAUSE__QUALI_ID);
     createEReference(specificCatchClauseEClass, SPECIFIC_CATCH_CLAUSE__ID);
     createEReference(specificCatchClauseEClass, SPECIFIC_CATCH_CLAUSE__BLOCK);
@@ -5382,38 +5911,16 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
 
     statementExpressionListEClass = createEClass(STATEMENT_EXPRESSION_LIST);
     createEReference(statementExpressionListEClass, STATEMENT_EXPRESSION_LIST__LIST);
+    createEReference(statementExpressionListEClass, STATEMENT_EXPRESSION_LIST__LISTS);
 
     statementExpressionEClass = createEClass(STATEMENT_EXPRESSION);
-    createEReference(statementExpressionEClass, STATEMENT_EXPRESSION__PRIMARY_EXPRESSION);
-    createEReference(statementExpressionEClass, STATEMENT_EXPRESSION__ARGUMENT_LIST);
-    createEAttribute(statementExpressionEClass, STATEMENT_EXPRESSION__INCRIMENT_DECREMENT);
     createEReference(statementExpressionEClass, STATEMENT_EXPRESSION__TIPO);
+    createEReference(statementExpressionEClass, STATEMENT_EXPRESSION__ARGUMENT_LIST);
+    createEReference(statementExpressionEClass, STATEMENT_EXPRESSION__PRIMARY_EXPRESSION);
+    createEAttribute(statementExpressionEClass, STATEMENT_EXPRESSION__INCRIMENT_DECREMENT);
     createEReference(statementExpressionEClass, STATEMENT_EXPRESSION__UNARY_EXPRESSION);
     createEAttribute(statementExpressionEClass, STATEMENT_EXPRESSION__ASSIGNEMENT_OPERATOR);
     createEReference(statementExpressionEClass, STATEMENT_EXPRESSION__EXPRESSION);
-
-    primaryExpressionEClass = createEClass(PRIMARY_EXPRESSION);
-    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__NON_ARRAY_TYPE);
-    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__EXPRESSION_LIST);
-    createEAttribute(primaryExpressionEClass, PRIMARY_EXPRESSION__RANK_SPECIFIER);
-    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__ARRAY_INITIALIZER);
-    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__ARRAY_TYPE);
-    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__ARRAY_INITIALIZER2);
-    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__TIPO);
-    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__ARGUMENT_LIST);
-    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__ID);
-    createEAttribute(primaryExpressionEClass, PRIMARY_EXPRESSION__LITERAL);
-    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__EXPRESSION);
-    createEAttribute(primaryExpressionEClass, PRIMARY_EXPRESSION__PREDEFINED_TYPE);
-    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__TYPE_OR_VOID);
-    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__PRIMARY_EXORESSION2);
-
-    primaryExpression2EClass = createEClass(PRIMARY_EXPRESSION2);
-    createEReference(primaryExpression2EClass, PRIMARY_EXPRESSION2__ID);
-    createEReference(primaryExpression2EClass, PRIMARY_EXPRESSION2__ARGUMENT_LIST);
-    createEReference(primaryExpression2EClass, PRIMARY_EXPRESSION2__EXPRESSION_LIST);
-    createEAttribute(primaryExpression2EClass, PRIMARY_EXPRESSION2__INCREMENTE_DECREMENT);
-    createEReference(primaryExpression2EClass, PRIMARY_EXPRESSION2__PRIMARY_EXPRESSION2);
 
     doStatementEClass = createEClass(DO_STATEMENT);
     createEReference(doStatementEClass, DO_STATEMENT__EMBEDDED_STATEMENT);
@@ -5450,7 +5957,36 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     createEReference(blockEClass, BLOCK__STATEMENT);
 
     maybeEmptyBlockEClass = createEClass(MAYBE_EMPTY_BLOCK);
-    createEReference(maybeEmptyBlockEClass, MAYBE_EMPTY_BLOCK__STATEMENT);
+
+    sByteEClass = createEClass(SBYTE);
+
+    byteEClass = createEClass(BYTE);
+
+    shortEClass = createEClass(SHORT);
+
+    uShortEClass = createEClass(USHORT);
+
+    intEClass = createEClass(INT);
+
+    uIntEClass = createEClass(UINT);
+
+    longEClass = createEClass(LONG);
+
+    uLongEClass = createEClass(ULONG);
+
+    charEClass = createEClass(CHAR);
+
+    boolEClass = createEClass(BOOL);
+
+    decimalEClass = createEClass(DECIMAL);
+
+    floatEClass = createEClass(FLOAT);
+
+    doubleEClass = createEClass(DOUBLE);
+
+    objectEClass = createEClass(OBJECT);
+
+    stringEClass = createEClass(STRING);
 
     voidEClass = createEClass(VOID);
   }
@@ -5484,59 +6020,187 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    identifierEClass.getESuperTypes().add(this.getConstructorDeclarator());
-    typeDeclarationEClass.getESuperTypes().add(this.getStructMemberDeclaration());
-    structMemberDeclarationEClass.getESuperTypes().add(this.getStructMemberDeclarations());
-    structMemberDeclarationEClass.getESuperTypes().add(this.getStructMemberDeclarations2());
-    staticConstructorDeclarationEClass.getESuperTypes().add(this.getStructMemberDeclaration());
-    constructorDeclarationEClass.getESuperTypes().add(this.getStructMemberDeclaration());
-    argumentListEClass.getESuperTypes().add(this.getConstructorInitializer());
-    operatorDeclarationEClass.getESuperTypes().add(this.getStructMemberDeclaration());
-    conversionOperatorDeclaratorEClass.getESuperTypes().add(this.getOperatorDeclarator());
-    binaryOperatorDeclaratorEClass.getESuperTypes().add(this.getOperatorDeclarator());
-    unaryOperatorDeclaratorEClass.getESuperTypes().add(this.getOperatorDeclarator());
-    indexerDeclarationEClass.getESuperTypes().add(this.getStructMemberDeclaration());
-    eventDeclarationEClass.getESuperTypes().add(this.getStructMemberDeclaration());
-    propertyDeclarationEClass.getESuperTypes().add(this.getStructMemberDeclaration());
-    methodDeclarationEClass.getESuperTypes().add(this.getStructMemberDeclaration());
-    methodDeclarationEClass.getESuperTypes().add(this.getClassMemberDeclaration());
-    fixedParametersEClass.getESuperTypes().add(this.getFormalParameterList());
-    typeOrVoidEClass.getESuperTypes().add(this.getDelegateDeclaration());
-    fieldDeclarationEClass.getESuperTypes().add(this.getStructMemberDeclaration());
-    arrayInitializerEClass.getESuperTypes().add(this.getVariableInitializer());
-    constantDeclarationEClass.getESuperTypes().add(this.getStructMemberDeclaration());
-    qualifiedIdentifierListEClass.getESuperTypes().add(this.getClassBase());
-    attributesEClass.getESuperTypes().add(this.getMethodHeader());
-    attributesEClass.getESuperTypes().add(this.getEnumType());
-    attributeListEClass.getESuperTypes().add(this.getGlobalAttributeSection());
     attributeListEClass.getESuperTypes().add(this.getAttributeSection());
-    expressionEClass.getESuperTypes().add(this.getArgument());
     expressionEClass.getESuperTypes().add(this.getVariableInitializer());
+    expressionEClass.getESuperTypes().add(this.getArgument());
     expressionEClass.getESuperTypes().add(this.getResourceAquisition());
+    arrayInitializerEClass.getESuperTypes().add(this.getVariableInitializer());
     typeEClass.getESuperTypes().add(this.getEventDeclaration());
     typeEClass.getESuperTypes().add(this.getPropertyDeclaration());
     typeEClass.getESuperTypes().add(this.getFieldDeclaration());
     typeEClass.getESuperTypes().add(this.getConstantDeclaration());
+    integralTypeEClass.getESuperTypes().add(this.getBuiltInType());
     nonArrayTypeEClass.getESuperTypes().add(this.getArrayType());
+    builtInClassTypeEClass.getESuperTypes().add(this.getBuiltInType());
+    builtInClassTypeEClass.getESuperTypes().add(this.getClassBase());
+    argumentListEClass.getESuperTypes().add(this.getConstructorInitializer());
+    conversionOperatorDeclaratorEClass.getESuperTypes().add(this.getOperatorDeclarator());
+    binaryOperatorDeclaratorEClass.getESuperTypes().add(this.getOperatorDeclarator());
+    unaryOperatorDeclaratorEClass.getESuperTypes().add(this.getOperatorDeclarator());
+    fixedParametersEClass.getESuperTypes().add(this.getFormalParameterList());
+    typeOrVoidEClass.getESuperTypes().add(this.getDelegateDeclaration());
     localVariableDeclarationEClass.getESuperTypes().add(this.getResourceAquisition());
     blockEClass.getESuperTypes().add(this.getRemoveAccessorDeclaration());
     blockEClass.getESuperTypes().add(this.getAddAccessorDeclaration());
+    blockEClass.getESuperTypes().add(this.getMaybeEmptyBlock());
     maybeEmptyBlockEClass.getESuperTypes().add(this.getSetAccessorDeclaration());
     maybeEmptyBlockEClass.getESuperTypes().add(this.getGetAccessorDeclaration());
+    sByteEClass.getESuperTypes().add(this.getIntegralType());
+    byteEClass.getESuperTypes().add(this.getIntegralType());
+    shortEClass.getESuperTypes().add(this.getIntegralType());
+    uShortEClass.getESuperTypes().add(this.getIntegralType());
+    intEClass.getESuperTypes().add(this.getIntegralType());
+    uIntEClass.getESuperTypes().add(this.getIntegralType());
+    longEClass.getESuperTypes().add(this.getIntegralType());
+    uLongEClass.getESuperTypes().add(this.getIntegralType());
+    charEClass.getESuperTypes().add(this.getIntegralType());
+    boolEClass.getESuperTypes().add(this.getBuiltInType());
+    decimalEClass.getESuperTypes().add(this.getBuiltInType());
+    floatEClass.getESuperTypes().add(this.getBuiltInType());
+    doubleEClass.getESuperTypes().add(this.getBuiltInType());
+    objectEClass.getESuperTypes().add(this.getBuiltInClassType());
+    stringEClass.getESuperTypes().add(this.getBuiltInClassType());
     voidEClass.getESuperTypes().add(this.getTypeOrVoid());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getModel_Inputs(), this.getCompilationUnit(), null, "inputs", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(identifierEClass, Identifier.class, "Identifier", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getIdentifier_FormalList(), this.getFormalParameterList(), null, "formalList", null, 0, 1, Identifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getIdentifier_ConstInitializer(), this.getConstructorInitializer(), null, "constInitializer", null, 0, 1, Identifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(compilationUnitEClass, CompilationUnit.class, "CompilationUnit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getCompilationUnit_UsingDirectives(), this.getUsingDirective(), null, "usingDirectives", null, 0, -1, CompilationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getCompilationUnit_GlobalAtt(), this.getGlobalAttributes(), null, "globalAtt", null, 0, 1, CompilationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getCompilationUnit_NameSpaces(), this.getNamespaceMemberDeclaration(), null, "nameSpaces", null, 0, -1, CompilationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(identifierEClass, Identifier.class, "Identifier", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(usingDirectiveEClass, UsingDirective.class, "UsingDirective", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getUsingDirective_Name(), this.getIdentifier(), null, "name", null, 0, 1, UsingDirective.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getUsingDirective_Usings(), this.getQualifiedIdentifier(), null, "usings", null, 0, 1, UsingDirective.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(arrayTypeEClass, ArrayType.class, "ArrayType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(globalAttributesEClass, GlobalAttributes.class, "GlobalAttributes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getGlobalAttributes_GlobalAttSections(), this.getGlobalAttributeSection(), null, "globalAttSections", null, 0, -1, GlobalAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(globalAttributeSectionEClass, GlobalAttributeSection.class, "GlobalAttributeSection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getGlobalAttributeSection_Attributes(), this.getAttributeList(), null, "attributes", null, 0, 1, GlobalAttributeSection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(attributesEClass, Attributes.class, "Attributes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAttributes_Attributes(), this.getAttributeSection(), null, "attributes", null, 0, -1, Attributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(attributeSectionEClass, AttributeSection.class, "AttributeSection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(attributeListEClass, AttributeList.class, "AttributeList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAttributeList_Attribute(), this.getAttribute(), null, "attribute", null, 0, 1, AttributeList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAttributeList_Attributes(), this.getAttribute(), null, "attributes", null, 0, -1, AttributeList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(attributeEClass, Attribute.class, "Attribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAttribute_Name(), this.getAttributeName(), null, "name", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAttribute_AttArguments(), this.getAttributeArguments(), null, "attArguments", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(attributeArgumentsEClass, AttributeArguments.class, "AttributeArguments", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAttributeArguments_ExpresionList(), this.getExpressionList(), null, "expresionList", null, 0, 1, AttributeArguments.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(expressionListEClass, ExpressionList.class, "ExpressionList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getExpressionList_Expression(), this.getExpression(), null, "expression", null, 0, 1, ExpressionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpressionList_Expressions(), this.getExpression(), null, "expressions", null, 0, -1, ExpressionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getExpression_Unary(), this.getUnaryExpression(), null, "unary", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression_Exp(), this.getExpression(), null, "exp", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression_Exp2(), this.getExpression2(), null, "exp2", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(expression2EClass, Expression2.class, "Expression2", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getExpression2_InterExp(), this.getExpression(), null, "interExp", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_InterExp2(), this.getExpression2(), null, "interExp2", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_PipelineExp(), this.getExpression(), null, "pipelineExp", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_PipelineExp2(), this.getExpression2(), null, "pipelineExp2", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_InExp(), this.getExpression(), null, "inExp", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_InExp2(), this.getExpression2(), null, "inExp2", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_BarExp(), this.getExpression(), null, "barExp", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_BarExp2(), this.getExpression2(), null, "barExp2", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_Exp(), this.getExpression(), null, "exp", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_Exp2(), this.getExpression2(), null, "exp2", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_AmpExp(), this.getExpression(), null, "ampExp", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_AmpExp2(), this.getExpression2(), null, "ampExp2", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_EqualityExp(), this.getExpression(), null, "equalityExp", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_EqualityExp2(), this.getExpression2(), null, "equalityExp2", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_RelopExp(), this.getExpression(), null, "relopExp", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_RelopExp2(), this.getExpression2(), null, "relopExp2", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_BuildInType(), this.getBuiltInType(), null, "buildInType", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_ShiftExp(), this.getExpression(), null, "shiftExp", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_ShiftExp2(), this.getExpression2(), null, "shiftExp2", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_OperatorExp(), this.getExpression(), null, "operatorExp", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_OperatorExp2(), this.getExpression2(), null, "operatorExp2", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_MultipExp(), this.getExpression(), null, "multipExp", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_MultipExp2(), this.getExpression2(), null, "multipExp2", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_DivExp(), this.getExpression(), null, "divExp", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_DivExp2(), this.getExpression2(), null, "divExp2", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_ModExp(), this.getExpression(), null, "modExp", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression2_ModExp2(), this.getExpression2(), null, "modExp2", null, 0, 1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(unaryExpressionEClass, UnaryExpression.class, "UnaryExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getUnaryExpression_ExpUnaryOperator(), ecorePackage.getEString(), "expUnaryOperator", null, 0, 1, UnaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getUnaryExpression_Type(), this.getType(), null, "type", null, 0, 1, UnaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getUnaryExpression_UnaryExp(), this.getUnaryExpression(), null, "unaryExp", null, 0, 1, UnaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getUnaryExpression_PrimaryExp(), this.getPrimaryExpression(), null, "primaryExp", null, 0, 1, UnaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(primaryExpressionEClass, PrimaryExpression.class, "PrimaryExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPrimaryExpression_NonArrayType(), this.getNonArrayType(), null, "nonArrayType", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExpression_ExpressionList(), this.getExpressionList(), null, "expressionList", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPrimaryExpression_RankSpecifier(), ecorePackage.getEString(), "rankSpecifier", null, 0, -1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExpression_ArrayInitializer(), this.getArrayInitializer(), null, "arrayInitializer", null, 0, -1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExpression_ArrayType(), this.getArrayType(), null, "arrayType", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExpression_ArrayInitializer2(), this.getArrayInitializer(), null, "arrayInitializer2", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExpression_Tipo(), this.getType(), null, "tipo", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExpression_ArgumentList(), this.getArgumentList(), null, "argumentList", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExpression_Id(), this.getIdentifier(), null, "id", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPrimaryExpression_Literal(), ecorePackage.getEString(), "literal", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExpression_Expression(), this.getExpression(), null, "expression", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPrimaryExpression_PredefinedType(), ecorePackage.getEString(), "predefinedType", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExpression_TypeOrVoid(), this.getTypeOrVoid(), null, "typeOrVoid", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExpression_PrimaryExoression2(), this.getPrimaryExpression2(), null, "primaryExoression2", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(primaryExpression2EClass, PrimaryExpression2.class, "PrimaryExpression2", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPrimaryExpression2_Id(), this.getIdentifier(), null, "id", null, 0, -1, PrimaryExpression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExpression2_ArgumentList(), this.getArgumentList(), null, "argumentList", null, 0, -1, PrimaryExpression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExpression2_ExpressionList(), this.getExpressionList(), null, "expressionList", null, 0, -1, PrimaryExpression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPrimaryExpression2_IncrementeDecrement(), ecorePackage.getEString(), "incrementeDecrement", null, 0, -1, PrimaryExpression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExpression2_PrimaryExpression2(), this.getPrimaryExpression2(), null, "primaryExpression2", null, 0, -1, PrimaryExpression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(arrayInitializerEClass, ArrayInitializer.class, "ArrayInitializer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getArrayInitializer_VariableInitalizer(), this.getVariableInitializer(), null, "variableInitalizer", null, 0, 1, ArrayInitializer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getArrayInitializer_VariableInitalizers(), this.getVariableInitializer(), null, "variableInitalizers", null, 0, -1, ArrayInitializer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(variableInitializerEClass, VariableInitializer.class, "VariableInitializer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(attributeNameEClass, AttributeName.class, "AttributeName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAttributeName_QualifiedId(), this.getQualifiedIdentifier(), null, "qualifiedId", null, 0, 1, AttributeName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(typeEClass, Type.class, "Type", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getType_NonArray(), this.getNonArrayType(), null, "nonArray", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getType_VariableDeclarator(), this.getVariableDeclarator(), null, "variableDeclarator", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getType_VariableDeclarators(), this.getVariableDeclarator(), null, "variableDeclarators", null, 0, -1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getType_QIdent(), this.getQualifiedIdentifier(), null, "qIdent", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getType_EventAccessorDeclarations(), this.getEventAccessorDeclarations(), null, "eventAccessorDeclarations", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getType_QualifiedId(), this.getQualifiedIdentifier(), null, "qualifiedId", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getType_AccDeclarate(), this.getAccessorDeclarations(), null, "accDeclarate", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getType_Variable(), this.getVariableDeclarator(), null, "variable", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getType_Variables(), this.getVariableDeclarator(), null, "variables", null, 0, -1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getType_ConstDeclarator(), this.getConstantDeclarator(), null, "constDeclarator", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getType_ConstDeclarators(), this.getConstantDeclarator(), null, "constDeclarators", null, 0, -1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(integralTypeEClass, IntegralType.class, "IntegralType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(nonArrayTypeEClass, NonArrayType.class, "NonArrayType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getNonArrayType_BuiltType(), this.getBuiltInType(), null, "builtType", null, 0, 1, NonArrayType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNonArrayType_Qualified(), this.getQualifiedIdentifier(), null, "qualified", null, 0, 1, NonArrayType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(builtInTypeEClass, BuiltInType.class, "BuiltInType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(builtInClassTypeEClass, BuiltInClassType.class, "BuiltInClassType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getBuiltInClassType_QID2(), this.getQualifiedIdentifierList(), null, "qID2", null, 0, 1, BuiltInClassType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(qualifiedIdentifierEClass, QualifiedIdentifier.class, "QualifiedIdentifier", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getQualifiedIdentifier_Id(), this.getIdentifier(), null, "id", null, 0, 1, QualifiedIdentifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getQualifiedIdentifier_Ids(), this.getIdentifier(), null, "ids", null, 0, -1, QualifiedIdentifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(namespaceMemberDeclarationEClass, NamespaceMemberDeclaration.class, "NamespaceMemberDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getNamespaceMemberDeclaration_NameDeclaretion(), this.getNamespaceDeclaration(), null, "nameDeclaretion", null, 0, 1, NamespaceMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -5552,8 +6216,6 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
 
     initEClass(typeDeclarationEClass, TypeDeclaration.class, "TypeDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getTypeDeclaration_ClassDeclaration(), this.getClassDeclaration(), null, "classDeclaration", null, 0, 1, TypeDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTypeDeclaration_Mod(), ecorePackage.getEString(), "mod", null, 0, -1, TypeDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getTypeDeclaration_StructDeclaration(), this.getStructDeclaration(), null, "structDeclaration", null, 0, 1, TypeDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTypeDeclaration_InterfaceDeclaration(), this.getInterfaceDeclaration(), null, "interfaceDeclaration", null, 0, 1, TypeDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTypeDeclaration_EnumDeclaration(), this.getEnumDeclaration(), null, "enumDeclaration", null, 0, 1, TypeDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTypeDeclaration_DelegateDeclaration(), this.getDelegateDeclaration(), null, "delegateDeclaration", null, 0, 1, TypeDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -5564,6 +6226,15 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     initEReference(getEnumDeclaration_Name(), this.getIdentifier(), null, "name", null, 0, 1, EnumDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getEnumDeclaration_IntType(), this.getIntegralType(), null, "intType", null, 0, 1, EnumDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getEnumDeclaration_EnumBody(), this.getEnumBody(), null, "enumBody", null, 0, 1, EnumDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(enumBodyEClass, EnumBody.class, "EnumBody", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEnumBody_EnumDeclaration(), this.getEnumMemberDeclaration(), null, "enumDeclaration", null, 0, 1, EnumBody.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEnumBody_EnumDeclarations(), this.getEnumMemberDeclaration(), null, "enumDeclarations", null, 0, -1, EnumBody.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(enumMemberDeclarationEClass, EnumMemberDeclaration.class, "EnumMemberDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEnumMemberDeclaration_Att(), this.getAttributes(), null, "att", null, 0, 1, EnumMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEnumMemberDeclaration_Name(), this.getIdentifier(), null, "name", null, 0, 1, EnumMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEnumMemberDeclaration_Exp(), this.getExpression(), null, "exp", null, 0, 1, EnumMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(interfaceDeclarationEClass, InterfaceDeclaration.class, "InterfaceDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getInterfaceDeclaration_Name(), this.getIdentifier(), null, "name", null, 0, 1, InterfaceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -5602,21 +6273,6 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     initEReference(getInterfaceMethodDeclaration_Name(), this.getIdentifier(), null, "name", null, 0, 1, InterfaceMethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getInterfaceMethodDeclaration_ParameterList(), this.getFormalParameterList(), null, "parameterList", null, 0, 1, InterfaceMethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(structDeclarationEClass, StructDeclaration.class, "StructDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getStructDeclaration_Name(), this.getIdentifier(), null, "name", null, 0, 1, StructDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getStructDeclaration_QualId(), this.getQualifiedIdentifierList(), null, "qualId", null, 0, 1, StructDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getStructDeclaration_Structbody(), this.getStructBody(), null, "structbody", null, 0, 1, StructDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(structBodyEClass, StructBody.class, "StructBody", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getStructBody_StructMember(), this.getStructMemberDeclaration(), null, "structMember", null, 0, -1, StructBody.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(structMemberDeclarationsEClass, StructMemberDeclarations.class, "StructMemberDeclarations", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(structMemberDeclarations2EClass, StructMemberDeclarations2.class, "StructMemberDeclarations2", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(structMemberDeclarationEClass, StructMemberDeclaration.class, "StructMemberDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getStructMemberDeclaration_StructMember2(), this.getStructMemberDeclarations2(), null, "structMember2", null, 0, -1, StructMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(classDeclarationEClass, ClassDeclaration.class, "ClassDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getClassDeclaration_ClassModifier(), ecorePackage.getEString(), "classModifier", null, 0, -1, ClassDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClassDeclaration_ClassName(), this.getIdentifier(), null, "className", null, 0, 1, ClassDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -5624,20 +6280,21 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     initEReference(getClassDeclaration_ClassBody(), this.getClassBody(), null, "classBody", null, 0, 1, ClassDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(classBodyEClass, ClassBody.class, "ClassBody", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getClassBody_ClassAtt(), this.getAttributes(), null, "classAtt", null, 0, -1, ClassBody.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClassBody_ClassDeclaration(), this.getClassMemberDeclaration(), null, "classDeclaration", null, 0, -1, ClassBody.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(classMemberDeclarationEClass, ClassMemberDeclaration.class, "ClassMemberDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getClassMemberDeclaration_ClassAtt(), this.getAttributes(), null, "classAtt", null, 0, 1, ClassMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getClassMemberDeclaration_ConstDeclaration(), this.getConstantDeclaration(), null, "constDeclaration", null, 0, 1, ClassMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClassMemberDeclaration_FieldDeclaration(), this.getFieldDeclaration(), null, "fieldDeclaration", null, 0, 1, ClassMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getClassMemberDeclaration_MethodDeclaration(), this.getMethodDeclaration(), null, "methodDeclaration", null, 0, 1, ClassMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getClassMemberDeclaration_ConstDeclaration(), this.getConstantDeclaration(), null, "constDeclaration", null, 0, 1, ClassMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClassMemberDeclaration_PropertyDeclaration(), this.getPropertyDeclaration(), null, "propertyDeclaration", null, 0, 1, ClassMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClassMemberDeclaration_EventDeclaration(), this.getEventDeclaration(), null, "eventDeclaration", null, 0, 1, ClassMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClassMemberDeclaration_IndexDeclaration(), this.getIndexerDeclaration(), null, "indexDeclaration", null, 0, 1, ClassMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getClassMemberDeclaration_TypeDeclaration(), this.getTypeDeclaration(), null, "typeDeclaration", null, 0, 1, ClassMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClassMemberDeclaration_OpDeclaration(), this.getOperatorDeclaration(), null, "opDeclaration", null, 0, 1, ClassMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClassMemberDeclaration_ConstructorDeclaration(), this.getConstructorDeclaration(), null, "constructorDeclaration", null, 0, 1, ClassMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClassMemberDeclaration_DestructorDeclaration(), this.getDestructorDeclaration(), null, "destructorDeclaration", null, 0, 1, ClassMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClassMemberDeclaration_StaticDeclaration(), this.getStaticConstructorDeclaration(), null, "staticDeclaration", null, 0, 1, ClassMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getClassMemberDeclaration_TypeDeclaration(), this.getTypeDeclaration(), null, "typeDeclaration", null, 0, 1, ClassMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(staticConstructorDeclarationEClass, StaticConstructorDeclaration.class, "StaticConstructorDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getStaticConstructorDeclaration_StaticCosntModifier(), ecorePackage.getEString(), "staticCosntModifier", null, 0, 1, StaticConstructorDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -5654,11 +6311,15 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     initEReference(getConstructorDeclaration_EmptyBlock(), this.getMaybeEmptyBlock(), null, "emptyBlock", null, 0, 1, ConstructorDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(constructorDeclaratorEClass, ConstructorDeclarator.class, "ConstructorDeclarator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getConstructorDeclarator_ClassName(), this.getIdentifier(), null, "className", null, 0, 1, ConstructorDeclarator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConstructorDeclarator_FormalList(), this.getFormalParameterList(), null, "formalList", null, 0, 1, ConstructorDeclarator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConstructorDeclarator_ConstInitializer(), this.getConstructorInitializer(), null, "constInitializer", null, 0, 1, ConstructorDeclarator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(constructorInitializerEClass, ConstructorInitializer.class, "ConstructorInitializer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(argumentListEClass, ArgumentList.class, "ArgumentList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getArgumentList_Arg(), this.getArgument(), null, "arg", null, 0, -1, ArgumentList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getArgumentList_Arg(), this.getArgument(), null, "arg", null, 0, 1, ArgumentList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getArgumentList_Args(), this.getArgument(), null, "args", null, 0, -1, ArgumentList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(argumentEClass, Argument.class, "Argument", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -5724,8 +6385,13 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     initEReference(getMethodDeclaration_MaybeEmpty(), this.getMaybeEmptyBlock(), null, "maybeEmpty", null, 0, 1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(methodHeaderEClass, MethodHeader.class, "MethodHeader", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMethodHeader_Modifier(), ecorePackage.getEString(), "modifier", null, 0, -1, MethodHeader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMethodHeader_TypeOrVoid(), this.getTypeOrVoid(), null, "typeOrVoid", null, 0, 1, MethodHeader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMethodHeader_QualifiedIdentifier(), this.getQualifiedIdentifier(), null, "qualifiedIdentifier", null, 0, 1, MethodHeader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMethodHeader_FormalParameters(), this.getFormalParameterList(), null, "formalParameters", null, 0, 1, MethodHeader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(formalParameterListEClass, FormalParameterList.class, "FormalParameterList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getFormalParameterList_ParameterArray(), this.getParameterArray(), null, "parameterArray", null, 0, 1, FormalParameterList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(parameterArrayEClass, ParameterArray.class, "ParameterArray", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getParameterArray_Att(), this.getAttributes(), null, "att", null, 0, 1, ParameterArray.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -5733,10 +6399,11 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     initEReference(getParameterArray_Name(), this.getIdentifier(), null, "name", null, 0, 1, ParameterArray.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(fixedParametersEClass, FixedParameters.class, "FixedParameters", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getFixedParameters_ParameterArray(), this.getParameterArray(), null, "parameterArray", null, 0, 1, FixedParameters.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFixedParameters_FixParameter(), this.getFixedParameter(), null, "fixParameter", null, 0, 1, FixedParameters.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFixedParameters_FixParameters(), this.getFixedParameter(), null, "fixParameters", null, 0, -1, FixedParameters.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(fixedParameterEClass, FixedParameter.class, "FixedParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getFixedParameter_Att(), this.getAttributes(), null, "Att", null, 0, 1, FixedParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFixedParameter_Type(), this.getType(), null, "type", null, 0, 1, FixedParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFixedParameter_Name(), this.getIdentifier(), null, "name", null, 0, 1, FixedParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -5748,13 +6415,8 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     initEClass(fieldDeclarationEClass, FieldDeclaration.class, "FieldDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(variableDeclaratorEClass, VariableDeclarator.class, "VariableDeclarator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getVariableDeclarator_Name(), this.getIdentifier(), null, "name", null, 0, 1, VariableDeclarator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVariableDeclarator_VariableName(), this.getIdentifier(), null, "variableName", null, 0, 1, VariableDeclarator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getVariableDeclarator_Variable(), this.getVariableInitializer(), null, "variable", null, 0, 1, VariableDeclarator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(variableInitializerEClass, VariableInitializer.class, "VariableInitializer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(arrayInitializerEClass, ArrayInitializer.class, "ArrayInitializer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getArrayInitializer_VariableInitalizers(), this.getVariableInitializer(), null, "variableInitalizers", null, 0, -1, ArrayInitializer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(constantDeclarationEClass, ConstantDeclaration.class, "ConstantDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -5763,95 +6425,11 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     initEReference(getConstantDeclarator_Exp(), this.getExpression(), null, "exp", null, 0, 1, ConstantDeclarator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(classBaseEClass, ClassBase.class, "ClassBase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getClassBase_QIDs(), this.getQualifiedIdentifierList(), null, "qIDs", null, 0, 1, ClassBase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(qualifiedIdentifierListEClass, QualifiedIdentifierList.class, "QualifiedIdentifierList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getQualifiedIdentifierList_Id(), this.getQualifiedIdentifier(), null, "id", null, 0, 1, QualifiedIdentifierList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getQualifiedIdentifierList_Ids(), this.getQualifiedIdentifier(), null, "ids", null, 0, -1, QualifiedIdentifierList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(globalAttributesEClass, GlobalAttributes.class, "GlobalAttributes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getGlobalAttributes_GlobalAttSections(), this.getGlobalAttributeSection(), null, "globalAttSections", null, 0, -1, GlobalAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(globalAttributeSectionEClass, GlobalAttributeSection.class, "GlobalAttributeSection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(attributesEClass, Attributes.class, "Attributes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAttributes_TypeOrVoid(), this.getTypeOrVoid(), null, "typeOrVoid", null, 0, 1, Attributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAttributes_QualifiedID(), this.getQualifiedIdentifier(), null, "qualifiedID", null, 0, 1, Attributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAttributes_FormalParameters(), this.getFormalParameterList(), null, "formalParameters", null, 0, 1, Attributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAttributes_Attributes(), this.getAttributeSection(), null, "attributes", null, 0, -1, Attributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAttributes_Type(), this.getIntegralType(), null, "type", null, 0, 1, Attributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAttributes_EnumBody(), this.getEnumBody(), null, "enumBody", null, 0, 1, Attributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(attributeSectionEClass, AttributeSection.class, "AttributeSection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(attributeListEClass, AttributeList.class, "AttributeList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAttributeList_Attributes(), this.getAttribute(), null, "attributes", null, 0, -1, AttributeList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(attributeEClass, Attribute.class, "Attribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAttribute_AttName(), this.getAttributeName(), null, "attName", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAttribute_AttArguments(), this.getAttributeArguments(), null, "attArguments", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(attributeArgumentsEClass, AttributeArguments.class, "AttributeArguments", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAttributeArguments_Expresions(), this.getExpressionList(), null, "expresions", null, 0, -1, AttributeArguments.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(expressionListEClass, ExpressionList.class, "ExpressionList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getExpressionList_Expresions(), this.getExpression(), null, "expresions", null, 0, -1, ExpressionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getExpression_Unary(), this.getUnaryExpression(), null, "unary", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getExpression_Exp2(), this.getExpression2(), null, "exp2", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getExpression_Exp(), this.getExpression(), null, "exp", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getExpression_OtherExp2(), this.getExpression2(), null, "otherExp2", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(expression2EClass, Expression2.class, "Expression2", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getExpression2_InternalExp(), this.getExpression(), null, "internalExp", null, 0, -1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getExpression2_Exp(), this.getExpression(), null, "exp", null, 0, -1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getExpression2_InternalExp2(), this.getExpression2(), null, "internalExp2", null, 0, -1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getExpression2_BuildInType(), this.getBuiltInType(), null, "buildInType", null, 0, -1, Expression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(unaryExpressionEClass, UnaryExpression.class, "UnaryExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getUnaryExpression_ExpUnaryOperator(), ecorePackage.getEString(), "expUnaryOperator", null, 0, 1, UnaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getUnaryExpression_Type(), this.getType(), null, "type", null, 0, 1, UnaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getUnaryExpression_UnaryExp(), this.getUnaryExpression(), null, "unaryExp", null, 0, 1, UnaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getUnaryExpression_PrimaryExp(), this.getPrimaryExpression(), null, "primaryExp", null, 0, 1, UnaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(attributeNameEClass, AttributeName.class, "AttributeName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAttributeName_QualifiedId(), this.getQualifiedIdentifier(), null, "qualifiedId", null, 0, 1, AttributeName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(usingDirectiveEClass, UsingDirective.class, "UsingDirective", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getUsingDirective_Name(), this.getIdentifier(), null, "name", null, 0, 1, UsingDirective.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getUsingDirective_Usings(), this.getQualifiedIdentifier(), null, "usings", null, 0, 1, UsingDirective.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(typeEClass, Type.class, "Type", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getType_VariableDeclarator(), this.getVariableDeclarator(), null, "variableDeclarator", null, 0, -1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getType_QIdent(), this.getQualifiedIdentifier(), null, "qIdent", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getType_EventAccessorDeclarations(), this.getEventAccessorDeclarations(), null, "eventAccessorDeclarations", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getType_QualifiedId(), this.getQualifiedIdentifier(), null, "qualifiedId", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getType_AccDeclarate(), this.getAccessorDeclarations(), null, "accDeclarate", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getType_Variables(), this.getVariableDeclarator(), null, "variables", null, 0, -1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getType_ConstDeclarators(), this.getConstantDeclarator(), null, "constDeclarators", null, 0, -1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getType_NonArray(), this.getNonArrayType(), null, "nonArray", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(integralTypeEClass, IntegralType.class, "IntegralType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(arrayTypeEClass, ArrayType.class, "ArrayType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(enumTypeEClass, EnumType.class, "EnumType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(nonArrayTypeEClass, NonArrayType.class, "NonArrayType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getNonArrayType_Qualified(), this.getQualifiedIdentifier(), null, "qualified", null, 0, 1, NonArrayType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getNonArrayType_BuiltType(), this.getBuiltInType(), null, "builtType", null, 0, 1, NonArrayType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(qualifiedIdentifierEClass, QualifiedIdentifier.class, "QualifiedIdentifier", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getQualifiedIdentifier_Ids(), this.getIdentifier(), null, "ids", null, 0, -1, QualifiedIdentifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(builtInTypeEClass, BuiltInType.class, "BuiltInType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(enumBodyEClass, EnumBody.class, "EnumBody", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getEnumBody_EnumDeclarations(), this.getEnumMemberDeclaration(), null, "enumDeclarations", null, 0, -1, EnumBody.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(enumMemberDeclarationEClass, EnumMemberDeclaration.class, "EnumMemberDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getEnumMemberDeclaration_Att(), this.getAttributes(), null, "att", null, 0, 1, EnumMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getEnumMemberDeclaration_Name(), this.getIdentifier(), null, "name", null, 0, 1, EnumMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getEnumMemberDeclaration_Exp(), this.getExpression(), null, "exp", null, 0, 1, EnumMemberDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(statementEClass, Statement.class, "Statement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getStatement_LabelStat(), this.getLabeledStatement(), null, "labelStat", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -5864,7 +6442,8 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
 
     initEClass(localconstantDeclarationEClass, LocalconstantDeclaration.class, "LocalconstantDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLocalconstantDeclaration_Tipo(), this.getType(), null, "tipo", null, 0, 1, LocalconstantDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getLocalconstantDeclaration_ConstDeclarator(), this.getConstantDeclarator(), null, "constDeclarator", null, 0, -1, LocalconstantDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLocalconstantDeclaration_ConstDeclarator(), this.getConstantDeclarator(), null, "constDeclarator", null, 0, 1, LocalconstantDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLocalconstantDeclaration_ConstDeclarators(), this.getConstantDeclarator(), null, "constDeclarators", null, 0, -1, LocalconstantDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(labeledStatementEClass, LabeledStatement.class, "LabeledStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLabeledStatement_Id(), this.getIdentifier(), null, "id", null, 0, 1, LabeledStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -5889,7 +6468,8 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
 
     initEClass(localVariableDeclarationEClass, LocalVariableDeclaration.class, "LocalVariableDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLocalVariableDeclaration_Tipo(), this.getType(), null, "tipo", null, 0, 1, LocalVariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getLocalVariableDeclaration_Variable(), this.getVariableDeclarator(), null, "variable", null, 0, -1, LocalVariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLocalVariableDeclaration_Variable(), this.getVariableDeclarator(), null, "variable", null, 0, 1, LocalVariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLocalVariableDeclaration_Variables(), this.getVariableDeclarator(), null, "variables", null, 0, -1, LocalVariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(lockStatementEClass, LockStatement.class, "LockStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLockStatement_Exp(), this.getExpression(), null, "exp", null, 0, 1, LockStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -5907,12 +6487,13 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     initEClass(catchClausesEClass, CatchClauses.class, "CatchClauses", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getCatchClauses_SpeciCatchClause(), this.getSpecificCatchClause(), null, "speciCatchClause", null, 0, -1, CatchClauses.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getCatchClauses_GenCatchClause(), this.getGeneralCatchclause(), null, "genCatchClause", null, 0, 1, CatchClauses.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getCatchClauses_SpecCatchClause(), this.getSpecificCatchClause(), null, "specCatchClause", null, 0, 1, CatchClauses.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCatchClauses_SpecCatchClause(), this.getSpecificCatchClause(), null, "specCatchClause", null, 0, -1, CatchClauses.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(generalCatchclauseEClass, GeneralCatchclause.class, "GeneralCatchclause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getGeneralCatchclause_Block(), this.getBlock(), null, "block", null, 0, 1, GeneralCatchclause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(specificCatchClauseEClass, SpecificCatchClause.class, "SpecificCatchClause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSpecificCatchClause_ClassType(), this.getBuiltInClassType(), null, "classType", null, 0, 1, SpecificCatchClause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSpecificCatchClause_QualiId(), this.getQualifiedIdentifier(), null, "qualiId", null, 0, 1, SpecificCatchClause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSpecificCatchClause_Id(), this.getIdentifier(), null, "id", null, 0, 1, SpecificCatchClause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSpecificCatchClause_Block(), this.getBlock(), null, "block", null, 0, 1, SpecificCatchClause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -5961,39 +6542,17 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     initEReference(getForInitializer_StatementExpressionList(), this.getStatementExpressionList(), null, "statementExpressionList", null, 0, 1, ForInitializer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(statementExpressionListEClass, StatementExpressionList.class, "StatementExpressionList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getStatementExpressionList_List(), this.getStatementExpression(), null, "list", null, 0, -1, StatementExpressionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatementExpressionList_List(), this.getStatementExpression(), null, "list", null, 0, 1, StatementExpressionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatementExpressionList_Lists(), this.getStatementExpression(), null, "lists", null, 0, -1, StatementExpressionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(statementExpressionEClass, StatementExpression.class, "StatementExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getStatementExpression_PrimaryExpression(), this.getPrimaryExpression(), null, "primaryExpression", null, 0, 1, StatementExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getStatementExpression_ArgumentList(), this.getArgumentList(), null, "argumentList", null, 0, 1, StatementExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getStatementExpression_IncrimentDecrement(), ecorePackage.getEString(), "incrimentDecrement", null, 0, 1, StatementExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getStatementExpression_Tipo(), this.getType(), null, "tipo", null, 0, 1, StatementExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatementExpression_ArgumentList(), this.getArgumentList(), null, "argumentList", null, 0, 1, StatementExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatementExpression_PrimaryExpression(), this.getPrimaryExpression(), null, "primaryExpression", null, 0, 1, StatementExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getStatementExpression_IncrimentDecrement(), ecorePackage.getEString(), "incrimentDecrement", null, 0, 1, StatementExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getStatementExpression_UnaryExpression(), this.getUnaryExpression(), null, "unaryExpression", null, 0, 1, StatementExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getStatementExpression_AssignementOperator(), ecorePackage.getEString(), "assignementOperator", null, 0, 1, StatementExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getStatementExpression_Expression(), this.getExpression(), null, "expression", null, 0, 1, StatementExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(primaryExpressionEClass, PrimaryExpression.class, "PrimaryExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getPrimaryExpression_NonArrayType(), this.getNonArrayType(), null, "nonArrayType", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPrimaryExpression_ExpressionList(), this.getExpressionList(), null, "expressionList", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getPrimaryExpression_RankSpecifier(), ecorePackage.getEString(), "rankSpecifier", null, 0, -1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPrimaryExpression_ArrayInitializer(), this.getArrayInitializer(), null, "arrayInitializer", null, 0, -1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPrimaryExpression_ArrayType(), this.getArrayType(), null, "arrayType", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPrimaryExpression_ArrayInitializer2(), this.getArrayInitializer(), null, "arrayInitializer2", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPrimaryExpression_Tipo(), this.getType(), null, "tipo", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPrimaryExpression_ArgumentList(), this.getArgumentList(), null, "argumentList", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPrimaryExpression_Id(), this.getIdentifier(), null, "id", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getPrimaryExpression_Literal(), ecorePackage.getEString(), "literal", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPrimaryExpression_Expression(), this.getExpression(), null, "expression", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getPrimaryExpression_PredefinedType(), ecorePackage.getEString(), "predefinedType", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPrimaryExpression_TypeOrVoid(), this.getTypeOrVoid(), null, "typeOrVoid", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPrimaryExpression_PrimaryExoression2(), this.getPrimaryExpression2(), null, "primaryExoression2", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(primaryExpression2EClass, PrimaryExpression2.class, "PrimaryExpression2", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getPrimaryExpression2_Id(), this.getIdentifier(), null, "id", null, 0, -1, PrimaryExpression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPrimaryExpression2_ArgumentList(), this.getArgumentList(), null, "argumentList", null, 0, -1, PrimaryExpression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPrimaryExpression2_ExpressionList(), this.getExpressionList(), null, "expressionList", null, 0, -1, PrimaryExpression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getPrimaryExpression2_IncrementeDecrement(), ecorePackage.getEString(), "incrementeDecrement", null, 0, -1, PrimaryExpression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPrimaryExpression2_PrimaryExpression2(), this.getPrimaryExpression2(), null, "primaryExpression2", null, 0, -1, PrimaryExpression2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(doStatementEClass, DoStatement.class, "DoStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getDoStatement_EmbeddedStatement(), this.getEmbeddedStatement(), null, "embeddedStatement", null, 0, 1, DoStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -6030,7 +6589,36 @@ public class CSharpPackageImpl extends EPackageImpl implements CSharpPackage
     initEReference(getBlock_Statement(), this.getStatement(), null, "statement", null, 0, -1, Block.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(maybeEmptyBlockEClass, MaybeEmptyBlock.class, "MaybeEmptyBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getMaybeEmptyBlock_Statement(), this.getStatement(), null, "statement", null, 0, -1, MaybeEmptyBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(sByteEClass, SByte.class, "SByte", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(byteEClass, org.xtext.example.myModel.cSharp.Byte.class, "Byte", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(shortEClass, org.xtext.example.myModel.cSharp.Short.class, "Short", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(uShortEClass, UShort.class, "UShort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(intEClass, Int.class, "Int", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(uIntEClass, UInt.class, "UInt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(longEClass, org.xtext.example.myModel.cSharp.Long.class, "Long", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(uLongEClass, ULong.class, "ULong", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(charEClass, Char.class, "Char", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(boolEClass, Bool.class, "Bool", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(decimalEClass, Decimal.class, "Decimal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(floatEClass, org.xtext.example.myModel.cSharp.Float.class, "Float", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(doubleEClass, org.xtext.example.myModel.cSharp.Double.class, "Double", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(objectEClass, org.xtext.example.myModel.cSharp.Object.class, "Object", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(stringEClass, org.xtext.example.myModel.cSharp.String.class, "String", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(voidEClass, org.xtext.example.myModel.cSharp.Void.class, "Void", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

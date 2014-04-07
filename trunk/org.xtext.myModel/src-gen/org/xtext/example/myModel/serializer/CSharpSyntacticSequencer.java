@@ -20,134 +20,150 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected CSharpGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_Argument_RefOrOutParserRuleCall_0_q;
-	protected AbstractElementAlias match_ArrayInitializer_CommaKeyword_1_2_q;
 	protected AbstractElementAlias match_ArrayType_RANK_SPECIFIERTerminalRuleCall_1_p;
-	protected AbstractElementAlias match_AttributeSection_CommaKeyword_3_q;
-	protected AbstractElementAlias match_AttributeSection___AttributeTargetParserRuleCall_1_0_ColonKeyword_1_1__q;
-	protected AbstractElementAlias match_BuiltInType_BoolKeyword_1_or_DecimalKeyword_2_or_DoubleKeyword_4_or_FloatKeyword_3;
-	protected AbstractElementAlias match_ClassBase___BuiltInClassTypeParserRuleCall_1_1_0_CommaKeyword_1_1_1_0__q;
-	protected AbstractElementAlias match_ClassDeclaration_SEMICOLONTerminalRuleCall_6_q;
+	protected AbstractElementAlias match_AttributeSection___AttributeTargetParserRuleCall_1_0_DOISPONTOSTerminalRuleCall_1_1__q;
+	protected AbstractElementAlias match_ClassMemberDeclaration_ModifierParserRuleCall_0_0_a;
 	protected AbstractElementAlias match_ConstantDeclaration_ConstantModifierParserRuleCall_0_a;
-	protected AbstractElementAlias match_ConstantDeclaration_EventDeclaration_FieldDeclaration_PropertyDeclaration_FieldModifierParserRuleCall_0_a_or_PropertyModifierParserRuleCall_0_a_or___ConstantModifierParserRuleCall_0_a_ConstKeyword_1___or___EventModifierParserRuleCall_0_a_EventKeyword_1__;
-	protected AbstractElementAlias match_ConstructorInitializer___ColonKeyword_0_0_BaseKeyword_0_1_LeftParenthesisKeyword_0_2___or___ColonKeyword_1_0_ThisKeyword_1_1_LeftParenthesisKeyword_1_2__;
+	protected AbstractElementAlias match_ConstructorInitializer___DOISPONTOSTerminalRuleCall_0_0_BaseKeyword_0_1_PARENTESQTerminalRuleCall_0_2___or___DOISPONTOSTerminalRuleCall_1_0_ThisKeyword_1_1_PARENTESQTerminalRuleCall_1_2__;
 	protected AbstractElementAlias match_DestructorDeclaration_ExternKeyword_0_q;
+	protected AbstractElementAlias match_DestructorDeclaration_WSTerminalRuleCall_4_a;
 	protected AbstractElementAlias match_EmbeddedStatement_CheckedKeyword_1_6_0_0_or_UncheckedKeyword_1_6_0_1;
-	protected AbstractElementAlias match_EnumBody_CommaKeyword_1_2_q;
 	protected AbstractElementAlias match_EnumDeclaration_SEMICOLONTerminalRuleCall_4_q;
-	protected AbstractElementAlias match_EnumType_EnumModifierParserRuleCall_1_a;
-	protected AbstractElementAlias match_EnumType_SEMICOLONTerminalRuleCall_6_q;
 	protected AbstractElementAlias match_EventDeclaration_EventModifierParserRuleCall_0_a;
+	protected AbstractElementAlias match_Expression2_HyphenMinusKeyword_1_10_0_0_or_PlusSignKeyword_1_10_0_1;
 	protected AbstractElementAlias match_FieldDeclaration_FieldModifierParserRuleCall_0_a;
-	protected AbstractElementAlias match_FixedParameter_ParameterModifierParserRuleCall_0_q;
-	protected AbstractElementAlias match_GlobalAttributeSection_CommaKeyword_4_q;
-	protected AbstractElementAlias match_Identifier_AvailableIdentifierParserRuleCall_0_1_or___CommercialAtKeyword_1_0_IDENTIFIER_START_CHARACTERTerminalRuleCall_1_1__;
-	protected AbstractElementAlias match_IntegralType_ByteKeyword_1_or_CharKeyword_8_or_IntKeyword_4_or_LongKeyword_6_or_ShortKeyword_2_or_UintKeyword_5_or_UlongKeyword_7_or_UshortKeyword_3;
+	protected AbstractElementAlias match_FixedParameter_RefOrOutParserRuleCall_1_q;
+	protected AbstractElementAlias match_Identifier_IDTerminalRuleCall_0_1_or___CommercialAtKeyword_1_1_IDTerminalRuleCall_1_2__;
 	protected AbstractElementAlias match_InterfaceAccessors___GetKeyword_1_0_0_SEMICOLONTerminalRuleCall_1_0_1___or___SetKeyword_1_1_0_SEMICOLONTerminalRuleCall_1_1_1__;
 	protected AbstractElementAlias match_InterfaceDeclaration_SEMICOLONTerminalRuleCall_4_q;
 	protected AbstractElementAlias match_InterfaceMemberDeclaration_NewKeyword_1_q;
-	protected AbstractElementAlias match_MaybeEmptyBlock_SEMICOLONTerminalRuleCall_1_1_or___LeftCurlyBracketKeyword_1_0_0_RightCurlyBracketKeyword_1_0_2__;
-	protected AbstractElementAlias match_MethodHeader_MethodModifierParserRuleCall_1_a;
 	protected AbstractElementAlias match_NamespaceDeclaration_SEMICOLONTerminalRuleCall_3_q;
+	protected AbstractElementAlias match_PrimaryExpression_CheckedKeyword_1_0_8_0_0_or_UncheckedKeyword_1_0_8_0_1;
 	protected AbstractElementAlias match_PropertyDeclaration_PropertyModifierParserRuleCall_0_a;
-	protected AbstractElementAlias match_StructDeclaration_SEMICOLONTerminalRuleCall_4_q;
-	protected AbstractElementAlias match_Type_RANK_SPECIFIERTerminalRuleCall_2_a;
+	protected AbstractElementAlias match_Type_RANK_SPECIFIERTerminalRuleCall_1_a;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (CSharpGrammarAccess) access;
 		match_Argument_RefOrOutParserRuleCall_0_q = new TokenAlias(false, true, grammarAccess.getArgumentAccess().getRefOrOutParserRuleCall_0());
-		match_ArrayInitializer_CommaKeyword_1_2_q = new TokenAlias(false, true, grammarAccess.getArrayInitializerAccess().getCommaKeyword_1_2());
 		match_ArrayType_RANK_SPECIFIERTerminalRuleCall_1_p = new TokenAlias(true, false, grammarAccess.getArrayTypeAccess().getRANK_SPECIFIERTerminalRuleCall_1());
-		match_AttributeSection_CommaKeyword_3_q = new TokenAlias(false, true, grammarAccess.getAttributeSectionAccess().getCommaKeyword_3());
-		match_AttributeSection___AttributeTargetParserRuleCall_1_0_ColonKeyword_1_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAttributeSectionAccess().getAttributeTargetParserRuleCall_1_0()), new TokenAlias(false, false, grammarAccess.getAttributeSectionAccess().getColonKeyword_1_1()));
-		match_BuiltInType_BoolKeyword_1_or_DecimalKeyword_2_or_DoubleKeyword_4_or_FloatKeyword_3 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getBuiltInTypeAccess().getBoolKeyword_1()), new TokenAlias(false, false, grammarAccess.getBuiltInTypeAccess().getDecimalKeyword_2()), new TokenAlias(false, false, grammarAccess.getBuiltInTypeAccess().getDoubleKeyword_4()), new TokenAlias(false, false, grammarAccess.getBuiltInTypeAccess().getFloatKeyword_3()));
-		match_ClassBase___BuiltInClassTypeParserRuleCall_1_1_0_CommaKeyword_1_1_1_0__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getClassBaseAccess().getBuiltInClassTypeParserRuleCall_1_1_0()), new TokenAlias(false, false, grammarAccess.getClassBaseAccess().getCommaKeyword_1_1_1_0()));
-		match_ClassDeclaration_SEMICOLONTerminalRuleCall_6_q = new TokenAlias(false, true, grammarAccess.getClassDeclarationAccess().getSEMICOLONTerminalRuleCall_6());
+		match_AttributeSection___AttributeTargetParserRuleCall_1_0_DOISPONTOSTerminalRuleCall_1_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAttributeSectionAccess().getAttributeTargetParserRuleCall_1_0()), new TokenAlias(false, false, grammarAccess.getAttributeSectionAccess().getDOISPONTOSTerminalRuleCall_1_1()));
+		match_ClassMemberDeclaration_ModifierParserRuleCall_0_0_a = new TokenAlias(true, true, grammarAccess.getClassMemberDeclarationAccess().getModifierParserRuleCall_0_0());
 		match_ConstantDeclaration_ConstantModifierParserRuleCall_0_a = new TokenAlias(true, true, grammarAccess.getConstantDeclarationAccess().getConstantModifierParserRuleCall_0());
-		match_ConstantDeclaration_EventDeclaration_FieldDeclaration_PropertyDeclaration_FieldModifierParserRuleCall_0_a_or_PropertyModifierParserRuleCall_0_a_or___ConstantModifierParserRuleCall_0_a_ConstKeyword_1___or___EventModifierParserRuleCall_0_a_EventKeyword_1__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(true, true, grammarAccess.getConstantDeclarationAccess().getConstantModifierParserRuleCall_0()), new TokenAlias(false, false, grammarAccess.getConstantDeclarationAccess().getConstKeyword_1())), new GroupAlias(false, false, new TokenAlias(true, true, grammarAccess.getEventDeclarationAccess().getEventModifierParserRuleCall_0()), new TokenAlias(false, false, grammarAccess.getEventDeclarationAccess().getEventKeyword_1())), new TokenAlias(true, true, grammarAccess.getFieldDeclarationAccess().getFieldModifierParserRuleCall_0()), new TokenAlias(true, true, grammarAccess.getPropertyDeclarationAccess().getPropertyModifierParserRuleCall_0()));
-		match_ConstructorInitializer___ColonKeyword_0_0_BaseKeyword_0_1_LeftParenthesisKeyword_0_2___or___ColonKeyword_1_0_ThisKeyword_1_1_LeftParenthesisKeyword_1_2__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getConstructorInitializerAccess().getColonKeyword_0_0()), new TokenAlias(false, false, grammarAccess.getConstructorInitializerAccess().getBaseKeyword_0_1()), new TokenAlias(false, false, grammarAccess.getConstructorInitializerAccess().getLeftParenthesisKeyword_0_2())), new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getConstructorInitializerAccess().getColonKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getConstructorInitializerAccess().getThisKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getConstructorInitializerAccess().getLeftParenthesisKeyword_1_2())));
+		match_ConstructorInitializer___DOISPONTOSTerminalRuleCall_0_0_BaseKeyword_0_1_PARENTESQTerminalRuleCall_0_2___or___DOISPONTOSTerminalRuleCall_1_0_ThisKeyword_1_1_PARENTESQTerminalRuleCall_1_2__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getConstructorInitializerAccess().getDOISPONTOSTerminalRuleCall_0_0()), new TokenAlias(false, false, grammarAccess.getConstructorInitializerAccess().getBaseKeyword_0_1()), new TokenAlias(false, false, grammarAccess.getConstructorInitializerAccess().getPARENTESQTerminalRuleCall_0_2())), new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getConstructorInitializerAccess().getDOISPONTOSTerminalRuleCall_1_0()), new TokenAlias(false, false, grammarAccess.getConstructorInitializerAccess().getThisKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getConstructorInitializerAccess().getPARENTESQTerminalRuleCall_1_2())));
 		match_DestructorDeclaration_ExternKeyword_0_q = new TokenAlias(false, true, grammarAccess.getDestructorDeclarationAccess().getExternKeyword_0());
+		match_DestructorDeclaration_WSTerminalRuleCall_4_a = new TokenAlias(true, true, grammarAccess.getDestructorDeclarationAccess().getWSTerminalRuleCall_4());
 		match_EmbeddedStatement_CheckedKeyword_1_6_0_0_or_UncheckedKeyword_1_6_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getEmbeddedStatementAccess().getCheckedKeyword_1_6_0_0()), new TokenAlias(false, false, grammarAccess.getEmbeddedStatementAccess().getUncheckedKeyword_1_6_0_1()));
-		match_EnumBody_CommaKeyword_1_2_q = new TokenAlias(false, true, grammarAccess.getEnumBodyAccess().getCommaKeyword_1_2());
 		match_EnumDeclaration_SEMICOLONTerminalRuleCall_4_q = new TokenAlias(false, true, grammarAccess.getEnumDeclarationAccess().getSEMICOLONTerminalRuleCall_4());
-		match_EnumType_EnumModifierParserRuleCall_1_a = new TokenAlias(true, true, grammarAccess.getEnumTypeAccess().getEnumModifierParserRuleCall_1());
-		match_EnumType_SEMICOLONTerminalRuleCall_6_q = new TokenAlias(false, true, grammarAccess.getEnumTypeAccess().getSEMICOLONTerminalRuleCall_6());
 		match_EventDeclaration_EventModifierParserRuleCall_0_a = new TokenAlias(true, true, grammarAccess.getEventDeclarationAccess().getEventModifierParserRuleCall_0());
+		match_Expression2_HyphenMinusKeyword_1_10_0_0_or_PlusSignKeyword_1_10_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getExpression2Access().getHyphenMinusKeyword_1_10_0_0()), new TokenAlias(false, false, grammarAccess.getExpression2Access().getPlusSignKeyword_1_10_0_1()));
 		match_FieldDeclaration_FieldModifierParserRuleCall_0_a = new TokenAlias(true, true, grammarAccess.getFieldDeclarationAccess().getFieldModifierParserRuleCall_0());
-		match_FixedParameter_ParameterModifierParserRuleCall_0_q = new TokenAlias(false, true, grammarAccess.getFixedParameterAccess().getParameterModifierParserRuleCall_0());
-		match_GlobalAttributeSection_CommaKeyword_4_q = new TokenAlias(false, true, grammarAccess.getGlobalAttributeSectionAccess().getCommaKeyword_4());
-		match_Identifier_AvailableIdentifierParserRuleCall_0_1_or___CommercialAtKeyword_1_0_IDENTIFIER_START_CHARACTERTerminalRuleCall_1_1__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getIdentifierAccess().getCommercialAtKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getIdentifierAccess().getIDENTIFIER_START_CHARACTERTerminalRuleCall_1_1())), new TokenAlias(false, false, grammarAccess.getIdentifierAccess().getAvailableIdentifierParserRuleCall_0_1()));
-		match_IntegralType_ByteKeyword_1_or_CharKeyword_8_or_IntKeyword_4_or_LongKeyword_6_or_ShortKeyword_2_or_UintKeyword_5_or_UlongKeyword_7_or_UshortKeyword_3 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getIntegralTypeAccess().getByteKeyword_1()), new TokenAlias(false, false, grammarAccess.getIntegralTypeAccess().getCharKeyword_8()), new TokenAlias(false, false, grammarAccess.getIntegralTypeAccess().getIntKeyword_4()), new TokenAlias(false, false, grammarAccess.getIntegralTypeAccess().getLongKeyword_6()), new TokenAlias(false, false, grammarAccess.getIntegralTypeAccess().getShortKeyword_2()), new TokenAlias(false, false, grammarAccess.getIntegralTypeAccess().getUintKeyword_5()), new TokenAlias(false, false, grammarAccess.getIntegralTypeAccess().getUlongKeyword_7()), new TokenAlias(false, false, grammarAccess.getIntegralTypeAccess().getUshortKeyword_3()));
+		match_FixedParameter_RefOrOutParserRuleCall_1_q = new TokenAlias(false, true, grammarAccess.getFixedParameterAccess().getRefOrOutParserRuleCall_1());
+		match_Identifier_IDTerminalRuleCall_0_1_or___CommercialAtKeyword_1_1_IDTerminalRuleCall_1_2__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getIdentifierAccess().getCommercialAtKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getIdentifierAccess().getIDTerminalRuleCall_1_2())), new TokenAlias(false, false, grammarAccess.getIdentifierAccess().getIDTerminalRuleCall_0_1()));
 		match_InterfaceAccessors___GetKeyword_1_0_0_SEMICOLONTerminalRuleCall_1_0_1___or___SetKeyword_1_1_0_SEMICOLONTerminalRuleCall_1_1_1__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getInterfaceAccessorsAccess().getGetKeyword_1_0_0()), new TokenAlias(false, false, grammarAccess.getInterfaceAccessorsAccess().getSEMICOLONTerminalRuleCall_1_0_1())), new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getInterfaceAccessorsAccess().getSetKeyword_1_1_0()), new TokenAlias(false, false, grammarAccess.getInterfaceAccessorsAccess().getSEMICOLONTerminalRuleCall_1_1_1())));
 		match_InterfaceDeclaration_SEMICOLONTerminalRuleCall_4_q = new TokenAlias(false, true, grammarAccess.getInterfaceDeclarationAccess().getSEMICOLONTerminalRuleCall_4());
 		match_InterfaceMemberDeclaration_NewKeyword_1_q = new TokenAlias(false, true, grammarAccess.getInterfaceMemberDeclarationAccess().getNewKeyword_1());
-		match_MaybeEmptyBlock_SEMICOLONTerminalRuleCall_1_1_or___LeftCurlyBracketKeyword_1_0_0_RightCurlyBracketKeyword_1_0_2__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getMaybeEmptyBlockAccess().getLeftCurlyBracketKeyword_1_0_0()), new TokenAlias(false, false, grammarAccess.getMaybeEmptyBlockAccess().getRightCurlyBracketKeyword_1_0_2())), new TokenAlias(false, false, grammarAccess.getMaybeEmptyBlockAccess().getSEMICOLONTerminalRuleCall_1_1()));
-		match_MethodHeader_MethodModifierParserRuleCall_1_a = new TokenAlias(true, true, grammarAccess.getMethodHeaderAccess().getMethodModifierParserRuleCall_1());
 		match_NamespaceDeclaration_SEMICOLONTerminalRuleCall_3_q = new TokenAlias(false, true, grammarAccess.getNamespaceDeclarationAccess().getSEMICOLONTerminalRuleCall_3());
+		match_PrimaryExpression_CheckedKeyword_1_0_8_0_0_or_UncheckedKeyword_1_0_8_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getPrimaryExpressionAccess().getCheckedKeyword_1_0_8_0_0()), new TokenAlias(false, false, grammarAccess.getPrimaryExpressionAccess().getUncheckedKeyword_1_0_8_0_1()));
 		match_PropertyDeclaration_PropertyModifierParserRuleCall_0_a = new TokenAlias(true, true, grammarAccess.getPropertyDeclarationAccess().getPropertyModifierParserRuleCall_0());
-		match_StructDeclaration_SEMICOLONTerminalRuleCall_4_q = new TokenAlias(false, true, grammarAccess.getStructDeclarationAccess().getSEMICOLONTerminalRuleCall_4());
-		match_Type_RANK_SPECIFIERTerminalRuleCall_2_a = new TokenAlias(true, true, grammarAccess.getTypeAccess().getRANK_SPECIFIERTerminalRuleCall_2());
+		match_Type_RANK_SPECIFIERTerminalRuleCall_1_a = new TokenAlias(true, true, grammarAccess.getTypeAccess().getRANK_SPECIFIERTerminalRuleCall_1());
 	}
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if(ruleCall.getRule() == grammarAccess.getAMPERSANDRule())
 			return getAMPERSANDToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getASSIGNEMENT_OPERATORRule())
+			return getASSIGNEMENT_OPERATORToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getAttributeTargetRule())
 			return getAttributeTargetToken(semanticObject, ruleCall, node);
-		else if(ruleCall.getRule() == grammarAccess.getAvailableIdentifierRule())
-			return getAvailableIdentifierToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getBARRule())
 			return getBARToken(semanticObject, ruleCall, node);
-		else if(ruleCall.getRule() == grammarAccess.getBuiltInClassTypeRule())
-			return getBuiltInClassTypeToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getCHAPEURule())
+			return getCHAPEUToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getCOLCHETEDIRRule())
+			return getCOLCHETEDIRToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getCOLCHETEESQRule())
+			return getCOLCHETEESQToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getCOMMARule())
+			return getCOMMAToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getConstantModifierRule())
 			return getConstantModifierToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getConversionKindRule())
 			return getConversionKindToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getDIVISAORule())
+			return getDIVISAOToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getDOISPONTOSRule())
+			return getDOISPONTOSToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getEXPRESSION_EQUALITY_OPERATORRule())
 			return getEXPRESSION_EQUALITY_OPERATORToken(semanticObject, ruleCall, node);
-		else if(ruleCall.getRule() == grammarAccess.getEnumModifierRule())
-			return getEnumModifierToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getEXPRESSION_SHIFT_OPERATORRule())
+			return getEXPRESSION_SHIFT_OPERATORToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getEventModifierRule())
 			return getEventModifierToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getExpressionRelationalOperatorRule())
 			return getExpressionRelationalOperatorToken(semanticObject, ruleCall, node);
-		else if(ruleCall.getRule() == grammarAccess.getExpressionShiftOperatorRule())
-			return getExpressionShiftOperatorToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getFieldModifierRule())
 			return getFieldModifierToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getIDRule())
 			return getIDToken(semanticObject, ruleCall, node);
-		else if(ruleCall.getRule() == grammarAccess.getIDENTIFIER_START_CHARACTERRule())
-			return getIDENTIFIER_START_CHARACTERToken(semanticObject, ruleCall, node);
-		else if(ruleCall.getRule() == grammarAccess.getMethodModifierRule())
-			return getMethodModifierToken(semanticObject, ruleCall, node);
-		else if(ruleCall.getRule() == grammarAccess.getOPERATOR_OR_SIGNRule())
-			return getOPERATOR_OR_SIGNToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getLEFT_CURLY_BRACKETSRule())
+			return getLEFT_CURLY_BRACKETSToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getMODRule())
+			return getMODToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getMULTIPRule())
+			return getMULTIPToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getModifierRule())
+			return getModifierToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getOverloadableUnaryOperatorRule())
 			return getOverloadableUnaryOperatorToken(semanticObject, ruleCall, node);
-		else if(ruleCall.getRule() == grammarAccess.getParameterModifierRule())
-			return getParameterModifierToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getPARENTDIRRule())
+			return getPARENTDIRToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getPARENTESQRule())
+			return getPARENTESQToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getPONTORule())
+			return getPONTOToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getPropertyModifierRule())
 			return getPropertyModifierToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getRANK_SPECIFIERRule())
 			return getRANK_SPECIFIERToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getRIGHT_CURLY_BRACKETSRule())
+			return getRIGHT_CURLY_BRACKETSToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getRefOrOutRule())
 			return getRefOrOutToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getSEMICOLONRule())
 			return getSEMICOLONToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getWSRule())
+			return getWSToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
 	/**
-	 * terminal AMPERSAND:
-	 * 	'&';
+	 * terminal AMPERSAND: '&';
 	 */
 	protected String getAMPERSANDToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
 		return "&";
+	}
+	
+	/**
+	 * terminal ASSIGNEMENT_OPERATOR:
+	 * 	SIMPLE_ASSIGNEMT 
+	 * 	|ADDTIVE_ASSIGNEMT 
+	 * 	|SUBTRACTIVE_ASSIGNMENT 
+	 * 	|ATTRIBUTION_MULTIPLICATIVE 
+	 * 	|DIVISION_ASSIGNMENT
+	 * 	|ASSIGNMENT_MODULE
+	 * 	|AND_ASSIGNEMENT 
+	 * 	|OR_ASSIGNEMENT
+	 * 	|LEFT_SHIFT_ASSIGNMENT 
+	 * 	|RIGHT_SHIFT_ASSIGNMENT;
+	 */
+	protected String getASSIGNEMENT_OPERATORToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "=";
 	}
 	
 	/**
@@ -168,18 +184,7 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	}
 	
 	/**
-	 * AvailableIdentifier:
-	 * 	IdentifierOrKeyword;
-	 */
-	protected String getAvailableIdentifierToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "";
-	}
-	
-	/**
-	 * terminal BAR:
-	 * 	'|';
+	 * terminal BAR: '|';
 	 */
 	protected String getBARToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
@@ -188,22 +193,44 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	}
 	
 	/**
-	 * BuiltInClassType:
-	 * 	'object' | 'string';
+	 * terminal CHAPEU : '^';
 	 */
-	protected String getBuiltInClassTypeToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	protected String getCHAPEUToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "object";
+		return "^";
+	}
+	
+	/**
+	 * terminal COLCHETEDIR : ']';
+	 */
+	protected String getCOLCHETEDIRToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "]";
+	}
+	
+	/**
+	 * terminal COLCHETEESQ : "[";
+	 */
+	protected String getCOLCHETEESQToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "[";
+	}
+	
+	/**
+	 * terminal COMMA : ",";
+	 */
+	protected String getCOMMAToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return ",";
 	}
 	
 	/**
 	 * ConstantModifier:
-	 * 	'new'
-	 * 	| 'public'
-	 * 	| 'protected'
-	 * 	| 'internal'
-	 * 	| 'private';
+	 * 	Modifier;
 	 */
 	protected String getConstantModifierToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
@@ -223,9 +250,25 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	}
 	
 	/**
-	 * terminal EXPRESSION_EQUALITY_OPERATOR:
-	 * 	'=='
-	 * 	| '!=';
+	 * terminal  DIVISAO : "/";
+	 */
+	protected String getDIVISAOToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "/";
+	}
+	
+	/**
+	 * terminal DOISPONTOS : ":";
+	 */
+	protected String getDOISPONTOSToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return ":";
+	}
+	
+	/**
+	 * terminal EXPRESSION_EQUALITY_OPERATOR:'=='|'!=';
 	 */
 	protected String getEXPRESSION_EQUALITY_OPERATORToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
@@ -234,23 +277,17 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	}
 	
 	/**
-	 * EnumModifier:
-	 * 	'new' | 'public' | 'protected' | 'internal' | 'private';
+	 * terminal EXPRESSION_SHIFT_OPERATOR:	"<<"|">>";
 	 */
-	protected String getEnumModifierToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	protected String getEXPRESSION_SHIFT_OPERATORToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "new";
+		return "<<";
 	}
 	
 	/**
 	 * EventModifier:
-	 * 	'new'
-	 * 	| 'public'
-	 * 	| 'protected'
-	 * 	| 'internal'
-	 * 	| 'private'
-	 * 	| 'static'
+	 * 	 'static'
 	 * 	| 'virtual'
 	 * 	| 'sealed'
 	 * 	| 'override'
@@ -260,17 +297,18 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected String getEventModifierToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "new";
+		return "static";
 	}
 	
 	/**
 	 * ExpressionRelationalOperator:
 	 * 	LESS_THAN
-	 * 	| GREATER_THAN
-	 * 	| '<='
-	 * 	| '>='
-	 * 	| 'is'
-	 * 	| 'as';
+	 *     |GREATER_THAN
+	 *     |MENORIGUAL
+	 *     |MAIORIGUAL
+	 *     |'is'
+	 *     |'as'
+	 * ;
 	 */
 	protected String getExpressionRelationalOperatorToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
@@ -279,36 +317,19 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	}
 	
 	/**
-	 * ExpressionShiftOperator:
-	 * 	'<<'
-	 * 	| '>>';
-	 */
-	protected String getExpressionShiftOperatorToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "<<";
-	}
-	
-	/**
 	 * FieldModifier:
-	 * 	'new'
-	 * 	| 'public'
-	 * 	| 'protected'
-	 * 	| 'internal'
-	 * 	| 'private'
-	 * 	| 'static'
+	 * 	 'static'
 	 * 	| 'readonly'
 	 * 	| 'volatile';
 	 */
 	protected String getFieldModifierToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "new";
+		return "static";
 	}
 	
 	/**
-	 * terminal ID:
-	 * 	'^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
+	 * terminal ID: LETTER (LETTER | DIGIT)*;
 	 */
 	protected String getIDToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
@@ -317,48 +338,49 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	}
 	
 	/**
-	 * terminal IDENTIFIER_START_CHARACTER:
-	 * 	LETTER | '_';
+	 * terminal LEFT_CURLY_BRACKETS:'{';
 	 */
-	protected String getIDENTIFIER_START_CHARACTERToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	protected String getLEFT_CURLY_BRACKETSToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "";
+		return "{";
 	}
 	
 	/**
-	 * MethodModifier:
+	 * terminal MOD: '%';
+	 */
+	protected String getMODToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "%";
+	}
+	
+	/**
+	 * terminal MULTIP : "*";
+	 */
+	protected String getMULTIPToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "*";
+	}
+	
+	/**
+	 * Modifier:
 	 * 	'new'
 	 * 	| 'public'
 	 * 	| 'protected'
 	 * 	| 'internal'
-	 * 	| 'private'
-	 * 	| 'static'
-	 * 	| 'virtual'
-	 * 	| 'sealed'
-	 * 	| 'override'
-	 * 	| 'abstract'
-	 * 	| 'extern';
+	 * 	| 'private';
 	 */
-	protected String getMethodModifierToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	protected String getModifierToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
 		return "new";
 	}
 	
 	/**
-	 * terminal OPERATOR_OR_SIGN:
-	 * 	'+' | '-';
-	 */
-	protected String getOPERATOR_OR_SIGNToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "+";
-	}
-	
-	/**
 	 * OverloadableUnaryOperator:
-	 * 	OPERATOR_OR_SIGN
+	 * 	('-'|'+')
 	 * 	| INCREMENT_DECREMENT
 	 * 	| '!'
 	 * 	| '~'
@@ -368,28 +390,39 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected String getOverloadableUnaryOperatorToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "+";
+		return "-";
 	}
 	
 	/**
-	 * ParameterModifier:
-	 * 	'ref'
-	 * 	| 'out';
+	 * terminal PARENTDIR : ")";
 	 */
-	protected String getParameterModifierToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	protected String getPARENTDIRToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "ref";
+		return ")";
+	}
+	
+	/**
+	 * terminal PARENTESQ : "(";
+	 */
+	protected String getPARENTESQToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "(";
+	}
+	
+	/**
+	 * terminal PONTO : ".";
+	 */
+	protected String getPONTOToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return ".";
 	}
 	
 	/**
 	 * PropertyModifier:
-	 * 	'new'
-	 * 	| 'public'
-	 * 	| 'protected'
-	 * 	| 'internal'
-	 * 	| 'private'
-	 * 	| 'static'
+	 * 	'static'
 	 * 	| 'virtual'
 	 * 	| 'sealed'
 	 * 	| 'override'
@@ -399,17 +432,25 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected String getPropertyModifierToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "new";
+		return "static";
 	}
 	
 	/**
-	 * terminal RANK_SPECIFIER:
-	 * 	'[' ','* ']';
+	 * terminal RANK_SPECIFIER: COLCHETEESQ COMMA* COLCHETEDIR;
 	 */
 	protected String getRANK_SPECIFIERToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
 		return "[]";
+	}
+	
+	/**
+	 * terminal RIGHT_CURLY_BRACKETS:'}';
+	 */
+	protected String getRIGHT_CURLY_BRACKETSToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "}";
 	}
 	
 	/**
@@ -424,13 +465,21 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	}
 	
 	/**
-	 * terminal SEMICOLON:
-	 * 	';';
+	 * terminal SEMICOLON : ";";
 	 */
 	protected String getSEMICOLONToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
 		return ";";
+	}
+	
+	/**
+	 * terminal WS:(' '|'\t'|'\r'|'\n')+;
+	 */
+	protected String getWSToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return " ";
 	}
 	
 	@Override
@@ -441,68 +490,48 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
 			if(match_Argument_RefOrOutParserRuleCall_0_q.equals(syntax))
 				emit_Argument_RefOrOutParserRuleCall_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_ArrayInitializer_CommaKeyword_1_2_q.equals(syntax))
-				emit_ArrayInitializer_CommaKeyword_1_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_ArrayType_RANK_SPECIFIERTerminalRuleCall_1_p.equals(syntax))
 				emit_ArrayType_RANK_SPECIFIERTerminalRuleCall_1_p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_AttributeSection_CommaKeyword_3_q.equals(syntax))
-				emit_AttributeSection_CommaKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_AttributeSection___AttributeTargetParserRuleCall_1_0_ColonKeyword_1_1__q.equals(syntax))
-				emit_AttributeSection___AttributeTargetParserRuleCall_1_0_ColonKeyword_1_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_BuiltInType_BoolKeyword_1_or_DecimalKeyword_2_or_DoubleKeyword_4_or_FloatKeyword_3.equals(syntax))
-				emit_BuiltInType_BoolKeyword_1_or_DecimalKeyword_2_or_DoubleKeyword_4_or_FloatKeyword_3(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_ClassBase___BuiltInClassTypeParserRuleCall_1_1_0_CommaKeyword_1_1_1_0__q.equals(syntax))
-				emit_ClassBase___BuiltInClassTypeParserRuleCall_1_1_0_CommaKeyword_1_1_1_0__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_ClassDeclaration_SEMICOLONTerminalRuleCall_6_q.equals(syntax))
-				emit_ClassDeclaration_SEMICOLONTerminalRuleCall_6_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_AttributeSection___AttributeTargetParserRuleCall_1_0_DOISPONTOSTerminalRuleCall_1_1__q.equals(syntax))
+				emit_AttributeSection___AttributeTargetParserRuleCall_1_0_DOISPONTOSTerminalRuleCall_1_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_ClassMemberDeclaration_ModifierParserRuleCall_0_0_a.equals(syntax))
+				emit_ClassMemberDeclaration_ModifierParserRuleCall_0_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_ConstantDeclaration_ConstantModifierParserRuleCall_0_a.equals(syntax))
 				emit_ConstantDeclaration_ConstantModifierParserRuleCall_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_ConstantDeclaration_EventDeclaration_FieldDeclaration_PropertyDeclaration_FieldModifierParserRuleCall_0_a_or_PropertyModifierParserRuleCall_0_a_or___ConstantModifierParserRuleCall_0_a_ConstKeyword_1___or___EventModifierParserRuleCall_0_a_EventKeyword_1__.equals(syntax))
-				emit_ConstantDeclaration_EventDeclaration_FieldDeclaration_PropertyDeclaration_FieldModifierParserRuleCall_0_a_or_PropertyModifierParserRuleCall_0_a_or___ConstantModifierParserRuleCall_0_a_ConstKeyword_1___or___EventModifierParserRuleCall_0_a_EventKeyword_1__(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_ConstructorInitializer___ColonKeyword_0_0_BaseKeyword_0_1_LeftParenthesisKeyword_0_2___or___ColonKeyword_1_0_ThisKeyword_1_1_LeftParenthesisKeyword_1_2__.equals(syntax))
-				emit_ConstructorInitializer___ColonKeyword_0_0_BaseKeyword_0_1_LeftParenthesisKeyword_0_2___or___ColonKeyword_1_0_ThisKeyword_1_1_LeftParenthesisKeyword_1_2__(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_ConstructorInitializer___DOISPONTOSTerminalRuleCall_0_0_BaseKeyword_0_1_PARENTESQTerminalRuleCall_0_2___or___DOISPONTOSTerminalRuleCall_1_0_ThisKeyword_1_1_PARENTESQTerminalRuleCall_1_2__.equals(syntax))
+				emit_ConstructorInitializer___DOISPONTOSTerminalRuleCall_0_0_BaseKeyword_0_1_PARENTESQTerminalRuleCall_0_2___or___DOISPONTOSTerminalRuleCall_1_0_ThisKeyword_1_1_PARENTESQTerminalRuleCall_1_2__(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_DestructorDeclaration_ExternKeyword_0_q.equals(syntax))
 				emit_DestructorDeclaration_ExternKeyword_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_DestructorDeclaration_WSTerminalRuleCall_4_a.equals(syntax))
+				emit_DestructorDeclaration_WSTerminalRuleCall_4_a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_EmbeddedStatement_CheckedKeyword_1_6_0_0_or_UncheckedKeyword_1_6_0_1.equals(syntax))
 				emit_EmbeddedStatement_CheckedKeyword_1_6_0_0_or_UncheckedKeyword_1_6_0_1(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_EnumBody_CommaKeyword_1_2_q.equals(syntax))
-				emit_EnumBody_CommaKeyword_1_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_EnumDeclaration_SEMICOLONTerminalRuleCall_4_q.equals(syntax))
 				emit_EnumDeclaration_SEMICOLONTerminalRuleCall_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_EnumType_EnumModifierParserRuleCall_1_a.equals(syntax))
-				emit_EnumType_EnumModifierParserRuleCall_1_a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_EnumType_SEMICOLONTerminalRuleCall_6_q.equals(syntax))
-				emit_EnumType_SEMICOLONTerminalRuleCall_6_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_EventDeclaration_EventModifierParserRuleCall_0_a.equals(syntax))
 				emit_EventDeclaration_EventModifierParserRuleCall_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_Expression2_HyphenMinusKeyword_1_10_0_0_or_PlusSignKeyword_1_10_0_1.equals(syntax))
+				emit_Expression2_HyphenMinusKeyword_1_10_0_0_or_PlusSignKeyword_1_10_0_1(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_FieldDeclaration_FieldModifierParserRuleCall_0_a.equals(syntax))
 				emit_FieldDeclaration_FieldModifierParserRuleCall_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_FixedParameter_ParameterModifierParserRuleCall_0_q.equals(syntax))
-				emit_FixedParameter_ParameterModifierParserRuleCall_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_GlobalAttributeSection_CommaKeyword_4_q.equals(syntax))
-				emit_GlobalAttributeSection_CommaKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_Identifier_AvailableIdentifierParserRuleCall_0_1_or___CommercialAtKeyword_1_0_IDENTIFIER_START_CHARACTERTerminalRuleCall_1_1__.equals(syntax))
-				emit_Identifier_AvailableIdentifierParserRuleCall_0_1_or___CommercialAtKeyword_1_0_IDENTIFIER_START_CHARACTERTerminalRuleCall_1_1__(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_IntegralType_ByteKeyword_1_or_CharKeyword_8_or_IntKeyword_4_or_LongKeyword_6_or_ShortKeyword_2_or_UintKeyword_5_or_UlongKeyword_7_or_UshortKeyword_3.equals(syntax))
-				emit_IntegralType_ByteKeyword_1_or_CharKeyword_8_or_IntKeyword_4_or_LongKeyword_6_or_ShortKeyword_2_or_UintKeyword_5_or_UlongKeyword_7_or_UshortKeyword_3(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_FixedParameter_RefOrOutParserRuleCall_1_q.equals(syntax))
+				emit_FixedParameter_RefOrOutParserRuleCall_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_Identifier_IDTerminalRuleCall_0_1_or___CommercialAtKeyword_1_1_IDTerminalRuleCall_1_2__.equals(syntax))
+				emit_Identifier_IDTerminalRuleCall_0_1_or___CommercialAtKeyword_1_1_IDTerminalRuleCall_1_2__(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_InterfaceAccessors___GetKeyword_1_0_0_SEMICOLONTerminalRuleCall_1_0_1___or___SetKeyword_1_1_0_SEMICOLONTerminalRuleCall_1_1_1__.equals(syntax))
 				emit_InterfaceAccessors___GetKeyword_1_0_0_SEMICOLONTerminalRuleCall_1_0_1___or___SetKeyword_1_1_0_SEMICOLONTerminalRuleCall_1_1_1__(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_InterfaceDeclaration_SEMICOLONTerminalRuleCall_4_q.equals(syntax))
 				emit_InterfaceDeclaration_SEMICOLONTerminalRuleCall_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_InterfaceMemberDeclaration_NewKeyword_1_q.equals(syntax))
 				emit_InterfaceMemberDeclaration_NewKeyword_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_MaybeEmptyBlock_SEMICOLONTerminalRuleCall_1_1_or___LeftCurlyBracketKeyword_1_0_0_RightCurlyBracketKeyword_1_0_2__.equals(syntax))
-				emit_MaybeEmptyBlock_SEMICOLONTerminalRuleCall_1_1_or___LeftCurlyBracketKeyword_1_0_0_RightCurlyBracketKeyword_1_0_2__(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_MethodHeader_MethodModifierParserRuleCall_1_a.equals(syntax))
-				emit_MethodHeader_MethodModifierParserRuleCall_1_a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_NamespaceDeclaration_SEMICOLONTerminalRuleCall_3_q.equals(syntax))
 				emit_NamespaceDeclaration_SEMICOLONTerminalRuleCall_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_PrimaryExpression_CheckedKeyword_1_0_8_0_0_or_UncheckedKeyword_1_0_8_0_1.equals(syntax))
+				emit_PrimaryExpression_CheckedKeyword_1_0_8_0_0_or_UncheckedKeyword_1_0_8_0_1(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_PropertyDeclaration_PropertyModifierParserRuleCall_0_a.equals(syntax))
 				emit_PropertyDeclaration_PropertyModifierParserRuleCall_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_StructDeclaration_SEMICOLONTerminalRuleCall_4_q.equals(syntax))
-				emit_StructDeclaration_SEMICOLONTerminalRuleCall_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_Type_RANK_SPECIFIERTerminalRuleCall_2_a.equals(syntax))
-				emit_Type_RANK_SPECIFIERTerminalRuleCall_2_a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_Type_RANK_SPECIFIERTerminalRuleCall_1_a.equals(syntax))
+				emit_Type_RANK_SPECIFIERTerminalRuleCall_1_a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -517,14 +546,6 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * Syntax:
-	 *     ','?
-	 */
-	protected void emit_ArrayInitializer_CommaKeyword_1_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Syntax:
 	 *     RANK_SPECIFIER+
 	 */
 	protected void emit_ArrayType_RANK_SPECIFIERTerminalRuleCall_1_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -533,41 +554,17 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * Syntax:
-	 *     ','?
+	 *     (AttributeTarget DOISPONTOS)?
 	 */
-	protected void emit_AttributeSection_CommaKeyword_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AttributeSection___AttributeTargetParserRuleCall_1_0_DOISPONTOSTerminalRuleCall_1_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
 	 * Syntax:
-	 *     (AttributeTarget ':')?
+	 *     Modifier*
 	 */
-	protected void emit_AttributeSection___AttributeTargetParserRuleCall_1_0_ColonKeyword_1_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Syntax:
-	 *     'float' | 'double' | 'decimal' | 'bool'
-	 */
-	protected void emit_BuiltInType_BoolKeyword_1_or_DecimalKeyword_2_or_DoubleKeyword_4_or_FloatKeyword_3(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Syntax:
-	 *     (BuiltInClassType ',')?
-	 */
-	protected void emit_ClassBase___BuiltInClassTypeParserRuleCall_1_1_0_CommaKeyword_1_1_1_0__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Syntax:
-	 *     SEMICOLON?
-	 */
-	protected void emit_ClassDeclaration_SEMICOLONTerminalRuleCall_6_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ClassMemberDeclaration_ModifierParserRuleCall_0_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -581,17 +578,9 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * Syntax:
-	 *     PropertyModifier* | (EventModifier* 'event') | FieldModifier* | (ConstantModifier* 'const')
+	 *     (DOISPONTOS 'this' PARENTESQ) | (DOISPONTOS 'base' PARENTESQ)
 	 */
-	protected void emit_ConstantDeclaration_EventDeclaration_FieldDeclaration_PropertyDeclaration_FieldModifierParserRuleCall_0_a_or_PropertyModifierParserRuleCall_0_a_or___ConstantModifierParserRuleCall_0_a_ConstKeyword_1___or___EventModifierParserRuleCall_0_a_EventKeyword_1__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Syntax:
-	 *     (':' 'this' '(') | (':' 'base' '(')
-	 */
-	protected void emit_ConstructorInitializer___ColonKeyword_0_0_BaseKeyword_0_1_LeftParenthesisKeyword_0_2___or___ColonKeyword_1_0_ThisKeyword_1_1_LeftParenthesisKeyword_1_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ConstructorInitializer___DOISPONTOSTerminalRuleCall_0_0_BaseKeyword_0_1_PARENTESQTerminalRuleCall_0_2___or___DOISPONTOSTerminalRuleCall_1_0_ThisKeyword_1_1_PARENTESQTerminalRuleCall_1_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -605,17 +594,17 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * Syntax:
-	 *     'unchecked' | 'checked'
+	 *     WS*
 	 */
-	protected void emit_EmbeddedStatement_CheckedKeyword_1_6_0_0_or_UncheckedKeyword_1_6_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_DestructorDeclaration_WSTerminalRuleCall_4_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
 	 * Syntax:
-	 *     ','?
+	 *     'checked' | 'unchecked'
 	 */
-	protected void emit_EnumBody_CommaKeyword_1_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_EmbeddedStatement_CheckedKeyword_1_6_0_0_or_UncheckedKeyword_1_6_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -629,25 +618,17 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * Syntax:
-	 *     EnumModifier*
-	 */
-	protected void emit_EnumType_EnumModifierParserRuleCall_1_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Syntax:
-	 *     SEMICOLON?
-	 */
-	protected void emit_EnumType_SEMICOLONTerminalRuleCall_6_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Syntax:
 	 *     EventModifier*
 	 */
 	protected void emit_EventDeclaration_EventModifierParserRuleCall_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Syntax:
+	 *     '+' | '-'
+	 */
+	protected void emit_Expression2_HyphenMinusKeyword_1_10_0_0_or_PlusSignKeyword_1_10_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -661,42 +642,17 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * Syntax:
-	 *     ParameterModifier?
+	 *     RefOrOut?
 	 */
-	protected void emit_FixedParameter_ParameterModifierParserRuleCall_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_FixedParameter_RefOrOutParserRuleCall_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
 	 * Syntax:
-	 *     ','?
+	 *     ID | ('@' ID)
 	 */
-	protected void emit_GlobalAttributeSection_CommaKeyword_4_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Syntax:
-	 *     ('@' IDENTIFIER_START_CHARACTER) | AvailableIdentifier
-	 */
-	protected void emit_Identifier_AvailableIdentifierParserRuleCall_0_1_or___CommercialAtKeyword_1_0_IDENTIFIER_START_CHARACTERTerminalRuleCall_1_1__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Syntax:
-	 *     (
-	     'long' | 
-	     'ushort' | 
-	     'char' | 
-	     'uint' | 
-	     'byte' | 
-	     'short' | 
-	     'ulong' | 
-	     'int'
-	 )
-	 */
-	protected void emit_IntegralType_ByteKeyword_1_or_CharKeyword_8_or_IntKeyword_4_or_LongKeyword_6_or_ShortKeyword_2_or_UintKeyword_5_or_UlongKeyword_7_or_UshortKeyword_3(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Identifier_IDTerminalRuleCall_0_1_or___CommercialAtKeyword_1_1_IDTerminalRuleCall_1_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -726,25 +682,17 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * Syntax:
-	 *     SEMICOLON | ('{' '}')
-	 */
-	protected void emit_MaybeEmptyBlock_SEMICOLONTerminalRuleCall_1_1_or___LeftCurlyBracketKeyword_1_0_0_RightCurlyBracketKeyword_1_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Syntax:
-	 *     MethodModifier*
-	 */
-	protected void emit_MethodHeader_MethodModifierParserRuleCall_1_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Syntax:
 	 *     SEMICOLON?
 	 */
 	protected void emit_NamespaceDeclaration_SEMICOLONTerminalRuleCall_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Syntax:
+	 *     'unchecked' | 'checked'
+	 */
+	protected void emit_PrimaryExpression_CheckedKeyword_1_0_8_0_0_or_UncheckedKeyword_1_0_8_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -758,17 +706,9 @@ public class CSharpSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * Syntax:
-	 *     SEMICOLON?
-	 */
-	protected void emit_StructDeclaration_SEMICOLONTerminalRuleCall_4_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Syntax:
 	 *     RANK_SPECIFIER*
 	 */
-	protected void emit_Type_RANK_SPECIFIERTerminalRuleCall_2_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Type_RANK_SPECIFIERTerminalRuleCall_1_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
